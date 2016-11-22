@@ -1,0 +1,71 @@
+<html>
+  <head>
+    <!-- $Id: SubmitRequestSendToUser.vm,v 1.27 2016-11-02 13:35:25-04 ericholp Exp $ -->
+    <title>Submission Agreement Request</title>
+    <style>
+      .maintable {
+        padding: 0px;
+        margin: 0px;
+	border-spacing:0px;
+	border-right: 0px;
+	border-left: 0px;
+	border-collapse:collapse; 
+	margin-bottom: 0px;
+      }
+      ul {
+        list-style: none;
+      }
+      ul li {
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Dear ${submitappinfo.name} User,</h2>
+
+    <p>The user ${submitdata.name} has just completed a Records Submission Form for the ${org.name}, with the Submission Agreement ID ${submitdata.ssaid}.</p>
+
+    <h2>Contents of Agreement</h2>
+
+    <p><b>Department/Unit:</b> ${submitdata.department}</p>
+
+    <p><b>Department Address:</b> ${submitdata.address}</p>
+
+    <p><b>Contact Name:</b> ${submitdata.name}</p>
+
+    <p><b>Contact Email:</b> ${submitdata.email}</p>
+
+    <p><b>Contact Phone:</b> ${submitdata.phone}</p>
+
+    <p><b>Head of Department/Unit:</b> ${submitdata.departmenthead}</p>
+
+    <p><b>Agree:</b> ${submitdata.signature}</p>
+
+    #if (${errors.duplicateuser})
+    <p><b>Note</b>: The user ${submitdata.firstname} ${submitdata.lastname} was already defined.</p>
+    #end
+    #if (${errors.duplicateusername})
+    <p><b>Note</b>: This username ${submitdata.username} was already defined.</p>
+    #end
+    #if (${errors.duplicatedepartment})
+    <p><b>Note</b>: The department ${submitdata.department} was already defined.</p>
+    #end
+    #if (${errors.departmentalreadyassignedtothisuser})
+    <p><b>Note</b>: This department ${submitdata.department} was already assigned to this user (${submitdata.firstname} ${submitdata.lastname}).</p>
+    #end
+    #if (${errors.wrongnumberofusermatches})
+    <p><b>Note</b>: There were an unexpected number of matches of this user (${submitdata.firstname} ${submitdata.lastname}) already in the system, no additions were made.</p>
+    #end
+    
+    <p></p>
+    <p></p>
+    <p></p>
+
+    <p>The ${org.name} staff will contact you when you are authorized to transfer records.</p>
+
+    <p></p>
+    
+    <p>Sincerely,</p>
+    <p>The ${submitappinfo.name} (https://${thishost}${submitappinfo.root})</p>
+    
+  </body>
+</html>

@@ -1,0 +1,70 @@
+<html>
+  <head>
+    <!-- $Id: UploadCompleteSendToUser.vm,v 1.20 2016-11-02 22:11:57-04 ericholp Exp $ -->
+    <title>Draft Transfer Request:  ${rsa.id}</title>
+    <style>
+      .maintable {
+        padding: 0px;
+        margin: 0px;
+	border-spacing:0px;
+	border-right: 0px;
+	border-left: 0px;
+	border-collapse:collapse; 
+	margin-bottom: 0px;
+      }
+      ul {
+        list-style: none;
+      }
+      ul li {
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Dear ${submitappinfo.name} User,</h2>
+    
+    <p>The user ${session.getAttribute("name")} has just
+    completed a Records Submission Form to the ${org.name},
+    with the Transfer Request ID ${rsa.id} and Submission Agreement ID
+    ${rsa.ssasForm.id}.</p>
+
+    <h4>Department/Unit or Donor Contact Information</h4>
+    #if (!$rsa.ssasForm.ssaContactsForms || $rsa.ssasForm.ssaContactsForms.size()==0) 
+       <p>No contacts</p>
+    #else
+       <ul>
+	 #foreach($contact in ${rsa.ssasForm.ssaContactsForms})
+	 <li>${contact.name}, ${contact.phone}, ${contact.address}, ${contact.email}</li>
+	 #end
+       </ul>
+     #end
+    
+    <h3>Record Submission Form information</h3>
+    
+    <h4>Date spans of the records:</h4>
+    <span>
+    <label>Beginning year</label>
+    ${rsa.startyear}
+    <label>Ending year</label>
+    ${rsa.endyear}
+    </span>
+ 
+    <h4>Description/comments:</h4>
+    <p>${rsa.description}</p>
+ 
+    <h4>Files selected for transfer:</h4>
+    #set( $count = 1 )
+    <table class="maintable" border="1">
+      <tr><th>&nbsp;</th><th>name</th><th>size</th><th>date</th></tr>
+      #foreach($file in ${rsa.rsaFileDataForms} )
+        <tr><td>${count}</td><td>${file.name}</td><td>${file.nicesize}</td><td>${file.lastmoddatetime}</td></tr>
+        #set( $count = $count + 1 )
+      #end
+    </table>
+
+    <p>Sincerely,</p>
+    <p>${org.name} Staff</p>
+    <p>${org.phone}</p>
+    <p>https://${thishost}${submitappinfo.root}</p>
+    
+  </body>
+</html>

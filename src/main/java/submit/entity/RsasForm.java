@@ -1,0 +1,92 @@
+package submit.entity;
+
+// $Id: RsasForm.java,v 1.31 2016-10-31 12:48:06-04 ericholp Exp $
+
+import javax.persistence.OrderColumn;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+import javax.persistence.*;
+import java.util.*;
+import lombok.*;
+
+//import submit.impl.Format;
+
+@Entity
+@Table(name = "rsas")
+@Data
+@EqualsAndHashCode(exclude={"ssasForm", "rsaFileDataForms"})
+public class RsasForm {
+
+    @Transient
+    private int numfiles=0;
+    
+    @Id
+    @GeneratedValue
+    private Integer id;
+
+    private String startyear;
+    private String endyear;
+    private String description;
+    private long extent=0;
+    private String extentstr;
+    private String transferdate;
+    private String accessionnumber;
+    private String createdby;
+    private boolean approved;
+    private int idx;
+
+    public void setTransferdate(String date){
+	if(date.equals("")){
+	    this.transferdate=null;
+	}else{
+	    this.transferdate=date;
+	}
+    }
+    
+    public String getStartyear(){
+	if(startyear != null && startyear.length() > 4){
+	    return startyear.substring(0, 4);
+	}
+	return startyear;
+    }
+    public String getEndyear(){
+	if(endyear != null && endyear.length() > 4){
+	    return endyear.substring(0, 4);
+	}
+	return endyear;
+    }
+    
+
+
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="ssaid")
+    @NotFound(action = NotFoundAction.IGNORE)
+    private SsasForm ssasForm;
+    
+    public int hashCode(SsasForm ssa) {
+	return ssa.getId();
+    }
+
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy="rsasForm", cascade={CascadeType.REMOVE,CascadeType.MERGE})
+    @OrderColumn(name="idx")
+    @Setter(AccessLevel.NONE)
+    private List<RsaFileDataForm> rsaFileDataForms;
+
+    public void setRsaFileDataForms(List<RsaFileDataForm> fds){
+	if(fds != null){
+	    int i = 0;
+	    for(RsaFileDataForm fd : fds){
+		fd.setIdx(i++);
+	    }
+	}	
+	rsaFileDataForms = fds;
+    }
+   
+    public int hashCode(RsaFileDataForm fd) {
+	return fd.getId();
+    }
+}

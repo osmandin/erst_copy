@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+  </head>
+  <body>
+    <div id="body_header" th:fragment="body_header">
+      <div class="MSUwrapper" id="MSUheader">
+	<div id="MSUmasthead" role="banner">
+	  <a href="http://www.msu.edu">
+	    <img alt="Michigan State University masthead graphic" class="screen-msugraphic" height="34" width="297" th:src="@{/resources/images/masthead-helmet-green.png}"/>
+	    <img alt="Michigan State University masthead graphic" class="print-msugraphic" height="34" width="297" th:src="@{/resources/images/masthead-helmet-black.png}"/>
+	  </a>
+	</div>
+	<div class="white-fill" id="MSUSearchTool" role="search">
+	  <div id="search-tool-box">
+            <form action="https://u.search.msu.edu/index.php" method="get" role="form">
+	      <input name="client" type="hidden" value="ERST"/>
+	      <input name="sitesearch" type="hidden" value="submitrecords.archives.msu.edu"/>
+	      <label class="descriptor-readable" for="q">Search Tool</label>
+	      <input id="q" name="q" placeholder="Search..." type="text"/>
+	      <input id="btn_search" type="submit" value="search button"/>
+	    </form>
+	  </div>
+	</div>
+      </div>
+    </div>
+  </body>
+</html>

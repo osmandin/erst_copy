@@ -1,0 +1,37 @@
+#navigation, #body_header, #body_footer {
+    display: none;  
+}
+
+.window, .breadcrumbs, .callout, .callout-nobackground, #content, #content.wide, #body_main  {
+    border: none !important;
+    float: none !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    width: 100% !important;
+}
+
+    
+#body_header {
+    height: auto;
+        min-height: 0;
+}
+
+#body_header img {
+    display: none;
+}
+
+.banner {
+    position: absolute;
+    left: -9999px;
+}
+
+.breadcrumbs {
+    border-bottom: 1px dashed #999 !important;
+    margin-bottom: 15px !important;
+    padding-bottom: 15px !important;
+}
+
+.CABS-print-only {
+    display: block	
+}

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!-- $Id: NotifyUser.html,v 1.27 2016-11-15 11:32:33-04 ericholp Exp $ -->
+    <title>Notify User</title>
+    <div th:replace="fragments/Head :: Head"></div>
+    <script type="text/javascript" th:src="@{/resources/js/NotifyUser.js}"></script> 
+  </head>
+  <body>
+
+    <div th:replace="fragments/BodyHeader :: BodyHeader">body_header</div>
+    
+    <div id="body_main">
+      <div class="window">
+
+	<div th:replace="fragments/Nav :: Nav"></div>
+	
+	<div id="content">
+	  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	  
+	  <div class="success_box" th:if="${emailsent eq '1'}">
+	    <p>
+	      The email was sent.  (<span th:text="${emailrecips}"></span>)
+	    </p>
+	  </div>
+
+	  <div class="alert_box" th:if="${failed eq '1'}">
+	    <p>
+	      The email was not sent.  (<span th:text="${emailrecips}"></span>)
+	    </p>
+	  </div>
+
+	  <div class="alert_box" th:if="${invalidaddresses eq '1'}">
+	    <p>
+	      The email was not sent due to an invalid address.  (<span th:text="${emailrecips}"></span>)
+	    </p>
+	  </div>
+	  
+	  <div class="alert_box" id="alert_box_top">
+	    <p>Please enter the missing values below.</p>
+	    <ul>
+	      <li class="hiddenerror" id="usernameerr">Please enter a "Username."</li> 
+	      <li class="hiddenerror" id="firstnameerr">Please enter a valid "First name."</li> 
+	      <li class="hiddenerror" id="lastnameerr">Please enter a valid "Last name."</li> 
+	      <li class="hiddenerror" id="fromemailerr">Please enter a valid "Email from address."</li> 
+	      <li class="hiddenerror" id="toemailerr">Please enter a valid "Email to address."</li> 
+	      <li class="hiddenerror" id="emailsubjecterr">Please enter a valid "Email subject."</li> 
+	      <li class="hiddenerror" id="emailtexterr">Please enter a valid "Email body text."</li> 
+	    </ul>
+	  </div>
+	  
+	  <h1>Notify User</h1>
+	  
+	  <p><a th:href="@{/ListUsers}">Return to user list</a></p>
+
+	  <form id="form" th:action="@{/NotifyUser}" th:object="${emailsetup}" method="post">
+	    <p>
+	      <table>
+		<tr><th>Username:</th><td><input  type="text" th:field="*{username}"/></td></tr>
+		<tr><th>First name:</th><td><input type="text" th:field="*{firstname}"/></td></tr>
+		<tr><th>Last name:</th><td><input type="text" th:field="*{lastname}"/></td></tr>
+		<tr><th>Admin Function:</th><td><input type="checkbox" disabled="disabled" readonly="readonly" th:field="*{isadmin}" th:checked="*{isadmin}"/></td></tr>
+		<tr><th>Email from address:</th><td><input type="text" style="width:250px" th:field="*{from}"/></td></tr>
+		<tr><th>Email to address:</th><td><input type="text" th:field="*{to}"/></td></tr>
+		<tr><th>Email subject:</th><td><input type="text" style="width:300px" th:field="*{subject}"/></td></tr>
+	      </table>
+	      <br/>
+	      <b style="font-size: 0.9em">Email body text:</b><br/>
+	      <textarea cols="45" rows="15" th:field="*{body}"></textarea><br/>
+	    </p>
+	  </form>
+	  
+	  <div class="alert_box" id="alert_box_bottom">
+	    <p>
+	      Please enter the missing values above.
+	    </p>
+	  </div>
+	  
+	  <p><input type="button" value="Send" onclick="validate()"/></p>
+	  
+	  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	</div>
+	
+      </div>
+    </div>
+
+    <div th:replace="fragments/Footer :: Footer"></div>
+    
+  </body>
+</html>

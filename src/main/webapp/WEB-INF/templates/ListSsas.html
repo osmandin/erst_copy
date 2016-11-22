@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+  
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Make and Manage Submission Agreements</title>
+    <div th:replace="fragments/Head :: Head"></div>
+    <script type="text/javascript" th:src="@{/resources/js/ListSsas.js}"></script> 
+  </head>
+  
+  <body>
+    
+    <div th:replace="fragments/BodyHeader :: BodyHeader">body_header</div>
+    
+    <div id="body_main">
+      <div class="window">
+	
+	<div th:replace="fragments/Nav :: Nav"></div>
+	
+	<div id="content">
+	  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	  
+	  
+	  <div class="success_box" id="success_box_top" th:if="${deleted}">
+	    <p>Submission Agreement with id=<span th:text="${ssaid}">ssa id</span> has been deleted.</p>
+	  </div>
+	  
+	  <div class="success_box" th:if="${alldeleted == '1'}">
+	    <p>All of the selected Submission Agreements have been deleted.</p>
+	  </div>
+	  
+	  <div class="success_box" th:if="${ssadeleted == '1'}">
+	    <p>Submission Agreement deleted. </p>
+	  </div>
+
+	  <div class="alert_box" th:if="${nodeletes}">
+	    <p>No Submission Agreements selected for deletion.</p>
+	  </div>
+
+	  <div class="alert_box" th:if="${somenotdeleted == '1'}">
+	    <p>
+	      The following Submission Agreements were not deleted because 
+	      they have dependent Transfer
+	      Requests: <span th:text="${rejectedssas}">rejected
+		ssas</span>.
+	    </p>
+	  </div>
+	  
+	  <h1>Make and Manage Submission Agreements</h1>
+
+
+	  <p>From this screen, you can either create a new Submission Agreement or edit an existing one.</p>
+
+	  <p><a th:href="@{/CreateSsa}">Create a new Submission Agreement.</a></p>
+
+	  <h3>Edit a Submission Agreement</h3>
+	  <br/>
+
+
+	  <div th:switch="${(ssasForm == null) or (ssasForm.size() == 0)}">
+	    <div th:case="true">
+	      <h3>Currently there are no Submission Agreements.</h3>
+	    </div>
+            <div th:case="*">
+	      <form method="POST" th:action="@{/DeleteSsas}">
+		<p>
+		  <table border="1">
+		    <tr>
+		      <th style="min-width:15px">&nbsp;</th>
+		      <th style="min-width:15px">&nbsp;</th>
+		      <th align="center" style="min-width:15px;text-align:center">ID</th>
+		      <th>Department/Unit or Donor</th>
+		      <th>Records Title</th>
+		      <th align="center" style="min-width:80px;text-align:center">Status</th>
+		      <th align="center" style="text-align:center">Enabled</th>
+		    </tr>
+		    <tr th:each="ssa : ${ssasForm}">
+		      <td align="center"><input name="ssa" type="checkbox" th:value="${ssa.id}" th:checked="${false}"/></td>
+		      <td align="center"><a th:href="@{/EditSsa(id=${ssa.id})}">Edit</a></td>
+		      <td align="center" th:text="${ssa.id}"></td>
+		      <td>
+			<div th:if="${ssa.departmentForm != null}">
+			  <span th:text="${ssa.departmentForm.name}"></span>
+			</div>
+		      </td>
+		      <td th:text="${ssa.recordstitle}">ssa recordstitle</td>	      
+		      <td align="center" th:switch="${ssa.approved}">
+			<span th:case="true">approved</span>
+			<span th:case="*">not approved</span>
+		      </td>
+		      <td align="center" th:switch="${ssa.enabled}">
+			<span th:case="true">yes</span>
+			<span th:case="*">no</span>
+		      </td>
+		    </tr>
+		  </table>
+		</p>
+		
+		<input type="submit" name="delete" value="Delete selected Submission Agreement" onclick="return confirm_delete_ssas( this.form )" />
+		
+	      </form>
+	    </div>
+	  </div>
+	  
+	  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	</div>
+	
+      </div>
+    </div>
+    
+    <div th:replace="fragments/Footer :: Footer"></div>
+    
+  </body>
+</html>

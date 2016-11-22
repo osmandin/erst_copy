@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+  
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Submission Agreement cannot be deleted</title>
+    <div th:replace="fragments/Head :: Head"></div>
+    <script type="text/javascript" th:src="@{/resources/js/SsaDeleteWarning.js}"></script> 
+  </head>
+  
+  <body>
+    
+    <div th:replace="fragments/BodyHeader :: BodyHeader"></div>
+    
+    <div id="body_main">
+      <div class="window">
+	
+	<div th:replace="fragments/Nav :: Nav"></div>
+	
+	<div id="content">
+	  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+
+	  <div class="alert_box" th:if="${nodeletes == '1'}">
+	    <p>No Transfer Requests were deleted.</p>
+	  </div>
+	  
+  	  <div class="success_box" id="success_box_top" th:if="${weredeletes eq '1'}">
+	    <p>The following Transfer Requests were deleted: <span th:text="${deletedrsas}"></span>.</p>
+	  </div>
+	  
+  
+	  <div th:switch="(*{ssa == null} or *{ssa.rsasForms == null} or *{ssa.rsasForms.size() == 0})">
+	    <div th:case="true">
+	      <h1>Submission Agreement dependancy resolved</h1>
+	    </div>
+	    <div th:case="*">
+	      <h1>Submission Agreement <span th:text="*{ssa.id}"></span> cannot be deleted</h1>
+	    </div>
+	  </div>
+	  
+	  <p><a th:href="@{/ListSsas}">Return to Submission Agreement Tasks main page</a></p>
+
+	  <p><a th:href="@{/EditSsa(id=${ssaid})}">Return to Submission Agreement <span th:text="${ssaid}"></span></a></p>
+
+	  <div th:switch="(*{ssa == null} or *{ssa.rsasForms == null} or *{ssa.rsasForms.size() == 0})">
+	    <div th:case="true">
+	      <p>
+		There are no Transfer Requests for this Submission
+		Agreement. The Submission Agreement can now be
+		deleted.
+	      </p>
+	    </div>
+	    <div th:case="*">
+	      <p>
+		Submission Agreement <span th:text="*{ssa.id}"></span> cannot be deleted because there are 
+		Transfer Requests that depend on it.
+	      </p>
+    
+	      <form method="POST" th:action="@{/DeleteRsasForSsa}">
+		<input type="hidden" name="ssaid" th:value="${ssaid}"/>
+		<p>
+		  <table border="1">
+		    <tr>
+		      <th>&nbsp;</th>
+		      <th>id</th>
+		      <th>approved?</th>
+		    </tr>
+		    
+		    <tr th:each="rsa,stat : *{ssa.rsasForms}">
+		      <td><input name="rsa" type="checkbox" th:value="*{ssa.rsasForms[__${stat.index}__].id}"/></td>
+		      
+		      <div th:switch="*{ssa.rsasForms[__${stat.index}__].approved}">
+			<div th:case="true">
+			  <td><a th:href="@{/EditApprovedRsa(rsaid=*{ssa.rsasForms[__${stat.index}__].id})}" th:text="*{ssa.rsasForms[__${stat.index}__].id}"></a></td>
+			  <td>approved</td>
+			</div>
+			  <div th:case="*">
+			    <td><a th:href="@{/EditDraftRsa(rsaid=*{ssa.rsasForms[__${stat.index}__].id})}" th:text="*{ssa.rsasForms[__${stat.index}__].id}"></a></td>
+			    <td>draft</td>
+			  </div>
+		      </div>
+		    </tr>
+		    
+		  </table>
+		</p>
+		<input type="submit" name="delete" value="Delete selected Requests"
+		       onclick="return confirm_delete_rsas( this.form )" />
+	      </form>
+	      
+	    </div>
+	  </div>
+	  
+	  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	</div>
+	
+      </div>
+    </div>
+    
+    <div th:replace="fragments/Footer :: Footer"></div>
+    
+  </body>
+</html>

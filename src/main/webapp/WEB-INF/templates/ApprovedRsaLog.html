@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+  
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Completed Transfer Request Log</title>    
+    <div th:replace="fragments/Head :: Head"></div>
+  </head>
+  
+  <body>
+    
+    <div th:replace="fragments/BodyHeader :: BodyHeader">body_header</div>
+    
+    <div id="body_main">
+      <div class="window">
+	
+	<div th:replace="fragments/Nav :: Nav"></div>
+	
+	<div id="content">
+	  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+	  <p></p>
+	  <p></p>
+	  
+	  <h1>Completed Transfer Request Log</h1>
+	  	  
+	  <div th:switch="${data.size()}">
+	    <div th:case="'0'">
+	      <h3>Currently there are no entries in the Completed Transfer Request Log</h3>
+	    </div>
+	    <div th:case="*">
+	      
+	      <p></p>
+	      <p></p>
+	      
+	      <div id="contentArea">
+		<table border="1">
+		  <tr>
+		    <th>Transfer No.</th>
+		    <th>Date/Time</th>
+		    <th>Accession Number</th>
+		    <th>Department/Unit Name</th>
+		    <th>Dept Head Name</th>
+		    <th>Dept Head Email</th>
+		    <th>Approver Name</th>
+		    <th>Approver Email</th>
+		    <th>Description</th>
+		  </tr>
+		  
+		  <tr th:each="item : ${data}">
+		    <td th:text="${item.rsaid}"></td>
+		    <td th:text="${item.datetime}"></td>
+		    <td th:text="${item.accession}"></td>
+		    <td th:text="${item.departmentname}"></td>
+		    <td th:text="${item.sendername}"></td>
+		    <td th:text="${item.senderemail}"></td>
+		    <td th:text="${item.approvername}"></td>
+		    <td th:text="${item.approveremail}"></td>
+		    <td th:text="${item.description}"></td>
+		  </tr>
+		  
+		</table>
+	      </div>
+	      <br/>
+	      <a th:href="@{/DownloadApprovedRsaCSV}">Download as CSV file</a>
+	      
+	    </div>
+	  </div>
+	  
+	  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	</div>
+	
+      </div>
+    </div>
+    
+    <div th:replace="fragments/Footer :: Footer"></div>
+    
+  </body>
+</html>

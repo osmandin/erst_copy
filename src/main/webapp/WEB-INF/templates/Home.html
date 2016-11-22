@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+  
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Electronic Records Submission Tool</title>
+    <div th:replace="fragments/Head :: Head" th:remove="tag"></div>
+  </head>
+  
+  <body>
+    
+    <div th:replace="fragments/BodyHeader :: BodyHeader" th:remove="tag">body_header</div>
+    
+    <div id="body_main">
+      <div class="window">
+	
+	<div th:replace="fragments/Nav :: Nav"></div>
+	
+	<div id="content">
+	  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	  
+	  <div th:if="${submitrequestsubmitted}">
+	    <div class="success_box">
+	      <p>Your Submission Agreement Form has been submitted.</p>
+	    </div>
+	    <p></p>
+	  </div>
+	  
+	  <div th:if="${staffemailfailed eq '1' and useremailfailed ne '1'}">
+	    <div class="alert_box">
+	      <p>Submission Agreement Form submitted. There was a problem with the email sent to the Archives Staff.</p>
+	    </div>
+	    <p></p>
+	  </div>
+	  
+	  <div th:if="${useremailfailed eq '1' and staffemailfailed ne '1'}">
+	    <div class="alert_box">
+	      <p>
+		Submission Agreement Form submitted. There was a problem with 
+		the email sent to the user.  Please contact 
+		University Archives staff for help.  (See contact links at the 
+		bottom of the page.)
+	      </p>
+	    </div>
+	    <p></p>
+	  </div>
+	  
+	  <div th:if="${useremailfailed eq '1' and staffemailfailed eq '1'}">
+	    <div class="alert_box">
+	      <p>
+		Submission Agreement Form submitted. There was a problem with
+		the email sent to the user and to University Archives
+		staff.
+	      </p>
+	    </div>
+	    <p></p>
+	  </div>
+	  
+	  <div th:if="${correct eq '1' and staffemailfailed ne '1' and useremailfailed ne '1'}">
+	    <div class="success_box">
+	      <p>Submission Agreement Form submitted. An email has been sent to the University Archives staff.  You should receive an email response soon.</p>
+	    </div>
+	    <p></p>
+	  </div>
+
+	  <div th:if="${session.captchaincorrect eq '1'}">
+	    <div class="alert_box">
+	      <p>
+		The response to the captcha was invalid.
+	      </p>
+	    </div>
+	    <p></p>
+	  </div>
+
+	  <h1>Electronic Records Submission Tool</h1>
+
+	  <p>
+	    This website contains forms used for transferring 
+	    electronic records (computer files) of <b>permanent</b>
+	    historical value to the University Archives &amp;
+	    Historical Collections. Prior to any transfer, first time 
+	    users need to fill out a submission agreement form. 
+	    Returning users may login and send records once their 
+	    account has been activated. 
+	  </p>
+
+	  <div th:switch="${session.loggedin}">
+	    <h2 th:case="'1'"><a th:href="@{/SubmitRecords}">Submit Records to Archives/Transmittal Form</a></h2>
+	    <div th:case="*">
+	      <div  th:if="${displaysubmitlink ne '0'}">
+		<h2 style="margin-bottom: 0;padding-bottom: 0; border:0">First time Users</h2>
+		<ul style="margin-top: 0;padding-top: 0;border:0">
+		  <li><h2><a th:href="@{/SubmitRequest}">Submission Agreement Form</a></h2></li>
+		</ul>
+	      </div>
+	      <h2 style="margin-bottom: 0;padding-bottom: 0; border:0">Returning Users (login required)</h2>
+	      <ul style="margin-top: 0;padding-top: 0;border:0">
+		<li><h2><a th:href="@{/SubmitRecords}">Submit Records to Archives/Transmittal Form</a></h2></li>
+	      </ul>
+	    </div>
+	  </div>
+	  
+	  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	</div>
+	
+      </div>
+    </div>
+    
+    <div th:replace="fragments/Footer :: Footer"></div>
+    
+  </body>
+</html>

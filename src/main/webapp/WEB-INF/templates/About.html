@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+  
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <!-- $Id: About.html,v 1.16 2016-09-26 09:21:28-04 ericholp Exp $ -->
+    <title>About</title>
+    <div th:replace="fragments/Head :: Head" th:remove="tag"></div>
+  </head>
+  
+  <body>
+    
+    <div th:replace="fragments/BodyHeader :: BodyHeader" th:remove="tag">body_header</div>
+    
+    <div id="body_main">
+      <div class="window">
+	
+	<div th:replace="fragments/Nav :: Nav">Nav</div>
+	
+	<div id="content">
+	  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+	  <h1>About Page</h1>
+	  
+	  <p>
+	    University Archives &amp; Historic Collections (UAHC)
+	    collects University records that have permanent historical
+	    value regardless of format.  Many of MSU's official business
+	    and historical records are now created digitally.  The
+	    archives is trying to capture as many of these born-digital,
+	    and in some cases, digitized, documents, audio and video
+	    files as possible to document their potential historical
+	    significance to future Spartans.
+	  </p>
+	  
+	  <p>
+	    <img alt="Image depicting a records life cycle" src="/resources/images/lifecycle.jpeg" th:src="@{/resources/images/lifecycle.jpeg}"></img>
+	  </p>
+	  
+	  <p>
+	    Born-digital materials transferred to the UAHC are added
+	    to the Trusted Digital Repository (TDR).  MSU's TDR was
+	    started with a grant funded by the National Historical
+	    Publications &amp; Records Commission (NHPRC).  The method
+	    for transferring files digitally from campus departments
+	    to the archives is based on a process created by Tufts
+	    University that was also funded by the NHPRC.
+	  </p>
+
+	  <p>
+	    <img alt="Image of the NHPRC logo" src="/resources/images/nhprc50percent.jpg" th:src="@{/resources/images/nhprc50percent.jpg}"></img>
+	  </p>
+	  
+	  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	</div>
+	
+      </div>
+    </div>
+    
+    <div th:replace="fragments/Footer :: Footer"></div>
+    
+  </body>
+</html>

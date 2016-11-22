@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+  <head>
+    <!-- $Id: CreateSsa.html,v 1.31 2016-11-15 11:28:44-04 ericholp Exp $ -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Create a new Submission Agreement</title>
+    <div th:replace="fragments/Head :: Head"></div>
+    <script th:inline="javascript">
+      /*<![CDATA[*/
+      var defaultrestriction = [[${defaultaccessrestriction}]];
+      var prefix="";
+      /*]]>*/
+    </script>
+    <script>
+      $(function(){
+        $(".datedropdown").combodate({
+          firstItem: 'name',
+          minYear: new Date().getFullYear()-10,
+          maxYear: new Date().getFullYear()+10
+        });
+      });
+    </script>
+    <script type="text/javascript" th:src="@{/resources/js/CreateSsa.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/js/ValidateSsa.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/js/Populate.js}"></script> 
+    <script type="text/javascript" th:src="@{/resources/js/moment.js}"></script>  
+    <script type="text/javascript" th:src="@{/resources/js/combodate.js}"></script>  
+  </head>
+  <body>
+    
+    <div th:replace="fragments/BodyHeader :: BodyHeader">body_header</div>
+    
+    <div id="body_main">
+      <div class="window">
+	
+	<div th:replace="fragments/Nav :: Nav">Nav</div>
+	
+	<div id="content">
+	  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+	  <div class="alert_box" id="alert_box_top">
+	    <p>Please enter the missing values below.</p>
+	    <ul>
+	      <li id="departmentiderr">Please select "Department/Unit or Donor."</li>
+	      <li id="recordstitleerr">Please enter a valid "Records Title."</li>
+	      <li id="departmentheaderr">Please enter a valid "Head of Department/Unit."</li>
+	      <li id="recordiderr">Please enter a valid "Record or Collection Identifier."</li>
+	      <li id="nameerr">Please enter a valid "Department/Unit or Donor Contact: Name(s)."</li>
+	      <li id="phoneerr">Please enter a valid "Department/Unit or Donor Contact: Phone(s)."</li>
+	      <li id="emailerr">Please enter a valid "Department/Unit or Donor Contact: Email address(es)."</li>
+	      <li id="addresserr">Please enter a valid "Department/Unit or Donor Contact: Campus Address(es)."</li>
+	      <li id="creationdateyearerr">Please enter a valid "Agreement Creation Date Year."</li>
+	      <li id="creationdatemontherr">Please enter a valid "Agreement Creation Date Month."</li>
+	      <li id="creationdatedayerr">Please enter a valid "Agreement Creation Date Day of the Month."</li>
+	      <li id="copyrighterr">Please enter a valid "Copyright Statement(s)."</li>
+	      <li id="accessrestrictionserr">Please enter a valid "Access Restrictions."</li>
+	      <li id="effectivedateyearerr">Please enter a valid "Effective Date Year."</li>
+	      <li id="effectivedatemontherr">Please enter a valid "Effective Date Month."</li>
+	      <li id="effectivedatedayerr">Please enter a valid "Effective Date Day of the Month."</li>
+	      <li id="retentionscheduleerr">Please enter a valid "Retention Schedule."</li>
+	      <li id="retentionperioderr">Please enter a valid "Retention Period."</li>
+	      <li id="descriptionstandardserr">Please enter a valid "Archival Description Standards."</li>
+	      <li id="departmentmissingerr">There are no Departments/Units or Donors defined.</li>
+	    </ul>
+	  </div>
+	  
+	  <div class="alert_box" id="alert_box_top">
+	    <p>Please enter the missing values below.</p>
+	  </div>
+	  
+	  <div class="success_box" id="success_box_top" th:if="${success}">
+	    <p>New Submission Agreement created.</p>
+	  </div>
+	  
+	  <h1>Create a Submission Agreement</h1>
+	  
+	  <p><a th:href="@{/ListSsas}">Return to Submission Agreement Tasks main page</a></p>
+	  
+	  <p>
+	    Use the form below to create a new Submission Agreement.  Upon
+	    approval, it will immediately become available for
+	    authorized users associated with the office to initiate
+	    transfers.
+	  </p>
+
+	  <div th:replace="fragments/SsaForm :: SsaForm" th:remove="tag">SsaForm</div>
+	  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	</div>
+	
+      </div>
+    </div>
+    
+    <div th:replace="fragments/Footer :: Footer"></div>
+    
+  </body>
+</html>

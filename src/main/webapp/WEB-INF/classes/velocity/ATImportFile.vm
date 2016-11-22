@@ -1,0 +1,33 @@
+<accessionRecords xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file/Users/sibyIroud/Desktop/accessionsImport.xsd">
+  <record>
+    <recordNumber>${rsa.id}</recordNumber>
+    <accessionNumber>
+      <part1>${accessionpart1}</part1>
+      <part2>${accessionpart2}</part2>
+      <part3>${accessionpart3}</part3>
+    </accessionNumber>
+    <description>${rsa.description}</description>
+    <accessionDate>${rsa.transferdate}</accessionDate>
+    <userDefinedDate2>${rsa.transferdate}</userDefinedDate2>
+    <dateBegin>${rsa.startyear}</dateBegin>
+    <dateEnd>${rsa.endyear}</dateEnd>
+    <resourceType>Records</resourceType>
+    <retentionRule>${rsa.ssasForm.retentionperiod}</retentionRule>
+    <resourceType>Records</resourceType>
+    <retentionRule>${rsa.ssasForm.retentionperiod}</retentionRule>
+    <title>${recordidpart1} ${recordidpart2} #if( $departvalid )${rsa.ssasForm.departmentForm.name}#end ${rsa.ssasForm.recordstitle}</title>
+    <resourceIdentifier>
+      <part1>${recordidpart1}</part1>
+      <part2>${recordidpart2}</part2>
+    </resourceIdentifier>
+    <extentNumber>${rsa.extent}</extentNumber>
+    <extentType>Gigabytes</extentType>
+    <inventory>#set($sep = "")#foreach($item in $rsa.rsaFileDataForms)$sep$item.name#set($sep = ",")#end</inventory>
+    #if ($displayaccessrestrictions == 1)
+    <accessRestrictionsNote>#set($sep = "")#foreach($item in $rsa.ssasForm.ssaAccessRestrictionsForms)$sep$item.restriction#set($sep = ",")#end</accessRestrictionsNote>
+    #end
+    #if ($displaycopyrightinfo == 1)
+ <rightsTransferredNote>#set($sep = "")#foreach($item in $rsa.ssasForm.ssaCopyrightsForms)$sep$item.copyright#set($sep = ",")#end</rightsTransferredNote>
+    #end
+ </record>
+</accessionRecords>

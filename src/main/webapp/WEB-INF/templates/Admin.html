@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+  
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Administrative Tools</title>
+    <div th:replace="fragments/Head :: Head"></div>
+  </head>
+  
+  <body>
+    
+    <div th:replace="fragments/BodyHeader :: BodyHeader">body_header</div>
+    
+    <div id="body_main">
+      <div class="window">
+	
+	<div th:replace="fragments/Nav :: Nav">Nav</div>
+	
+	<div id="content">
+	  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+	  <!--
+	  <h2><a th:href="@{/Upload}">Upload</a></h2>
+	  -->
+	  
+	  <h1>Administrative Tools</h1>
+	  
+	  <p>This is the homepage of staff tools.</p>
+	  
+	  <h2><a th:href="@{/ListSsas}">Create and Manage Submission Agreements</a></h2>
+	  
+	  <p>Visit this page to create, view, and edit Submission Agreements.</p>
+	  
+	  <h2><a th:href="@{/ListDraftRsas}">Review Draft Transfer Requests</a></h2>
+	  
+	  <p>Visit this page to review, edit, edit and approve Draft Transfer Requests.</p>
+	  
+	  <h2><a th:href="@{/ListApprovedRsas}">Manage Approved Transfer Requests</a></h2>
+	  
+	  <p>Visit this page to view and download approved Transfer Requests.</p>
+	  
+	  <h2><a th:href="@{/ListUsers}">Manage Users</a></h2>
+	  
+	  <p>Visit this page to add, view, and edit users.</p>
+	  
+	  <h2><a th:href="@{/ListDepartments}">Manage Department/Unit and Donors</a></h2>
+	  
+	  <p>Visit this page to add, view, and edit department/unit and donors.</p>
+	  
+	  <h2><a th:href="@{/ApprovedRsaLog}">View Completed Transfer Request Log</a></h2>
+	  
+	  <p>Visit this page to view the completed transfer requests.</p>
+	  
+	  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	</div>
+	
+      </div>
+    </div>
+    
+    <div th:replace="fragments/Footer :: Footer"></div>
+    
+  </body>
+</html>

@@ -1,0 +1,14 @@
+<html>
+  <head>
+    <title>Login</title>
+    <style>
+    </style>
+  </head>
+  <body>
+    
+    <h2>New login to ${submitappinfo.name}</h2>
+    
+    <p>User ${loginData.username} has logged in to ${loginData.hostname}.</p>
+    
+   </body>
+</html>

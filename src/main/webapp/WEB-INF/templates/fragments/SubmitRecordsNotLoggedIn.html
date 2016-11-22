@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+  </head>
+  <body>
+    
+    <div th:fragment="SubmitRecordsNotLoggedIn">
+
+      <!-- $Id: SubmitRecordsNotLoggedIn.html,v 1.10 2016-09-26 09:20:31-04 ericholp Exp $ -->
+      
+      <h1>Electronic Records Submission Tool</h1>
+      
+      <p>Please log in using your MSU Netid.</p>
+      <br/>
+      <form action="#" th:action="@{/Auth}" th:object="${loginData}" method="POST">
+	<table class="table simpletable">
+	  <tr><td><p><b>MSU Netid</b></p></td><td><div>
+		<input name="username" class="username" type="text" th:field="*{username}"/>
+	  </div></td></tr>
+	  <tr><td><p><b>Password</b></p></td><td><div>
+		<input name="password" type="password"  th:field="*{password}"/>
+	  </div></td></tr>
+	</table>
+	<p></p>
+	<div>
+	  <input name="submit" type="submit" value="Log in"/>
+	</div>
+      </form>
+      
+      <div th:if="${badauth}">
+	<p th:text="${loginmessage}">loginmessage</p>
+	<p>Sorry, that username / password combination is not valid. Please try logging in again with a valid MSU NetID.</p>
+	<p>Note: This NetID must first be registered as a valid user 
+	  of the Records Submission Tool. If you have further questions,
+	  please contact University Archives 
+	  <a th:href="@{mailto:{sem}(sem=${staff_email})}">here</a>.</p>
+	<br/>
+      </div>
+
+    </div>
+  </body>
+</html>

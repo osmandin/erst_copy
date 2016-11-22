@@ -1,0 +1,480 @@
+
+/* $Id: mine.css,v 1.10 2016-11-15 14:41:24-04 ericholp Exp $ */
+
+.text input {
+  width: 4em;
+}
+
+input.wide {
+  width: 15em;
+}
+
+#textid {
+  width: 15em;
+}
+
+/* checkbox/labels in fieldsets */
+
+fieldset span {
+ /* unfortunately this makes the dates on the submission request page block ... needed for the records submission form though! */
+ display: block;
+}
+
+fieldset label {
+  display: inline;
+}
+
+
+/* other spans mess up so handle repeatables differently */
+fieldset.repeatable span {
+ display: inline;
+}
+
+/* put border arround fieldsets such as <fieldset class="checkboxgroup legend"> on jax */
+fieldset.checkboxgroup {
+      border: 1px solid black;
+}
+
+label[for=fileobject] {
+  display: inline;
+}
+label[for=fileobject0] {
+  display: inline;
+}
+label[for=contentfileobject] {
+  display: inline;
+}
+label[for=contentfileobject0] {
+  display: inline;
+}
+ul {
+  list-style-type: none;
+}
+fieldset {
+  border: 0;
+}
+div#file_content_upload_div {
+  border: 0;
+}
+div#file_upload_div {
+  border: 0;
+}
+
+/*
+p, ul, ol {
+    font-size: 0.9em;
+    line-height: 1.5em;
+    padding: 0.5em 0px;
+}
+*/
+
+fieldset.repeatable label {
+    display: inline;
+    /*font-weight: normal;*/
+    font-size: 0.9em;
+    line-height: 1.5em;
+    /*padding: 0.5em 0px;*/ /* put back?  had to remove so that label[for=pwi] would work */
+}
+
+td {
+    /*font-size: 12px;*/
+    font-size: 0.9em;
+    line-height: 1.5em;
+    font-family: Arial,Helvetica,sans-serif;
+    /*width: 100px;*/
+    /*width: 65%;*/
+}
+
+th {
+    font-size: 0.9em;
+    text-align: left;
+    default fount size font-family: Arial,Helvetica,sans-serif;
+}
+
+.ssainfo th {
+    width: 65%;
+}
+
+span#maxuploadsize {
+    font-size: 0.9em;
+}
+
+label[for=notinline] {
+    font-weight: bold;
+    display: block;
+}
+
+label {
+    font-weight: bold;
+    display: inline;
+}
+
+
+label[for=login_username_input] {
+    padding-right: 8px;
+}
+label[for=login_password_input] {
+    padding-right: 15px;
+}
+
+td.error {
+    color: red;
+    font-weight: bold;
+}
+
+/*
+td {
+    background-color: green;
+    color: white;
+}
+*/
+
+
+div#navigation {
+    border-style: solid;
+    border-right-width: 1px;
+}
+
+/*
+div#content {
+    border-style: solid;
+    border-left-width: 1px;
+}
+*/
+
+/*
+select.styled-select {
+   width:140px;
+   border:1px solid #ccc;
+   margin:1px;
+   padding:3px;
+}
+*/
+
+
+select.styled-select {
+  font-size: 14px;
+  height: 29px;
+  border:1px solid #ccc;
+  margin:1px;
+  padding:3px;
+  min-width: 300px;
+}
+
+label[for=hdu] {
+  padding-right: 40px;
+}
+label[for=rsarcid] {
+  padding-right: 10px;
+}
+label[for=ssarcid] {
+  padding-right: 6px;
+}
+label[for=ssacontactname] {
+  padding-right: 136px;
+}
+label[for=ssacontactphone] {
+  padding-right: 78px;
+}
+label[for=ssacontactemail] {
+  padding-right: 139px;
+}
+label[for=ssacontactaddress] {
+  padding-right: 64px;
+}
+label[for=ran] {
+  padding-right: 5px;
+}
+label[for=rap] {
+  padding-right: 77px;
+}
+label[for=raem] {
+  padding-right: 138px;
+}
+label[for=caddr] {
+  padding-right: 63px;
+}
+label[for=acd] {
+  padding-right: 4px;
+}
+label[for=rt] {
+  padding-right: 95px;
+}
+label[for=ed] {
+    padding-right: 12px;
+    display: inline;
+}
+label[for=rs] {
+    padding-right: 88px;
+    font-weight: bold;
+    display: inline;
+}
+label[for=an] {
+    padding-right: 7px;
+    font-weight: bold;
+    display: inline;
+}
+label[for=rp] {
+    padding-right: 110px;
+    font-weight: bold;
+    display: inline;
+}
+label[for=rp2] {
+    padding-right: 25px;
+    font-weight: bold;
+    display: inline;
+}
+label[for=ads] {
+    font-weight: bold;
+    display: inline;
+}
+label[for=ext] {
+    padding-right: 145px;
+    font-weight: bold;
+    display: inline;
+}
+label[for=td] {
+    padding-right: 52px;
+    font-weight: bold;
+    display: inline;
+}
+
+
+#ed {
+ display: inline;
+}
+
+#acd {
+ display: inline;
+}
+
+span#ed {
+ display: inline;
+}
+span#ex {
+ display: inline;
+}
+span#rad {
+ display: inline;
+}
+
+
+/* ---------- */
+fieldset#opt {
+  border: 1px solid black;
+}
+fieldset#optdraft {
+  border: 1px solid black;
+}
+fieldset#optapproved {
+  border: 1px solid black;
+}
+/* ---------- */
+
+
+span.elements span {
+ display: inline;
+}
+
+/*
+#rad {
+    display: inline;
+    border: 1px solid #000;
+}
+*/
+
+#tn {
+ display: block;
+}
+
+/* dca rca */
+label[for=hd] {
+  padding-right: 30px;
+}
+label[for=pn] {
+  padding-right: 72px;
+}
+label[for=email] {
+  padding-right: 132px;
+}
+label[for=ca] {
+  padding-right: 58px;
+}
+label[for=id] {
+  font-weight: bold;
+}
+label[for=ssaid] {
+  font-weight: bold;
+}
+label[for=agreecd] {
+  font-weight: bold;
+}
+
+/* edit user */
+label[for=ufn] {
+  padding-right: 38px;
+}
+label[for=uln] {
+  padding-right: 39px;
+}
+label[for=uem] {
+  padding-right: 74px;
+}
+/* --------- */
+
+input#subid {
+  width: 2em;
+  background-color: transparent;
+  border: 0px solid;
+}
+input#id {
+  width: 2em;
+  background-color: transparent;
+  border: 0px solid;
+  margin:5px;
+}
+
+input.id {
+  width: 2em;
+  background-color: transparent;
+  border: 0px solid;
+  margin:5px;
+}
+
+label {
+  font-weight: normal;
+}
+
+label[for=rt] {
+  font-weight: bold;
+}
+label[for=acd] {
+  font-weight: bold;
+}
+label[for=transdate] {
+  font-weight: bold;
+}
+label[for=effdate] {
+  font-weight: bold;
+}
+label[for=tn] {
+ font-weight: bold;
+}
+label[for=accessnum] {
+ font-weight: bold;
+}
+label[for=expdate] {
+ font-weight: bold;
+}
+label[for=rad] {
+ font-weight: bold;
+}
+label[for=depart_label] {
+ font-weight: bold;
+}
+label[for=subid] {
+    font-weight: bold;
+}
+label[for=ed] {
+    padding-right: 45px;
+    font-weight: bold;
+}
+label[for=ex] {
+    padding-right: 35px;
+    font-weight: bold;
+}
+
+#navigation .currentpage {
+    pointer-events: none;
+    color: black;
+}
+
+.imgwborder {
+    border:1px solid #021a40;
+}
+
+
+.simpletable td {
+    font-size: 15px;
+    width: 80px;
+}
+
+.simpletable p {
+    /* line-height: 1.5em; */
+    /* padding: 0.5em 0px; */
+    padding: 0em 0px;
+}
+
+.exception_box {
+   color:red;
+}
+
+
+div.success_box {
+    padding: 5px;
+    background: palegreen;
+}
+
+
+#alert_box_top {
+   display:none;
+}
+
+#alert_box_bottom {
+   display:none;
+}
+
+.hiddenerror {
+   display:none;
+   color:red;
+}
+
+.hiddenerror2 {
+    display:none;
+}
+
+/* u tag obsolete */
+span.underline { text-decoration: underline; }
+
+#contentArea {
+    width: 100%;
+    height: 500px;
+    overflow: scroll;
+    /*overflow-x:scroll;
+    overflow-y: scroll;*/
+    border: 1px solid #000;
+}
+
+
+div.callout, div.callout p{
+    /*Site Override callout background color*/
+    background: #EAEDE6;
+    color: #000000;
+}
+div.callout a{
+    color: #18453b;
+}
+div.thebanner {
+    display: block;
+    width: 900px;
+    height: 194px;
+    margin-top: 0;
+}
+div.banner1 {
+    background: url(../images/banner-photo-1.JPG) no-repeat
+}
+div.banner2 {
+    background: url(../images/banner-photo-2.JPG) no-repeat
+}
+div.banner3 {
+    background: url(../images/banner-photo-3.JPG) no-repeat
+}
+div.banner4 {
+    background: url(../images/banner-photo-4.JPG) no-repeat
+}
+div.banner5 {
+    background: url(../images/banner-photo-5.JPG) no-repeat
+}
+div.banner6 {
+    background: url(../images/banner-photo-6.JPG) no-repeat
+}

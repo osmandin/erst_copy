@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Submission Agreement Form</title>
+    <link rel="stylesheet" type="text/css" href="root/static/css/reset.css" />
+    <link rel="stylesheet" type="text/css" href="root/static/css/default.css" />
+    <link rel="stylesheet" type="text/css" href="root/static/css/print.css" media="print" />
+    <link rel="stylesheet" type="text/css" href="root/static/css/web-standards.css" />
+    <link rel="stylesheet" type="text/css" href="root/static/css/taper_0.01.css" />
+    <link rel="stylesheet" type="text/css" href="root/static/css/mine.css" />
+  </head>
+  <body>
+    <h1>Submission Agreement Form</h1>
+    
+    <p>
+      Department staff that will be transferring records to the ${org.namefull} should fill out a submission agreement form to request an account.  The account links the staff person to a department for easy transfer of digital files from the department to the archives for long-term digital preservation.  A short transmittal form is required for the transfer of records.
+    </p>
+    <p>
+      After submitting the form, an archivist will contact you when your account is created and you are authorized to transfer records.
+    </p>
+    
+    <table>
+      <tr><th>Department/Unit:</th><td><label>${submitdata.department}</label></td><td></td></tr>
+      <tr><th>Department Address:</th><td><label>${submitdata.address}</label></td><td></td></tr>
+      <tr><th>Contact Name:</th><td><label>${submitdata.name}</label></td><td></td></tr>
+      <tr><th>Contact Email:</th><td><label>${submitdata.email}</label></td><td></td></tr>
+      <tr><th>Contact Phone:</th><td><label>${submitdata.phone}</label></td><td></td></tr>
+      <tr><th>Head of Department/Unit:</th><td><label>${submitdata.departmenthead}</label></td><td></td></tr>
+    </table>
+    
+    <p>
+      <b>Mandate for transfer</b>: The mandate of the ${org.namefull} is founded on a resolution of the Board of Trustees, as recorded in the minutes of November 21, 1969.  This resolution claims all records of the official activities of university officers and offices are the property of Michigan State University, and that such property cannot be destroyed without the approval of the director of Archives.
+    </p>
+    
+    <p>
+      <b>Retention Period</b>: The records transferred will be maintained permanently.  If the records transferred are appraised by the archives to have a retention period less than permanent, the archives will contact the Contact Person regarding the disposition of the records.
+    </p>
+    
+    <p>
+      <b>Access Restrictions</b>: The records transferred should be free of any restrictions to access. Records submitted will be available for finding and the use of these documents and/or information.  If some records need to be restricted from this type of usage, please note these restrictions on the transmittal form when the records are transferred.
+    </p>
+    
+    <p>
+      <b>Copyright Statement</b>: Items transferred from the MSU departments/unit will be given a copyright of "Michigan State University" unless specified otherwise on the transmittal form.
+    </p>
+    
+    <p>
+      <i>By typing your name below you agree that you have read all of the statements and that information provided is true and correct to the best of your knowledge.</i>
+    </p>
+    
+    <br/>
+    
+    <table>
+      <tr><th>Type Name Here:</th><td width="5"></td><td width="200" style="border:1px solid black;margin:5px;height:25px">${submitdata.signature}</td><td width="30"></td><td>${submitdata.date}</td></tr>
+    </table>
+    
+  </body>
+</html>

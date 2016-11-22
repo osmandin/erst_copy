@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+  
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Download Draft Files</title>
+    <div th:replace="fragments/Head :: Head"></div>
+    <script type="text/javascript" th:src="@{/resources/js/ListApprovedRsas.js}"></script> 
+  </head>
+  
+  <body>
+    
+    <div th:replace="fragments/BodyHeader :: BodyHeader">body_header</div>
+    
+    <div id="body_main">
+      <div class="window">
+	
+	<div th:replace="fragments/Nav :: Nav"></div>
+	
+	<div id="content">
+	  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+	  <h1>Download Draft Files for Transfer No. <span th:text="${rsaid}"></span></h1>
+
+	  <p><a th:href="@{/ListDraftRsas}">Return to Review Draft Transfer Requests</a></p>
+
+	  <p></p>
+	  
+	  <div th:switch="*{rsaFileDataForms == null or rsaFileDataForms.size() == 0}">
+	    <div th:case="true">
+	      <p>There were no files transferred or they have been deleted.</p>
+	    </div>
+	    <div th:case="*">
+	      <table class="maintable" border="1">
+		<tr>
+		  <th>name</th>
+		  <th>size</th>
+		  <th>date</th>
+		</tr>
+		<div th:each="item,stat: *{rsaFileDataForms}">
+		  <tr th:if="*{rsaFileDataForms[__${stat.index}__].status.equals('success')}">
+		    <td th:text="*{rsaFileDataForms[__${stat.index}__].name}"></td>
+		    <td th:text="*{rsaFileDataForms[__${stat.index}__].nicesize}"></td>		    
+		    <td th:text="*{rsaFileDataForms[__${stat.index}__].lastmoddatetime}"></td>
+		    <td>
+		      <a th:href="@{/DownloadFile(filename=*{rsaFileDataForms[__${stat.index}__].name}, rsaid=*{rsaFileDataForms[__${stat.index}__].rsasForm.id})}">Download</a>
+		    </td>
+		  </tr>
+		</div>
+	      </table>
+	    </div>
+	  </div>
+
+	  <p>
+	    <a th:href="@{/DownloadZipFile(rsaid=${rsaid}, redirect='ListDraftRsas')}">Download Zip File</a>
+	  </p>
+	  
+	  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	</div>
+	
+      </div>
+    </div>
+    
+    <div th:replace="fragments/Footer :: Footer"></div>
+    
+  </body>
+</html>
