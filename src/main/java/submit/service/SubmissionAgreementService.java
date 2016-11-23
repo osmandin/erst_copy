@@ -1,7 +1,5 @@
 package submit.service;
 
-// $Id: SubmissionAgreementService.java,v 1.4 2016-10-31 15:47:00-04 ericholp Exp $
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.ui.ModelMap;

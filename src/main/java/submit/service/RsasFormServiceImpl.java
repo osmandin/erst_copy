@@ -1,7 +1,5 @@
 package submit.service;
 
-// $Id: RsasFormServiceImpl.java,v 1.2 2016-10-31 15:58:51-04 ericholp Exp $
-
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;

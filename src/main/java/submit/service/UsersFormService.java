@@ -1,7 +1,5 @@
 package submit.service;
 
-// $Id: UsersFormService.java,v 1.10 2016-10-04 23:38:36-04 ericholp Exp $
-
 import submit.entity.UsersForm;
 
 import java.util.List;

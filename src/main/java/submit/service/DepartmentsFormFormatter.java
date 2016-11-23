@@ -1,9 +1,5 @@
 package submit.service;
 
-// $Id: DepartmentsFormFormatter.java,v 1.6 2016-10-20 14:20:09-04 ericholp Exp $
-
-// http://stackoverflow.com/questions/25234357/select-tag-with-object-thymeleaf-and-spring-mvc
-
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;

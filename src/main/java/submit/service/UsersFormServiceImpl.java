@@ -1,7 +1,5 @@
 package submit.service;
 
-// $Id: UsersFormServiceImpl.java,v 1.18 2016-10-20 14:16:27-04 ericholp Exp $
-
 import java.util.List;
 
 import javax.annotation.Resource;

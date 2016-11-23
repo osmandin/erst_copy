@@ -1,7 +1,5 @@
 package submit.service;
 
-// $Id: SsasFormService.java,v 1.8 2016-10-30 00:38:49-04 ericholp Exp $
-
 import submit.entity.DepartmentsForm;
 import submit.entity.SubmitRequestErrors;
 import submit.entity.SubmitData;

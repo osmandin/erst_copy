@@ -1,7 +1,5 @@
 package submit.service;
 
-// $Id: SubmissionAgreementServiceImpl.java,v 1.10 2016-11-02 15:02:53-04 ericholp Exp $
-
 import javax.annotation.Resource;
 
 import javax.servlet.http.HttpServletRequest;

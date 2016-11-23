@@ -1,7 +1,5 @@
 package submit.service;
 
-// $Id: DepartmentsFormServiceImpl.java,v 1.19 2016-11-01 13:08:45-04 ericholp Exp $
-
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;

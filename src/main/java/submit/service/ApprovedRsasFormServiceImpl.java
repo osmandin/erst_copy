@@ -1,7 +1,5 @@
 package submit.service;
 
-// $Id: ApprovedRsasFormServiceImpl.java,v 1.9 2016-10-31 16:26:07-04 ericholp Exp $
-
 import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
