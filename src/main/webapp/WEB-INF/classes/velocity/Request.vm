@@ -5,7 +5,6 @@
     <link rel="stylesheet" type="text/css" href="root/static/css/reset.css" />
     <link rel="stylesheet" type="text/css" href="root/static/css/default.css" />
     <link rel="stylesheet" type="text/css" href="root/static/css/print.css" media="print" />
-    <link rel="stylesheet" type="text/css" href="root/static/css/web-standards.css" />
     <link rel="stylesheet" type="text/css" href="root/static/css/taper_0.01.css" />
     <link rel="stylesheet" type="text/css" href="root/static/css/mine.css" />
   </head>
@@ -29,7 +28,7 @@
     </table>
     
     <p>
-      <b>Mandate for transfer</b>: The mandate of the ${org.namefull} is founded on a resolution of the Board of Trustees, as recorded in the minutes of November 21, 1969.  This resolution claims all records of the official activities of university officers and offices are the property of Michigan State University, and that such property cannot be destroyed without the approval of the director of Archives.
+      <b>Mandate for transfer</b>: The mandate of the ${org.namefull} is founded on a resolution of the Board of ABC, as recorded in the minutes of .  This resolution claims all records of the official activities of university officers and offices are the property of ABC, and that such property cannot be destroyed without the approval of the director of Archives.
     </p>
     
     <p>
@@ -41,7 +40,7 @@
     </p>
     
     <p>
-      <b>Copyright Statement</b>: Items transferred from the MSU departments/unit will be given a copyright of "Michigan State University" unless specified otherwise on the transmittal form.
+      <b>Copyright Statement</b>: Items transferred from the XYZ departments/unit will be given a copyright of "ABC" unless specified otherwise on the transmittal form.
     </p>
     
     <p>

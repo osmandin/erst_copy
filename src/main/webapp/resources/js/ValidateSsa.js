@@ -52,9 +52,9 @@ function validate( submit = 1 ) {
 		    }
 		}else if(id == "phone"){
 		    var phpatt = /^[0-9()-]{7,13}$/;
-		    var msuphpatt1 = /^[0-9]\-[0-9][0-9][0-9][0-9]$/;
-		    var msuphpatt2 = /^[0-9][0-9][0-9][0-9][0-9]$/;
-		    if(approved && !phpatt.test(val) && !msuphpatt1.test(val) && !msuphpatt2.test(val)){
+		    var phpatt1 = /^[0-9]\-[0-9][0-9][0-9][0-9]$/;
+		    var phpatt2 = /^[0-9][0-9][0-9][0-9][0-9]$/;
+		    if(approved && !phpatt.test(val) && !phpatt1.test(val) && !phpatt2.test(val)){
 			oneinvalid=1;
 			$("#phoneerr").show();
 			$(this).css("border", "solid 2px red");

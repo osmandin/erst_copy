@@ -253,7 +253,7 @@ public class UserPages {
 		String[] recipts = env.getRequiredProperty("loginemailrecipts").split("[, ]+");
 		
 		EmailSetup emailsetup = new EmailSetup();
-		emailsetup.setFrom("no-reply@msu.edu");
+		emailsetup.setFrom("no-reply");
 		emailsetup.setSubject("Login to " + context.getContextPath().substring(1)); // strip off leading slash
 		emailsetup.setToarray(recipts);
 		
