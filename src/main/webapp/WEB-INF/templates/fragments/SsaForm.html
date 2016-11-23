@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-  <!-- $Id: SsaForm.html,v 1.172 2016-11-10 23:44:34-04 ericholp Exp $ -->
-  
   <div th:fragment="SsaForm" th:remove="tag">
     
     <form id="form" th:object="${ssasForm}" method="post" th:action="@{/} + ${action}">

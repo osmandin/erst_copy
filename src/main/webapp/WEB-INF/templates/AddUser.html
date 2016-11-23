@@ -61,7 +61,7 @@
 	  <form id="form" th:action="@{/AddUser}" th:object="${usersForm}" method="post">
 	    <p></p>
 	    <div>
-	      <label>MSU Username</label>
+	      <label>Username</label>
 	      <input type="text" th:field="*{username}"/>
 	      <p style="color: red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
 	    </div>

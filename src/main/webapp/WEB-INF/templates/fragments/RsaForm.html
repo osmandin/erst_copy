@@ -6,8 +6,6 @@
     
     <div th:fragment="RsaForm">
 
-      <!-- $Id: RsaForm.html,v 1.66 2016-11-02 17:01:16-04 ericholp Exp $ -->
-      
       <form method="post" id="form" th:object="${rsasForm}" th:action="@{/} + ${action}">
 	<input type="hidden" th:field="*{id}"/>
 	<input type="hidden" th:field="*{createdby}"/>

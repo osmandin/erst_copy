@@ -6,8 +6,6 @@
     
     <div th:fragment="SubmitRecordsLoggedIn">
 
-      <!-- $Id: SubmitRecordsLoggedIn.html,v 1.31 2016-09-26 10:36:38-04 ericholp Exp $ -->
-      
       <div th:if="${ssa_not_found eq '1'}">
 	<p class="error">ERROR: There is no record of an SSA with the database ID '${ssa_id}'.</p>
       </div>
