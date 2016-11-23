@@ -95,7 +95,7 @@ public class Auth {
 
 	model.addAttribute("badauth", "1");
 	model.addAttribute("loginmessage", "Please try again");
-	LOGGER.log(Level.INFO, "authenicate failed for username={0}", new Object[]{username});
+	LOGGER.log(Level.INFO, "authenticate failed for username={0}", new Object[]{username});
 	return false;
     }
 }
