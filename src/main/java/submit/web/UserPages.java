@@ -1,7 +1,5 @@
 package submit.web;
 
-// $Id: UserPages.java,v 1.228 2016-11-15 11:54:01-04 ericholp Exp $
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -59,7 +57,7 @@ public class UserPages {
     private final static Logger LOGGER = Logger.getLogger(UserPages.class.getCanonicalName());
 
     @SuppressWarnings("unused")
-    private static final String rcsinfo = "$Id: UserPages.java,v 1.228 2016-11-15 11:54:01-04 ericholp Exp $";
+    private static final String rcsinfo = "$Id: UserPages.java,v 1.229 2016-11-23 14:22:49-04 ericholp Exp $";
 
     private boolean isadmin = false;
     private String email = "";
@@ -158,10 +156,10 @@ public class UserPages {
 	model.addAttribute("staff_email", staffemail);
 	
 	if ( session.isNew() ){
+	    String acceptedaddressmatch = env.getRequiredProperty("acceptedaddressmatch");
 	    Utils utils = new Utils();
-	    String validaddressmatch = env.getRequiredProperty("validaddressmatch");
-	    if(!utils.isValidAddress(request, validaddressmatch)){
-		LOGGER.log(Level.SEVERE, "Not a valid address");
+	    if(!utils.isAcceptedAddress(request, acceptedaddressmatch)){
+		LOGGER.log(Level.SEVERE, "Not an accepted address");
 		return "Home";
 	    }
 	}
@@ -192,10 +190,10 @@ public class UserPages {
 	if ( session.isNew() ){
 	    itsnew = true;
 
+	    String acceptedaddressmatch = env.getRequiredProperty("acceptedaddressmatch");
 	    Utils utils = new Utils();
-	    String validaddressmatch = env.getRequiredProperty("validaddressmatch");
-	    if(!utils.isValidAddress(request, validaddressmatch)){
-		LOGGER.log(Level.SEVERE, "Not a valid address");
+	    if(!utils.isAcceptedAddress(request, acceptedaddressmatch)){
+		LOGGER.log(Level.SEVERE, "Not an accepted address");
 		return "Home";
 	    }
 	}
@@ -283,10 +281,10 @@ public class UserPages {
 	model.addAttribute("page", "SubmitRecords");
 	    
 	if ( session.isNew() ){
+	    String acceptedaddressmatch = env.getRequiredProperty("acceptedaddressmatch");
 	    Utils utils = new Utils();
-	    String validaddressmatch = env.getRequiredProperty("validaddressmatch");
-	    if(!utils.isValidAddress(request, validaddressmatch)){
-		LOGGER.log(Level.SEVERE, "Not a valid address");
+	    if(!utils.isAcceptedAddress(request, acceptedaddressmatch)){
+		LOGGER.log(Level.SEVERE, "Not an accepted address");
 		model.addAttribute("displaysubmitlink", 0);
 		return "Home";
 	    }    
@@ -652,10 +650,10 @@ public class UserPages {
 	    return;
 	}
 		
-	String validaddressmatch = env.getRequiredProperty("validaddressmatch");
-	if(!utils.isValidAddress(request, validaddressmatch)){
+	String acceptedaddressmatch = env.getRequiredProperty("acceptedaddressmatch");
+	if(!utils.isAcceptedAddress(request, acceptedaddressmatch)){
 	    utils.redirectToRoot(context, httpresponse);
-	    LOGGER.log(Level.SEVERE, "Not a valid address");
+	    LOGGER.log(Level.SEVERE, "Not an accepted address");
 	    return;
 	}
 

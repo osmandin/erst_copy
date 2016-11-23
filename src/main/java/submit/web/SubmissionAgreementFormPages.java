@@ -1,7 +1,5 @@
 package submit.web;
 
-// $Id: SubmissionAgreementFormPages.java,v 1.15 2016-11-15 11:55:16-04 ericholp Exp $
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -29,7 +27,7 @@ public class SubmissionAgreementFormPages {
     private final static Logger LOGGER = Logger.getLogger(SubmissionAgreementFormPages.class.getCanonicalName());
 
     @SuppressWarnings("unused")
-    private static final String rcsinfo = "$Id: SubmissionAgreementFormPages.java,v 1.15 2016-11-15 11:55:16-04 ericholp Exp $";
+    private static final String rcsinfo = "$Id: SubmissionAgreementFormPages.java,v 1.16 2016-11-23 14:22:41-04 ericholp Exp $";
 
     @Resource
     private Environment env;
@@ -55,10 +53,10 @@ public class SubmissionAgreementFormPages {
 	    return "Home";
 	}
 
+	String acceptedaddressmatch = env.getRequiredProperty("acceptedaddressmatch");
 	Utils utils = new Utils();
-	String validaddressmatch = env.getRequiredProperty("validaddressmatch");
-	if(!utils.isValidAddress(request, validaddressmatch)){
-	    LOGGER.log(Level.SEVERE, "Not a valid address");
+	if(!utils.isAcceptedAddress(request, acceptedaddressmatch)){
+	    LOGGER.log(Level.SEVERE, "Not an accpted address");
 	    return "Home";
 	}
 
@@ -98,10 +96,10 @@ public class SubmissionAgreementFormPages {
 	    return "Home";
 	}
 		
+	String acceptedaddressmatch = env.getRequiredProperty("acceptedaddressmatch");
 	Utils utils = new Utils();
-	String validaddressmatch = env.getRequiredProperty("validaddressmatch");
-	if(!utils.isValidAddress(request, validaddressmatch)){
-	    LOGGER.log(Level.SEVERE, "Not a valid address");
+	if(!utils.isAcceptedAddress(request, acceptedaddressmatch)){
+	    LOGGER.log(Level.SEVERE, "Not an accepted address");
 	    return "Home";
 	}
 

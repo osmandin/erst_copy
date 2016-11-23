@@ -14,7 +14,7 @@ import org.springframework.ui.ModelMap;
 
 public class Utils {
     @SuppressWarnings("unused")
-    private static final String rcsinfo = "$Id: Utils.java,v 1.260 2016-11-15 11:48:22-04 ericholp Exp $";
+    private static final String rcsinfo = "$Id: Utils.java,v 1.261 2016-11-23 14:25:55-04 ericholp Exp $";
     
     private final static Logger LOGGER = Logger.getLogger(Utils.class.getCanonicalName());
 
@@ -48,13 +48,10 @@ public class Utils {
     }
     
     // ------------------------------------------------------------------------
-    public boolean isValidAddress(HttpServletRequest request, String validaddressmatch){
+    public boolean isAcceptedAddress(HttpServletRequest request, String addressmatch){
     	String remoteAddr = request.getRemoteAddr();
-	if(remoteAddr.equals("0:0:0:0:0:0:0:1")){
-	    return true;
-	}
-	if(!remoteAddr.matches(validaddressmatch)){
-	    LOGGER.log(Level.SEVERE, "Error: Not an valid address: {0}", new Object[]{remoteAddr});
+	if(!remoteAddr.matches(addressmatch)){
+	    LOGGER.log(Level.SEVERE, "Error: Not an accepted address: {0}", new Object[]{remoteAddr});
 	    return false;
 	}
 	return true;

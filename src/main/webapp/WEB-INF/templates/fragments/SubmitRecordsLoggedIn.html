@@ -82,6 +82,11 @@
 <script th:if="${session.isadmin}">
 
   window.onload = function() {
+  	var d = new Date();
+	var seconds = Math.round(d.getTime() / 1000);
+	var bannernum = seconds % 6 + 1;
+        $("#thebanner").removeClass("banner1").removeClass("banner2").removeClass("banner3").removeClass("banner4").removeClass("banner5").removeClass("banner6").addClass("banner" + bannernum);
+
         var e = document.getElementById("ssaid");
         var selectedIndex = $("#ssaid option:selected").index();
         var ssaid = e.options[e.selectedIndex].value;
