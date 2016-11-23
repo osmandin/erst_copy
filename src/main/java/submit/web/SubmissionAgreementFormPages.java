@@ -56,7 +56,7 @@ public class SubmissionAgreementFormPages {
 	}
 
 	Utils utils = new Utils();
-	if(!utils.isMsuAddress(request)){
+	if(!utils.isValidAddress(request)){
 	    LOGGER.log(Level.SEVERE, "Not an MSU address");
 	    return "Home";
 	}
@@ -98,7 +98,7 @@ public class SubmissionAgreementFormPages {
 	}
 		
 	Utils utils = new Utils();
-	if(!utils.isMsuAddress(request)){
+	if(!utils.isValidAddress(request)){
 	    LOGGER.log(Level.SEVERE, "Not an MSU address");
 	    return "Home";
 	}

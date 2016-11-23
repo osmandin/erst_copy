@@ -159,7 +159,7 @@ public class UserPages {
 	
 	if ( session.isNew() ){
 	    Utils utils = new Utils();
-	    if(!utils.isMsuAddress(request)){
+	    if(!utils.isValidAddress(request)){
 		LOGGER.log(Level.SEVERE, "Not an MSU address");
 		return "Home";
 	    }
@@ -192,7 +192,7 @@ public class UserPages {
 	    itsnew = true;
 
 	    Utils utils = new Utils();
-	    if(!utils.isMsuAddress(request)){
+	    if(!utils.isValidAddress(request)){
 		LOGGER.log(Level.SEVERE, "Not an MSU address");
 		return "Home";
 	    }
@@ -282,7 +282,7 @@ public class UserPages {
 	    
 	if ( session.isNew() ){
 	    Utils utils = new Utils();
-	    if(!utils.isMsuAddress(request)){
+	    if(!utils.isValidAddress(request)){
 		LOGGER.log(Level.SEVERE, "Not an MSU address");
 		model.addAttribute("displaysubmitlink", 0);
 		return "Home";
@@ -649,7 +649,7 @@ public class UserPages {
 	    return;
 	}
 		
-	if(!utils.isMsuAddress(request)){
+	if(!utils.isValidAddress(request)){
 	    utils.redirectToRoot(context, httpresponse);
 	    LOGGER.log(Level.SEVERE, "Not an MSU address");
 	    return;

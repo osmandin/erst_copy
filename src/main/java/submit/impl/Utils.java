@@ -48,13 +48,14 @@ public class Utils {
     }
     
     // ------------------------------------------------------------------------
-    public boolean isMsuAddress(HttpServletRequest request){
+    public boolean isValidAddress(HttpServletRequest request){
     	String remoteAddr = request.getRemoteAddr();
 	if(remoteAddr.equals("0:0:0:0:0:0:0:1")){
 	    return true;
 	}
+	// modify below for address check!!!!!
 	if(!remoteAddr.matches("^35\\..*")){
-	    LOGGER.log(Level.SEVERE, "Error: Not an MSU address: {0}", new Object[]{remoteAddr});
+	    LOGGER.log(Level.SEVERE, "Error: Not an valid address: {0}", new Object[]{remoteAddr});
 	    return false;
 	}
 	return true;
