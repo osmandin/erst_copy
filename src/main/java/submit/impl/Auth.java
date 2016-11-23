@@ -54,27 +54,6 @@ public class Auth {
     
     // ------------------------------------------------------------------------
     public boolean authenticate(String username, String password) {
-
-	String hostname = "";
-	try {
-	    hostname = InetAddress.getLocalHost().getHostName();
-	}catch(UnknownHostException ex){
-	    LOGGER.log(Level.SEVERE, null, ex);
-	}
-	
-	if(hostname.matches(".*local.*")){
-	    String[] usernames = {"test"};
-	    String[] passwords = {"test"};
-	    
-	    int i = 0;
-	    for(String usernameinlist : usernames){
-		if(usernameinlist.equals(username) && passwords[i].equals(password))
-		    return true;
-		i++;
-	    }
-	    return false;
-	}
-
 	return kauth(username, password);
     }    
 
