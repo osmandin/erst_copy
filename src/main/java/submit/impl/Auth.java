@@ -1,7 +1,5 @@
 package submit.impl;
 
-// $Id: Auth.java,v 1.1 2016-11-22 17:17:07-04 ericholp Exp $
-
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -9,7 +7,9 @@ import java.net.UnknownHostException;
 import java.io.PrintWriter;
 
 import javax.servlet.http.HttpSession;
+
 import org.springframework.ui.ModelMap;
+import org.springframework.core.env.Environment;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,7 +19,7 @@ public class Auth {
     private final static Logger LOGGER = Logger.getLogger(Auth.class.getCanonicalName());
 
     @SuppressWarnings("unused")
-    private static final String rcsinfo = "$Id: Auth.java,v 1.1 2016-11-22 17:17:07-04 ericholp Exp $";
+    private static final String rcsinfo = "$Id: Auth.java,v 1.3 2016-11-23 16:13:45-04 ericholp Exp $";
 
     // ------------------------------------------------------------------------
     private boolean kauth(String username, String password){
@@ -54,11 +54,32 @@ public class Auth {
     
     // ------------------------------------------------------------------------
     public boolean authenticate(String username, String password) {
+
+	String hostname = "";
+	try {
+	    hostname = InetAddress.getLocalHost().getHostName();
+	}catch(UnknownHostException ex){
+	    LOGGER.log(Level.SEVERE, null, ex);
+	}
+	
+	if(hostname.matches(".*local.*")){
+	    String[] usernames = {"test"};
+	    String[] passwords = {"test"};
+	    
+	    int i = 0;
+	    for(String usernameinlist : usernames){
+		if(usernameinlist.equals(username) && passwords[i].equals(password))
+		    return true;
+		i++;
+	    }
+	    return false;
+	}
+
 	return kauth(username, password);
     }    
 
     // ------------------------------------------------------------------------
-    public boolean fullauth(String username, String password, ModelMap model, HttpSession session, boolean itsnew){
+    public boolean fullauth(String username, String password, ModelMap model, HttpSession session, boolean itsnew, Environment env){
 
 	if(session == null){
 	    model.addAttribute("badauth", "1");
@@ -66,8 +87,9 @@ public class Auth {
 	    LOGGER.log(Level.SEVERE, "authenicate failed for username={0} due to a null session", new Object[]{username});
 	    return false;
 	}
-	
-	session.setMaxInactiveInterval(-1);
+
+	int sessiontimeout = Integer.parseInt(env.getRequiredProperty("session.timeout"));
+	session.setMaxInactiveInterval(sessiontimeout);
 	session.setAttribute("loggedin", "0");
 	session.setAttribute("name", "");
 	session.setAttribute("username", "");

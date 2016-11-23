@@ -1,7 +1,5 @@
 package submit.web;
 
-// $Id: UserAdmin.java,v 1.12 2016-11-01 13:16:56-04 ericholp Exp $
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -48,9 +46,6 @@ import submit.service.UsersFormService;
 public class UserAdmin {
     private final static Logger LOGGER = Logger.getLogger(UserAdmin.class.getCanonicalName());
 
-    @SuppressWarnings("unused")
-    private static final String rcsinfo = "$Id: UserAdmin.java,v 1.12 2016-11-01 13:16:56-04 ericholp Exp $";
-
     @Resource
     private Environment env;
 
@@ -95,7 +90,7 @@ public class UserAdmin {
 	LOGGER.log(Level.INFO, "ListUsers Get");
 
 	Utils utils = new Utils();	    
-	if(!utils.setupAdminHandler(model, session)){
+	if(!utils.setupAdminHandler(model, session, env)){
 	    return "Home";
 	}
 
@@ -152,7 +147,7 @@ public class UserAdmin {
 	LOGGER.log(Level.INFO, "EditUser Get");
 
 	Utils utils = new Utils();
-	if(!utils.setupAdminHandler(model, session)){
+	if(!utils.setupAdminHandler(model, session, env)){
 	    return "Home";
 	}
 
@@ -181,7 +176,7 @@ public class UserAdmin {
 	LOGGER.log(Level.INFO, "EditUser Post");
 
 	Utils utils = new Utils();
-	if(!utils.setupAdminHandler(model, session)){
+	if(!utils.setupAdminHandler(model, session, env)){
 	    return new ModelAndView("/Home");
 	}
 	
@@ -305,7 +300,7 @@ public class UserAdmin {
 	LOGGER.log(Level.INFO, "AddUser Get");
 
 	Utils utils = new Utils();  
-	if(!utils.setupAdminHandler(model, session)){
+	if(!utils.setupAdminHandler(model, session, env)){
 	    return "Home";
 	}
 	
@@ -331,7 +326,7 @@ public class UserAdmin {
 	LOGGER.log(Level.INFO, "AddUser Post");
 
 	Utils utils = new Utils();
-	if(!utils.setupAdminHandler(model, session)){
+	if(!utils.setupAdminHandler(model, session, env)){
 	    return new ModelAndView("/Home");
 	}
 	
@@ -403,7 +398,7 @@ public class UserAdmin {
 	LOGGER.log(Level.INFO, "DeleteUser Post");
 	
 	Utils utils = new Utils();
-	if(!utils.setupAdminHandler(model, session)){
+	if(!utils.setupAdminHandler(model, session, env)){
 	    return new ModelAndView("/Home");
 	}
 	
@@ -438,7 +433,7 @@ public class UserAdmin {
 	LOGGER.log(Level.INFO, "DeleteUserDepartment Get");
 
 	Utils utils = new Utils();
-	if(!utils.setupAdminHandler(model, session)){
+	if(!utils.setupAdminHandler(model, session, env)){
 	    return "Home";
 	}
 	
@@ -478,7 +473,7 @@ public class UserAdmin {
 	LOGGER.log(Level.INFO, "NotifyUser Get");
 
 	Utils utils = new Utils();
-	if(!utils.setupAdminHandler(model, session)){
+	if(!utils.setupAdminHandler(model, session, env)){
 	    return "Home";
 	}
 
@@ -565,7 +560,7 @@ public class UserAdmin {
 	LOGGER.log(Level.INFO, "NotifyUser Post");
 	
 	Utils utils = new Utils();
-	if(!utils.setupAdminHandler(model, session)){
+	if(!utils.setupAdminHandler(model, session, env)){
 	    return "Home";
 	}
 

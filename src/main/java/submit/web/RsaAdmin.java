@@ -43,9 +43,6 @@ import submit.service.UsersFormService;
 public class RsaAdmin {
     private final static Logger LOGGER = Logger.getLogger(RsaAdmin.class.getCanonicalName());
 
-    @SuppressWarnings("unused")
-    private static final String rcsinfo = "$Id: RsaAdmin.java,v 1.25 2016-11-08 02:40:23-04 ericholp Exp $";
-
     @Resource
     private Environment env;
 
@@ -97,8 +94,8 @@ public class RsaAdmin {
 				){
 	LOGGER.log(Level.INFO, "ListDraftRsas");
 
-	Utils utils = new Utils();	
-	if(!utils.setupAdminHandler(model, session)){
+	Utils utils = new Utils();
+	if(!utils.setupAdminHandler(model, session, env)){
 	    return "Home";
 	}
 
@@ -122,7 +119,7 @@ public class RsaAdmin {
 	LOGGER.log(Level.INFO, "ListAppovedRsas");
 
 	Utils utils = new Utils();	
-	if(!utils.setupAdminHandler(model, session)){
+	if(!utils.setupAdminHandler(model, session, env)){
 	    return "Home";
 	}
 
@@ -145,7 +142,7 @@ public class RsaAdmin {
 	LOGGER.log(Level.INFO, "EditDraftRsa Get");
 
 	Utils utils = new Utils();
-	if(!utils.setupAdminHandler(model, session)){
+	if(!utils.setupAdminHandler(model, session, env)){
 	    return "Home";
 	}
 
@@ -175,7 +172,7 @@ public class RsaAdmin {
 	LOGGER.log(Level.INFO, "EditDraftRsa Post");
 
 	Utils utils = new Utils();	    
-	if(!utils.setupAdminHandler(model, session)){
+	if(!utils.setupAdminHandler(model, session, env)){
 	    return "Home";
 	}
 
@@ -267,7 +264,7 @@ public class RsaAdmin {
 	LOGGER.log(Level.INFO, "EditAppovedRsas Get");
 	
 	Utils utils = new Utils();	    
-	if(!utils.setupAdminHandler(model, session)){
+	if(!utils.setupAdminHandler(model, session, env)){
 	    return "Home";
 	}
 
@@ -295,8 +292,8 @@ public class RsaAdmin {
 				  ){
 	LOGGER.log(Level.INFO, "EditAppovedRsas Post");
 
-	Utils utils = new Utils();	    
-	if(!utils.setupAdminHandler(model, session)){
+	Utils utils = new Utils();
+	if(!utils.setupAdminHandler(model, session, env)){
 	    return "Home";
 	}
 
@@ -334,8 +331,8 @@ public class RsaAdmin {
 				 ){
 	LOGGER.log(Level.INFO, "DeleteDraftRsa");
 
-	Utils utils = new Utils();	    
-	if(!utils.setupAdminHandler(model, session)){
+	Utils utils = new Utils();
+	if(!utils.setupAdminHandler(model, session, env)){
 	    return "Home";
 	}
 
@@ -395,8 +392,8 @@ public class RsaAdmin {
 				    ){
 	LOGGER.log(Level.INFO, "DeleteApprovedRsa");
 	
-	Utils utils = new Utils();	    
-	if(!utils.setupAdminHandler(model, session)){
+	Utils utils = new Utils();
+	if(!utils.setupAdminHandler(model, session, env)){
 	    return "Home";
 	}
 
@@ -447,7 +444,7 @@ public class RsaAdmin {
 	LOGGER.log(Level.INFO, "DeleteDraftRsas");
 
 	Utils utils = new Utils();
-	if(!utils.setupAdminHandler(model, session)){
+	if(!utils.setupAdminHandler(model, session, env)){
 	    return "Home";
 	}
 	
@@ -539,8 +536,8 @@ public class RsaAdmin {
 				     ){
 	LOGGER.log(Level.INFO, "DeleteApprovedRsas");
 	
-	Utils utils = new Utils();	    
-	if(!utils.setupAdminHandler(model, session)){
+	Utils utils = new Utils();
+	if(!utils.setupAdminHandler(model, session, env)){
 	    return "Home";
 	}
 
@@ -604,8 +601,8 @@ public class RsaAdmin {
 				 ){
 	LOGGER.log(Level.INFO, "ApprovedRsaLog");
 
-	Utils utils = new Utils();	    
-	if(!utils.setupAdminHandler(model, session)){
+	Utils utils = new Utils();
+	if(!utils.setupAdminHandler(model, session, env)){
 	    return "Home";
 	}
 

@@ -1,7 +1,5 @@
 package submit.web;
 
-// $Id: SsaAdmin.java,v 1.33 2016-11-01 13:15:53-04 ericholp Exp $
-
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
@@ -69,9 +67,6 @@ import submit.service.DepartmentsFormService;
 public class SsaAdmin {
     private final static Logger LOGGER = Logger.getLogger(SsaAdmin.class.getCanonicalName());
 
-    @SuppressWarnings("unused")
-    private static final String rcsinfo = "$Id: SsaAdmin.java,v 1.33 2016-11-01 13:15:53-04 ericholp Exp $";
-
     @Resource
     private Environment env;
 
@@ -134,7 +129,7 @@ public class SsaAdmin {
 	LOGGER.log(Level.INFO, "ListSsas Get");
 
 	Utils utils = new Utils();
-	if(!utils.setupAdminHandler(model, session)){
+	if(!utils.setupAdminHandler(model, session, env)){
 	    return "Home";
 	}
 	
@@ -157,7 +152,7 @@ public class SsaAdmin {
 	LOGGER.log(Level.INFO, "CreateSsa Get");
 
 	Utils utils = new Utils();
-	if(!utils.setupAdminHandler(model, session)){
+	if(!utils.setupAdminHandler(model, session, env)){
 	    return "Home";
 	}
 
@@ -237,7 +232,7 @@ public class SsaAdmin {
 	LOGGER.log(Level.INFO, "SsaDeleteWarning");
 	
 	Utils utils = new Utils();
-	if(!utils.setupAdminHandler(model, session)){
+	if(!utils.setupAdminHandler(model, session, env)){
 	    return "Home";
 	}
 	
@@ -257,7 +252,7 @@ public class SsaAdmin {
 	LOGGER.log(Level.INFO, "DeleteSsa Get");
 
 	Utils utils = new Utils();
-	if(!utils.setupAdminHandler(model, session)){
+	if(!utils.setupAdminHandler(model, session, env)){
 	    return "Home";
 	}
 	
@@ -290,7 +285,7 @@ public class SsaAdmin {
 	LOGGER.log(Level.INFO, "DeleteSsas Post");
 
 	Utils utils = new Utils();
-	if(!utils.setupAdminHandler(model, session)){
+	if(!utils.setupAdminHandler(model, session, env)){
 	    return "Home";
 	}
 
@@ -370,7 +365,7 @@ public class SsaAdmin {
 	LOGGER.log(Level.INFO, "EditSsa Get");
 
 	Utils utils = new Utils();
-	if(!utils.setupAdminHandler(model, session)){
+	if(!utils.setupAdminHandler(model, session, env)){
 	    return "Home";
 	}
 	
@@ -401,7 +396,7 @@ public class SsaAdmin {
 	LOGGER.log(Level.INFO, "EditSsa Post");
 
 	Utils utils = new Utils();
-	if(!utils.setupAdminHandler(model, session)){
+	if(!utils.setupAdminHandler(model, session, env)){
 	    return "Home";
 	}
 
@@ -479,7 +474,7 @@ public class SsaAdmin {
 	LOGGER.log(Level.INFO, "DeleteContact Get");
 
 	Utils utils = new Utils();
-	if(!utils.setupAdminHandler(model, session)){
+	if(!utils.setupAdminHandler(model, session, env)){
 	    return "Home";
 	}
 
@@ -529,7 +524,7 @@ public class SsaAdmin {
 	LOGGER.log(Level.INFO, "DeleteCopyright Get");
 
 	Utils utils = new Utils();
-	if(!utils.setupAdminHandler(model, session)){
+	if(!utils.setupAdminHandler(model, session, env)){
 	    return "Home";
 	}
 
@@ -581,7 +576,7 @@ public class SsaAdmin {
 	LOGGER.log(Level.INFO, "DeleteRsasForSsa");
 	
 	Utils utils = new Utils();
-	if(!utils.setupAdminHandler(model, session)){
+	if(!utils.setupAdminHandler(model, session, env)){
 	    return "Home";
 	}
 	
@@ -667,7 +662,7 @@ public class SsaAdmin {
 	LOGGER.log(Level.INFO, "DownloadSubmissionAgreementFormPDF");
 
 	Utils utils = new Utils();
-	if(!utils.setupAdminHandler(model, session)){
+	if(!utils.setupAdminHandler(model, session, env)){
 	    return;
 	}
 	
@@ -736,7 +731,7 @@ public class SsaAdmin {
 	LOGGER.log(Level.INFO, "CheckIfSsaApproved");
 
 	Utils utils = new Utils();
-	if(!utils.setupAdminHandler(model, session)){
+	if(!utils.setupAdminHandler(model, session, env)){
 	    LOGGER.log(Level.INFO, "CheckIfSsaApproved: not a admin user");
 	    return "invalid";
 	}
@@ -769,7 +764,7 @@ public class SsaAdmin {
 	LOGGER.log(Level.INFO, "DepartmentDeleteWarningDeleteSsas Post");
 	
 	Utils utils = new Utils();
-	if(!utils.setupAdminHandler(model, session)){
+	if(!utils.setupAdminHandler(model, session, env)){
 	    return "Home";
 	}
 
@@ -880,7 +875,7 @@ public class SsaAdmin {
 	LOGGER.log(Level.INFO, "DepartmentDeleteWarningDeleteSsas");
 	
 	Utils utils = new Utils();
-	if(!utils.setupAdminHandler(model, session)){
+	if(!utils.setupAdminHandler(model, session, env)){
 	    return "Home";
 	}
 

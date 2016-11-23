@@ -1,7 +1,5 @@
 package submit.web;
 
-// $Id: FileOps.java,v 1.21 2016-11-08 01:25:35-04 ericholp Exp $
-
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
@@ -63,9 +61,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class FileOps {
     private final static Logger LOGGER = Logger.getLogger(FileOps.class.getCanonicalName());
 
-    @SuppressWarnings("unused")
-    private static final String rcsinfo = "$Id: FileOps.java,v 1.21 2016-11-08 01:25:35-04 ericholp Exp $";
-
     @Resource
     private Environment env;
 
@@ -108,7 +103,7 @@ public class FileOps {
 	LOGGER.log(Level.INFO, "ListApprovedFiles Get");
 	
 	Utils utils = new Utils();
-	if(!utils.setupAdminHandler(model, session)){
+	if(!utils.setupAdminHandler(model, session, env)){
 	    return "Home";
 	}
 
@@ -138,7 +133,7 @@ public class FileOps {
 	LOGGER.log(Level.INFO, "ListDraftFiles Get");
 	
 	Utils utils = new Utils();
-	if(!utils.setupAdminHandler(model, session)){
+	if(!utils.setupAdminHandler(model, session, env)){
 	    return "Home";
 	}
 
@@ -166,7 +161,7 @@ public class FileOps {
 	LOGGER.log(Level.INFO, "DownloadFiles Get");
 	
 	Utils utils = new Utils();
-	if(!utils.setupAdminHandler(model, session)){
+	if(!utils.setupAdminHandler(model, session, env)){
 	    return;
 	}
 	
@@ -191,7 +186,7 @@ public class FileOps {
 	LOGGER.log(Level.INFO, "DownloadZipFile");
 
 	Utils utils = new Utils();	    
-	if(!utils.setupAdminHandler(model, session)){
+	if(!utils.setupAdminHandler(model, session, env)){
 	    return;
 	}
 	
@@ -213,7 +208,7 @@ public class FileOps {
 	LOGGER.log(Level.INFO, "DeleteApprovedInventory");
 
 	Utils utils = new Utils();	    
-	if(!utils.setupAdminHandler(model, session)){
+	if(!utils.setupAdminHandler(model, session, env)){
 	    return "Home";
 	}
 
@@ -258,7 +253,7 @@ public class FileOps {
 	LOGGER.log(Level.INFO, "DeleteDraftInventory");
 
 	Utils utils = new Utils();	    
-	if(!utils.setupAdminHandler(model, session)){
+	if(!utils.setupAdminHandler(model, session, env)){
 	    return "Home";
 	}
 
@@ -303,7 +298,7 @@ public class FileOps {
 	LOGGER.log(Level.INFO, "DownloadApprovedRsaCSV");
 
 	Utils utils = new Utils();	    
-	if(!utils.setupAdminHandler(model, session)){
+	if(!utils.setupAdminHandler(model, session, env)){
 	    return;
 	}
 
@@ -339,7 +334,7 @@ public class FileOps {
 	LOGGER.log(Level.INFO, "PrintPdf");
 
 	Utils utils = new Utils();
-	if(!utils.setupAdminHandler(model, session)){
+	if(!utils.setupAdminHandler(model, session, env)){
 	    return;
 	}
 	
@@ -456,7 +451,7 @@ public class FileOps {
 	LOGGER.log(Level.INFO, "CreateATImportFile");
 
 	Utils utils = new Utils();
-	if(!utils.setupAdminHandler(model, session)){
+	if(!utils.setupAdminHandler(model, session, env)){
 	    return "Home";
 	}
 
@@ -486,7 +481,7 @@ public class FileOps {
 	LOGGER.log(Level.INFO, "DownloadATImportFile");
 
 	Utils utils = new Utils();
-	if(!utils.setupAdminHandler(model, session)){
+	if(!utils.setupAdminHandler(model, session, env)){
 	    return;
 	}
 

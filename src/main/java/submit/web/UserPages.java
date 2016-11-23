@@ -56,9 +56,6 @@ import submit.service.DepartmentsFormService;
 public class UserPages {
     private final static Logger LOGGER = Logger.getLogger(UserPages.class.getCanonicalName());
 
-    @SuppressWarnings("unused")
-    private static final String rcsinfo = "$Id: UserPages.java,v 1.229 2016-11-23 14:22:49-04 ericholp Exp $";
-
     private boolean isadmin = false;
     private String email = "";
 
@@ -163,8 +160,9 @@ public class UserPages {
 		return "Home";
 	    }
 	}
-	
-	session.setMaxInactiveInterval(-1);
+
+	int sessiontimeout = Integer.parseInt(env.getRequiredProperty("session.timeout"));
+	session.setMaxInactiveInterval(sessiontimeout);
 	
 	model.addAttribute("loggedin", 0);
 	model.addAttribute("badauth", 0);
@@ -197,8 +195,10 @@ public class UserPages {
 		return "Home";
 	    }
 	}
+
 	
-	session.setMaxInactiveInterval(-1);
+	int sessiontimeout = Integer.parseInt(env.getRequiredProperty("session.timeout"));
+	session.setMaxInactiveInterval(sessiontimeout);
 	
 	if(session.getAttribute("name") != null){
 	    model.addAttribute("name", session.getAttribute("name").toString());
@@ -208,11 +208,10 @@ public class UserPages {
 	String password = logindata.getPassword();
 	
 	Auth auth = new Auth();
-	boolean loggedin = auth.fullauth(username, password, model, session, itsnew);
+	boolean loggedin = auth.fullauth(username, password, model, session, itsnew, env);
 	
 	if(!loggedin){
 	    LOGGER.log(Level.INFO, "login failed for username={0}", new Object[]{username});
-	    //model.addAttribute("loginmessage", "Login failed");
 	    return "Auth";
 	}
 
@@ -301,8 +300,9 @@ public class UserPages {
 	    LOGGER.log(Level.SEVERE, "null or blank username");
 	    return "Home";
 	}
-	
-	session.setMaxInactiveInterval(-1);
+
+	int sessiontimeout = Integer.parseInt(env.getRequiredProperty("session.timeout"));
+	session.setMaxInactiveInterval(sessiontimeout);
 
 	model.addAttribute("departments", 0);
 	
@@ -361,7 +361,7 @@ public class UserPages {
 	LOGGER.log(Level.INFO, "RecordsSubmissionForm Post");
 	
 	Utils utils = new Utils();
-	if(!utils.setupAuthdHandler(model, session)){
+	if(!utils.setupAuthdHandler(model, session, env)){
 	    return "Home";
 	}
 
@@ -397,7 +397,7 @@ public class UserPages {
 	LOGGER.log(Level.INFO, "UploadFiles");
 
 	Utils utils = new Utils();
-	if(!utils.setupAuthdHandler(model, session)){
+	if(!utils.setupAuthdHandler(model, session, env)){
 	    return "Home";
 	}
 	
@@ -425,7 +425,7 @@ public class UserPages {
 	LOGGER.log(Level.INFO, "CheckSpace");
 
 	Utils utils = new Utils();
-	if(!utils.setupAuthdHandler(model, session)){
+	if(!utils.setupAuthdHandler(model, session, env)){
 	    return "";
 	}
 
@@ -447,7 +447,7 @@ public class UserPages {
 	LOGGER.log(Level.INFO, "UploadComplete GET");
 
 	Utils utils = new Utils();
-	if(!utils.setupAuthdHandler(model, session)){
+	if(!utils.setupAuthdHandler(model, session, env)){
 	    return "Home";
 	}
 	
@@ -469,7 +469,7 @@ public class UserPages {
 	LOGGER.log(Level.INFO, "UploadComplete POST");
 
 	Utils utils = new Utils();
-	if(!utils.setupAuthdHandler(model, session)){
+	if(!utils.setupAuthdHandler(model, session, env)){
 	    return "Home";
 	}
 	

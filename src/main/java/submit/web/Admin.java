@@ -8,6 +8,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.core.env.Environment;
+import javax.annotation.Resource;
 
 import submit.impl.Utils;
 
@@ -15,9 +17,9 @@ import submit.impl.Utils;
 public class Admin {
     private final static Logger LOGGER = Logger.getLogger(Admin.class.getCanonicalName());
 
-    @SuppressWarnings("unused")
-    private static final String rcsinfo = "$Id: Admin.java,v 1.4 2016-10-25 00:09:30-04 ericholp Exp $";
-
+    @Resource
+    private Environment env;
+    
     // ------------------------------------------------------------------------
     @RequestMapping("/Admin")
     public String Admin(
@@ -27,7 +29,7 @@ public class Admin {
 	LOGGER.log(Level.INFO, "Admin");
 
 	Utils utils = new Utils();
-	if(!utils.setupAdminHandler(model, session)){
+	if(!utils.setupAdminHandler(model, session, env)){
 	    return "Home";
 	}
 

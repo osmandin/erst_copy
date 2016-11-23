@@ -31,9 +31,6 @@ import submit.repository.UsersFormRepository;
 public class DepartmentAdmin {
     private final static Logger LOGGER = Logger.getLogger(DepartmentAdmin.class.getCanonicalName());
 
-    @SuppressWarnings("unused")
-    private static final String rcsinfo = "$Id: DepartmentAdmin.java,v 1.8 2016-11-07 18:14:35-04 ericholp Exp $";
-
     @Autowired
     private UsersFormRepository userrepo;
 
@@ -42,6 +39,9 @@ public class DepartmentAdmin {
 
     @Autowired
     private SsasFormRepository ssarepo;
+
+    @Resource
+    private Environment env;
 
     // ------------------------------------------------------------------------
     @RequestMapping(value="/AddDepartment", method=RequestMethod.POST)
@@ -52,7 +52,7 @@ public class DepartmentAdmin {
 	LOGGER.log(Level.INFO, "AddDepartment Post");
 	
 	Utils utils = new Utils();	    
-	if(!utils.setupAdminHandler(model, session)){
+	if(!utils.setupAdminHandler(model, session, env)){
 	    return "Home";
 	}
 
@@ -76,7 +76,7 @@ public class DepartmentAdmin {
 	LOGGER.log(Level.INFO, "DeleteDepartment Post");
 	
 	Utils utils = new Utils();
-	if(!utils.setupAdminHandler(model, session)){
+	if(!utils.setupAdminHandler(model, session, env)){
 	    return "Home";
 	}
 	
@@ -149,7 +149,7 @@ public class DepartmentAdmin {
 	LOGGER.log(Level.INFO, "ListDepartments Get");
 
 	Utils utils = new Utils();
-	if(!utils.setupAdminHandler(model, session)){
+	if(!utils.setupAdminHandler(model, session, env)){
 	    return "Home";
 	}
 
@@ -169,7 +169,7 @@ public class DepartmentAdmin {
 	LOGGER.log(Level.INFO, "EditDepartment Get");
 
 	Utils utils = new Utils();
-	if(!utils.setupAdminHandler(model, session)){
+	if(!utils.setupAdminHandler(model, session, env)){
 	    return "Home";
 	}
 
@@ -197,7 +197,7 @@ public class DepartmentAdmin {
 	LOGGER.log(Level.INFO, "EditDepartment Post");
 
 	Utils utils = new Utils();
-	if(!utils.setupAdminHandler(model, session)){
+	if(!utils.setupAdminHandler(model, session, env)){
 	    return "Home";
 	}
 
@@ -229,7 +229,7 @@ public class DepartmentAdmin {
 	LOGGER.log(Level.INFO, "DepartmentDeleteWarning Post");
 
 	Utils utils = new Utils();
-	if(!utils.setupAdminHandler(model, session)){
+	if(!utils.setupAdminHandler(model, session, env)){
 	    return "Home";
 	}
 
@@ -284,7 +284,7 @@ public class DepartmentAdmin {
 	LOGGER.log(Level.INFO, "DepartmentDeleteWarningDeleteUsers Post");
 	
 	Utils utils = new Utils();
-	if(!utils.setupAdminHandler(model, session)){
+	if(!utils.setupAdminHandler(model, session, env)){
 	    return "Home";
 	}
 
@@ -345,7 +345,7 @@ public class DepartmentAdmin {
 	LOGGER.log(Level.INFO, "DepartmentDeleteWarningDeleteUsers Get");
 	
 	Utils utils = new Utils();
-	if(!utils.setupAdminHandler(model, session)){
+	if(!utils.setupAdminHandler(model, session, env)){
 	    return "Home";
 	}
 
