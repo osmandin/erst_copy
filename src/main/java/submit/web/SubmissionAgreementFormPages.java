@@ -56,8 +56,9 @@ public class SubmissionAgreementFormPages {
 	}
 
 	Utils utils = new Utils();
-	if(!utils.isValidAddress(request)){
-	    LOGGER.log(Level.SEVERE, "Not an MSU address");
+	String validaddressmatch = env.getRequiredProperty("validaddressmatch");
+	if(!utils.isValidAddress(request, validaddressmatch)){
+	    LOGGER.log(Level.SEVERE, "Not a valid address");
 	    return "Home";
 	}
 
@@ -98,8 +99,9 @@ public class SubmissionAgreementFormPages {
 	}
 		
 	Utils utils = new Utils();
-	if(!utils.isValidAddress(request)){
-	    LOGGER.log(Level.SEVERE, "Not an MSU address");
+	String validaddressmatch = env.getRequiredProperty("validaddressmatch");
+	if(!utils.isValidAddress(request, validaddressmatch)){
+	    LOGGER.log(Level.SEVERE, "Not a valid address");
 	    return "Home";
 	}
 

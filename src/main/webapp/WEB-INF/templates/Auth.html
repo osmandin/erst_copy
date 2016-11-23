@@ -21,11 +21,11 @@
 
 	  <h1>Electronic Records Submission Tool</h1>
 	  
-	  <p>Please log in using your MSU Netid.</p>
+	  <p>Please log in using your username.</p>
 	  <br/>
 	  <form th:action="@{/Auth}" th:object="${loginData}" method="POST">
 	    <table class="table simpletable">
-	      <tr><td><p><b>MSU Netid</b></p></td><td><div>
+	      <tr><td><p><b>Username</b></p></td><td><div>
 		    <input name="username" class="username" type="text" th:field="*{username}"/>
 	      </div></td></tr>
 	      <tr><td><p><b>Password</b></p></td><td><div>
@@ -40,8 +40,8 @@
 
           <div th:if="${badauth}">
 	    <p th:text="${loginmessage}"></p>
-	    <p>Sorry, that username / password combination is not valid. Please try logging in again with a valid MSU NetID and password.</p>
-	    <p>Note: This NetID must first be registered as a valid user
+	    <p>Sorry, that username / password combination is not valid. Please try logging in again with a valid username and password.</p>
+	    <p>Note: This username must first be registered as a valid user
 	      of the Records Submission Tool. If you have further questions,
 	      please contact University Archives
 	      <a th:href="@{mailto:{se}(se=${staff_email})}">here</a>.</p>

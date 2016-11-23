@@ -77,7 +77,7 @@ public class Auth {
 	if(username == null){
 	    LOGGER.log(Level.INFO, "authenicate failed due to a null username");
 	    model.addAttribute("badauth", "1");
-	    model.addAttribute("loginmessage", "Please enter a netid");
+	    model.addAttribute("loginmessage", "Please enter a username");
 	    return false;
 	}
 

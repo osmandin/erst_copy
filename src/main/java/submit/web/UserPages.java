@@ -159,8 +159,9 @@ public class UserPages {
 	
 	if ( session.isNew() ){
 	    Utils utils = new Utils();
-	    if(!utils.isValidAddress(request)){
-		LOGGER.log(Level.SEVERE, "Not an MSU address");
+	    String validaddressmatch = env.getRequiredProperty("validaddressmatch");
+	    if(!utils.isValidAddress(request, validaddressmatch)){
+		LOGGER.log(Level.SEVERE, "Not a valid address");
 		return "Home";
 	    }
 	}
@@ -192,8 +193,9 @@ public class UserPages {
 	    itsnew = true;
 
 	    Utils utils = new Utils();
-	    if(!utils.isValidAddress(request)){
-		LOGGER.log(Level.SEVERE, "Not an MSU address");
+	    String validaddressmatch = env.getRequiredProperty("validaddressmatch");
+	    if(!utils.isValidAddress(request, validaddressmatch)){
+		LOGGER.log(Level.SEVERE, "Not a valid address");
 		return "Home";
 	    }
 	}
@@ -282,8 +284,9 @@ public class UserPages {
 	    
 	if ( session.isNew() ){
 	    Utils utils = new Utils();
-	    if(!utils.isValidAddress(request)){
-		LOGGER.log(Level.SEVERE, "Not an MSU address");
+	    String validaddressmatch = env.getRequiredProperty("validaddressmatch");
+	    if(!utils.isValidAddress(request, validaddressmatch)){
+		LOGGER.log(Level.SEVERE, "Not a valid address");
 		model.addAttribute("displaysubmitlink", 0);
 		return "Home";
 	    }    
@@ -649,9 +652,10 @@ public class UserPages {
 	    return;
 	}
 		
-	if(!utils.isValidAddress(request)){
+	String validaddressmatch = env.getRequiredProperty("validaddressmatch");
+	if(!utils.isValidAddress(request, validaddressmatch)){
 	    utils.redirectToRoot(context, httpresponse);
-	    LOGGER.log(Level.SEVERE, "Not an MSU address");
+	    LOGGER.log(Level.SEVERE, "Not a valid address");
 	    return;
 	}
 

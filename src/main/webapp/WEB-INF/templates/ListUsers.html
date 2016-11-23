@@ -60,7 +60,7 @@
 	      <h4>Admins:</h4>
 	      <p>
 		<table border="1">
-		  <tr><th>last name</th><th>first name</th><th>netid</th><th>email</th><th>Department/Unit/Donor</th><th>&nbsp;</th><th>&nbsp;</th></tr>
+		  <tr><th>last name</th><th>first name</th><th>username</th><th>email</th><th>Department/Unit/Donor</th><th>&nbsp;</th><th>&nbsp;</th></tr>
 		  <tr th:each="user : ${adminusersForms}">
 		    <td th:text="${user.lastname}">last name</td>
 		    <td th:text="${user.firstname}">first name</td>
@@ -104,7 +104,7 @@
 	      <h4>Non-Admins:</h4>
 	      <p>
 		<table border="1">
-		  <tr><th>last name</th><th>first name</th><th>netid</th><th>email</th><th>Department/Unit/Donor</th><th>&nbsp;</th><th>&nbsp;</th></tr>
+		  <tr><th>last name</th><th>first name</th><th>username</th><th>email</th><th>Department/Unit/Donor</th><th>&nbsp;</th><th>&nbsp;</th></tr>
 		  <tr th:each="user : ${nonadminusersForms}">
 		    <td th:text="${user.lastname}">last name</td>
 		    <td th:text="${user.firstname}">first name</td>
