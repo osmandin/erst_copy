@@ -1,13 +1,13 @@
 package submit.entity;
 
-// $Id: UsersForm.java,v 1.8 2016-10-31 12:50:43-04 ericholp Exp $
-
 import javax.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 import java.util.List;
 
 @Data
 @Entity
+@ToString(exclude={"departmentsForms"})
 @Table(name = "users")
 public class UsersForm {
     

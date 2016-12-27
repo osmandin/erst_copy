@@ -1,7 +1,5 @@
 package submit.entity;
 
-// $Id: DepartmentsForm.java,v 1.24 2016-10-31 12:45:42-04 ericholp Exp $
-
 import javax.persistence.*;
 import lombok.*;
 import java.util.List;
@@ -10,6 +8,7 @@ import java.util.List;
 @Entity
 @Table(name = "departments")
 @EqualsAndHashCode(exclude={"ssasForm"})
+@ToString(exclude={"usersForms", "ssasForm"})
 public class DepartmentsForm {
     
     @Id
