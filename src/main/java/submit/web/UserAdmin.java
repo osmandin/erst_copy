@@ -46,6 +46,9 @@ import submit.service.UsersFormService;
 public class UserAdmin {
     private final static Logger LOGGER = Logger.getLogger(UserAdmin.class.getCanonicalName());
 
+    @SuppressWarnings("unused")
+    private static final String rcsinfo = "$Id: UserAdmin.java,v 1.17 2016-12-27 22:26:10-04 ericholp Exp $";
+
     @Resource
     private Environment env;
 
@@ -155,8 +158,23 @@ public class UserAdmin {
 
 	List<DepartmentsForm> dfs = departmentservice.findSkipUserid(userid);
 	model.addAttribute("dropdowndepartments", dfs);
-	
+
 	UsersForm usersForm = userrepo.findById(userid);
+
+	List<DepartmentsForm> ds = usersForm.getDepartmentsForms();
+	if(ds != null){
+	    for(DepartmentsForm dept : ds){
+		IdKey ik = new IdKey();
+		ik.userid=usersForm.getId();
+		ik.departmentid=dept.getId();
+		
+		MapForm mf = maprepo.findByKey(ik);
+		if(mf.isDepartmentactive()){
+		    dept.setActive(true);
+		}
+	    }
+	}
+	
 	model.addAttribute("usersForm", usersForm);
 
 	return "EditUser";
@@ -282,6 +300,21 @@ public class UserAdmin {
 	    model.addAttribute("dropdowndepartments", dfs);
 
 	    usersForm = userrepo.findById(usersForm.getId());
+
+	    List<DepartmentsForm> ds = usersForm.getDepartmentsForms();
+	    if(ds != null){
+		for(DepartmentsForm dept : ds){
+		    IdKey ik = new IdKey();
+		    ik.userid=usersForm.getId();
+		    ik.departmentid=dept.getId();
+		    
+		    MapForm mf = maprepo.findByKey(ik);
+		    if(mf.isDepartmentactive()){
+			dept.setActive(true);
+		    }
+		}
+	    }
+
 	    model.addAttribute("usersForm", usersForm);
 
 	    mav.setViewName("/EditUser");
