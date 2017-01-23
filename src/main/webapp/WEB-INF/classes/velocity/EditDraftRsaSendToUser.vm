@@ -1,6 +1,6 @@
 <html>
   <head>
-    <!-- $Id: EditDraftRsaSendToUser.vm,v 1.17 2016-11-02 22:15:18-04 ericholp Exp $ -->
+    <!-- $Id: EditDraftRsaSendToUser.vm,v 1.1 2017-01-23 16:00:46-04 ericholp Exp $ -->
     <title>Draft Transfer Request:  $rsaid</title>
     <style>
       .maintable {
@@ -55,6 +55,9 @@
  
     <h4>Description/comments:</h4>
     <p>${rsa.description}</p>
+
+    <h4>Accession Number:</h4>
+    <p>${rsa.accessionnumber}</p>
 
     #if (!${rsa.rsaFileDataForms} || ${rsa.rsaFileDataForms.size()} == 0) 
    <h4>No files selected for transfer:</h4>
