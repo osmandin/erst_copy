@@ -1,0 +1,44 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+  
+  <display-name>Submit - Electronic Records Submission System</display-name>
+  
+  <servlet>
+    <servlet-name>Submit</servlet-name>
+    
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    
+    <init-param>
+      <param-name>contextClass</param-name>
+      <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+    </init-param>
+    
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>submit.config.Config</param-value>
+    </init-param>    
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>Submit</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+  
+  <welcome-file-list>
+    <welcome-file>Home.html</welcome-file>
+  </welcome-file-list>
+  
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>Entire Application</web-resource-name>
+      <url-pattern>/*</url-pattern>
+    </web-resource-collection>
+    <user-data-constraint>
+      <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+    </user-data-constraint>
+  </security-constraint>
+  
+</web-app>
