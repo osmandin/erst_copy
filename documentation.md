@@ -16,5 +16,5 @@ This is a spring framework web app.
 
 ### Web Server ###
 
-The web server used was tomcat.
+The web server used: tomcat.
 
