@@ -18,3 +18,8 @@ This is a spring framework web app.
 
 The web server used: tomcat.
 
+### Maven ###
+
+A build script and a pom.xml file is provided for those using maven.
+
+
