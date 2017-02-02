@@ -7,7 +7,7 @@ This codebase is licensed under the AGPLv3 license (http://www.gnu.org/licenses/
 ### Database ###
 
 The database server used: mysql. The database defintion is
-info/db/defn. An example of adding a user is shown in inf/db/add-user.
+info/db/defn. An example of adding a user is shown in info/db/add-user.
 
 
 ### Framework ###
