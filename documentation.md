@@ -27,3 +27,6 @@ A build script and a pom.xml file is provided for those using maven.
 Copy the file info/properties/application.properties to
 ${HOME}/webapp-properties/submit/application.properties where $HOME is
 defined for the web server user.  Define the variables in application.properties.
+
+
+
