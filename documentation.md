@@ -4,6 +4,12 @@
 
 This codebase is licensed under the AGPLv3 license (http://www.gnu.org/licenses/agpl-3.0.txt). 
 
+### Download ###
+
+Go to your project directory:
+
+$ git clone git@gitlab.msu.edu:tdr/ERST_Open_Source.git
+
 ### Database ###
 
 The database server used: mysql. The database defintion is
