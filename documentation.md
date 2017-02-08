@@ -8,7 +8,7 @@ This codebase is licensed under the AGPLv3 license (http://www.gnu.org/licenses/
 
 Go to your project directory:
 
-$ git clone git@gitlab.msu.edu:tdr/ERST_Open_Source.git
+$ git clone https://gitlab.msu.edu/tdr/ERST_Open_Source.git
 
 ### Database ###
 
