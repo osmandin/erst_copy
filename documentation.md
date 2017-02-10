@@ -34,5 +34,8 @@ Copy the file info/properties/application.properties to
 ${HOME}/webapp-properties/submit/application.properties where $HOME is
 defined for the web server user.  Define the variables in application.properties.
 
+### Authentication ###
 
-
+Currently, authentication happens in the kauth method in the Auth
+class under the submit.impl package using /usr/bin/kinit.  Modify this
+class to implement other authentication methods.
