@@ -67,6 +67,9 @@ import submit.service.DepartmentsFormService;
 public class SsaAdmin {
     private final static Logger LOGGER = Logger.getLogger(SsaAdmin.class.getCanonicalName());
 
+    @SuppressWarnings("unused")
+    private static final String rcsinfo = "$Id: SsaAdmin.java,v 1.1 2017-02-18 02:04:23-04 ericholp Exp $";
+
     @Resource
     private Environment env;
 
@@ -137,7 +140,7 @@ public class SsaAdmin {
 	model.addAttribute("somenotdeleted", "0");
 	model.addAttribute("newssa", "1");
 
-	List<SsasForm> ssas = ssarepo.findAll();
+	List<SsasForm> ssas = ssarepo.findByDeletedFalseOrderByCreationdateAsc();
 	model.addAttribute("ssasForm", ssas);
 	
         return "ListSsas";
@@ -212,7 +215,7 @@ public class SsaAdmin {
 	ModelAndView mav = new ModelAndView();
 	String message = "New SSA " + ssasForm.getRecordid() + " was successfully created.";
 
-	List<SsasForm> ssas = ssarepo.findAll();
+	List<SsasForm> ssas = ssarepo.findByDeletedFalseOrderByCreationdateAsc();
 	model.addAttribute("ssas", ssas);
 
 	mav.setViewName("redirect:/ListSsas");
@@ -263,13 +266,15 @@ public class SsaAdmin {
 
 	SsasForm ssaform = ssarepo.findById(ssaid);
 	if(ssaform != null){
-	    ssarepo.delete(ssaform);
+	    ssaform.setDeleted(true);
+	    ssarepo.save(ssaform);
+	    //ssarepo.delete(ssaform);
 	}
 	
 	model.addAttribute("alldeleted", "0");
 	model.addAttribute("somenotdeleted", "0");
 	
-	List<SsasForm> ssas = ssarepo.findAll();
+	List<SsasForm> ssas = ssarepo.findByDeletedFalseOrderByCreationdateAsc();
 	model.addAttribute("ssasForm", ssas);
 	
 	return "ListSsas";
@@ -295,7 +300,7 @@ public class SsaAdmin {
 	if(ssaids == null || ssaids.length == 0){
 	    model.addAttribute("nodeletes", "1");
 	    
-	    List<SsasForm> ssas = ssarepo.findAll();
+	    List<SsasForm> ssas = ssarepo.findByDeletedFalseOrderByCreationdateAsc();
 	    model.addAttribute("ssasForm", ssas);
 	
 	    return "ListSsas";
@@ -309,15 +314,19 @@ public class SsaAdmin {
 	    List<RsasForm> rsas = rsarepo.findAllForSsaOrderByTransferdateAsc(ssaid);
 	    if(rsas == null || rsas.size() == 0){
 		SsasForm ssa = ssarepo.findById(ssaid);
-		ssarepo.delete(ssa);
-		
+		ssa.setDeleted(true);
+		ssarepo.save(ssa);
+		//ssarepo.delete(ssa);
+
+		/*
 		List<SsaContactsForm> cis = contactrepo.findAllBySsaIdOrderByNameAsc(ssaid);
 		if(cis != null){
 		    for(SsaContactsForm ci : cis){
 			contactrepo.delete(ci);
 		    }
 		}
-		
+		*/
+		/*
 		List<SsaAccessRestrictionsForm> ars = accessrestrictionrepo.findAllBySsaIdOrderByRestrictionAsc(ssaid);
 		if(ars != null){
 		    for(SsaAccessRestrictionsForm ar : ars){
@@ -331,7 +340,7 @@ public class SsaAdmin {
 			formattyperepo.delete(ft);
 		    }
 		}
-		
+		*/
 	    }else{
 		sb.append(sep + Integer.toString(ssaid));	
 		sep =", ";
@@ -348,7 +357,7 @@ public class SsaAdmin {
 	    model.addAttribute("rejectedssas", rejectedssas);
 	}
 	
-	List<SsasForm> ssas = ssarepo.findAll();
+	List<SsasForm> ssas = ssarepo.findByDeletedFalseOrderByCreationdateAsc();
 	model.addAttribute("ssasForm", ssas);
 
         return "ListSsas";
@@ -610,11 +619,17 @@ public class SsaAdmin {
 		sep = ", ";
 
 		RsasForm rsa = rsarepo.findById(rsaid);
+
+		/*
 		List<RsaFileDataForm> fds =  rsa.getRsaFileDataForms();
 		for(RsaFileDataForm fd : fds){
 		    rsaFileDataFormRepository.delete(fd);
 		}
-		rsarepo.delete(rsa);
+		*/
+
+		rsa.setDeleted(true);
+		rsarepo.save(rsa);
+		//rsarepo.delete(rsa);
 
 		try {
 		    FileUtils.deleteDirectory(new File(dropoff + "/" + rsaid));
@@ -821,7 +836,9 @@ public class SsaAdmin {
 			    }
 			}
 
-			ssarepo.delete(ssa);
+			ssa.setDeleted(true);
+			ssarepo.save(ssa);
+			//ssarepo.delete(ssa);
 			
 			sb1.append(sep1 + ssaid);
 			sep1 = ", ";

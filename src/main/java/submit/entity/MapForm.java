@@ -1,7 +1,5 @@
 package submit.entity;
 
-// $Id: MapForm.java,v 1.12 2016-10-04 23:29:46-04 ericholp Exp $
-
 import javax.persistence.*;
 
 import lombok.Data;

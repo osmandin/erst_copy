@@ -1,7 +1,5 @@
 package submit.entity;
 
-// $Id: OnlineSubmissionRequestForm.java,v 1.6 2016-10-22 01:14:50-04 ericholp Exp $
-
 import javax.persistence.*;
 import lombok.Data;
 

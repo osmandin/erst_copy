@@ -1,7 +1,5 @@
 package submit.repository;
 
-// $Id: SsaAccessRestrictionsFormRepository.java,v 1.9 2016-10-25 16:51:52-04 ericholp Exp $
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

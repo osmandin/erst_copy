@@ -1,7 +1,5 @@
 package submit.entity;
 
-// $Id: SubmitRequestErrors.java,v 1.4 2016-10-31 12:50:19-04 ericholp Exp $
-
 import lombok.Data;
 
 @Data

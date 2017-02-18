@@ -1,7 +1,5 @@
 package submit.entity;
 
-// $Id: SsaContactsForm.java,v 1.16 2016-11-03 14:59:46-04 ericholp Exp $
-
 import javax.persistence.*;
 import lombok.Data;
 import lombok.ToString;

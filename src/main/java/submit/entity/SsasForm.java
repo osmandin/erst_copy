@@ -1,7 +1,5 @@
 package submit.entity;
 
-// $Id: SsasForm.java,v 1.83 2016-11-01 11:12:49-04 ericholp Exp $
-
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 import org.hibernate.annotations.Fetch;
@@ -42,6 +40,7 @@ public class SsasForm {
     
     private boolean enabled=false;
     private boolean approved=false;
+    private boolean deleted=false;
 
     private String IP;
 

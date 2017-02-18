@@ -1,7 +1,5 @@
 package submit.entity;
 
-// $Id: ApprovedRsasForm.java,v 1.10 2016-10-22 01:13:23-04 ericholp Exp $
-
 import javax.persistence.*;
 import lombok.Data;
 

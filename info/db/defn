@@ -70,6 +70,7 @@ CREATE TABLE rsas (
   accessionnumber varchar(64) DEFAULT NULL,
   createdby varchar(256) DEFAULT NULL,
   approved tinyint(4) DEFAULT NULL,
+  deleted tinyint(4) DEFAULT 0,
   idx int(11) DEFAULT 0,
   PRIMARY KEY (id,ssaid)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -106,11 +107,11 @@ CREATE TABLE ssas (
   editdate date  DEFAULT null,
   enabled tinyint(4)  DEFAULT 0,
   approved tinyint(4) DEFAULT 0,
+  deleted tinyint(4) DEFAULT 0,
   IP varchar(64) DEFAULT null,
   onlinesubmission tinyint(1) DEFAULT 0,
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 CREATE TABLE ssaAccessRestrictions (
   id int(11) NOT NULL AUTO_INCREMENT,

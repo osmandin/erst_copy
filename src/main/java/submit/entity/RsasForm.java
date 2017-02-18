@@ -1,7 +1,5 @@
 package submit.entity;
 
-// $Id: RsasForm.java,v 1.31 2016-10-31 12:48:06-04 ericholp Exp $
-
 import javax.persistence.OrderColumn;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
@@ -11,8 +9,6 @@ import org.hibernate.annotations.FetchMode;
 import javax.persistence.*;
 import java.util.*;
 import lombok.*;
-
-//import submit.impl.Format;
 
 @Entity
 @Table(name = "rsas")
@@ -36,6 +32,7 @@ public class RsasForm {
     private String accessionnumber;
     private String createdby;
     private boolean approved;
+    private boolean deleted=false;
     private int idx;
 
     public void setTransferdate(String date){

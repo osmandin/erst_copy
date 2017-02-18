@@ -1,7 +1,5 @@
 package submit.entity;
 
-// $Id: IdKey.java,v 1.9 2016-10-22 01:14:24-04 ericholp Exp $
-
 import javax.persistence.*;
 import lombok.Data;
 import java.io.Serializable;

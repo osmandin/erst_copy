@@ -1,7 +1,5 @@
 package submit.repository;
 
-// $Id: DepartmentsFormRepository.java,v 1.12 2016-10-21 09:02:19-04 ericholp Exp $
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

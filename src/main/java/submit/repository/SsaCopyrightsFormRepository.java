@@ -1,7 +1,5 @@
 package submit.repository;
 
-// $Id: SsaCopyrightsFormRepository.java,v 1.13 2016-10-25 16:52:22-04 ericholp Exp $
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

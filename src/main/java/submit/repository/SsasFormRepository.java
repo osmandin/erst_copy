@@ -1,7 +1,5 @@
 package submit.repository;
 
-// $Id: SsasFormRepository.java,v 1.14 2016-11-03 10:36:20-04 ericholp Exp $
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -10,6 +8,9 @@ import submit.entity.*;
 
 public interface SsasFormRepository extends JpaRepository<SsasForm, Integer>{
     SsasForm findById(int id);
+
+    List<SsasForm> findByDeletedFalseOrderByCreationdateAsc();
+
     List<SsasForm> findByDepartmenthead(String departmenthead);
 
     @Query(value = "SELECT s FROM UsersForm u JOIN u.departmentsForms, SsasForm s JOIN s.departmentForm where u.username=?1")

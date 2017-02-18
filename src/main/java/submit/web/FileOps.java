@@ -61,6 +61,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class FileOps {
     private final static Logger LOGGER = Logger.getLogger(FileOps.class.getCanonicalName());
 
+    @SuppressWarnings("unused")
+    private static final String rcsinfo = "$Id: FileOps.java,v 1.26 2017-02-16 20:20:05-04 ericholp Exp $";
+
     @Resource
     private Environment env;
 
@@ -237,7 +240,7 @@ public class FileOps {
 	rsa.setRsaFileDataForms(null);
 	rsarepo.save(rsa);
 	
-	List<RsasForm> rsasForms = rsarepo.findByApprovedTrueOrderByTransferdateAsc();
+	List<RsasForm> rsasForms = rsarepo.findByApprovedTrueAndDeletedFalseOrderByTransferdateAsc();
 	model.addAttribute("rsasForms", rsasForms);
 	
 	return "ListApprovedRsas";
@@ -282,7 +285,7 @@ public class FileOps {
 	rsa.setRsaFileDataForms(null);
 	rsarepo.save(rsa);
 	
-	List<RsasForm> rsasForms = rsarepo.findByApprovedFalseOrderByTransferdateAsc();
+	List<RsasForm> rsasForms = rsarepo.findByApprovedFalseAndDeletedFalseOrderByTransferdateAsc();
 	model.addAttribute("rsasForms", rsasForms);
 	
 	return "ListDraftRsas";

@@ -2,8 +2,6 @@ package submit.repository;
 
 import java.util.List;
 
-// $Id: OnlineSubmissionRequestFormRepository.java,v 1.8 2016-10-25 16:50:34-04 ericholp Exp $
-
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import submit.entity.OnlineSubmissionRequestForm;

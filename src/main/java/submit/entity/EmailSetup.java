@@ -1,7 +1,5 @@
 package submit.entity;
 
-// $Id: EmailSetup.java,v 1.13 2016-10-25 17:55:57-04 ericholp Exp $
-
 import lombok.Data;
 import java.util.Arrays;
 

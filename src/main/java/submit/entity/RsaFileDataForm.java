@@ -1,7 +1,5 @@
 package submit.entity;
 
-// $Id: RsaFileDataForm.java,v 1.14 2016-11-07 21:37:22-04 ericholp Exp $
-
 import javax.persistence.*;
 import lombok.Data;
 import lombok.ToString;

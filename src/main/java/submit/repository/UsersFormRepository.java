@@ -1,7 +1,5 @@
 package submit.repository;
 
-// $Id: UsersFormRepository.java,v 1.7 2016-10-04 23:36:52-04 ericholp Exp $
-
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

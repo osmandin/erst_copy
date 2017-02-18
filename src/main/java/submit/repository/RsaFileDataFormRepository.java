@@ -1,7 +1,5 @@
 package submit.repository;
 
-// $Id: RsaFileDataFormRepository.java,v 1.3 2016-10-04 23:35:24-04 ericholp Exp $
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

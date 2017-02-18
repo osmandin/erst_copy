@@ -1,7 +1,5 @@
 package submit.entity;
 
-// $Id: SubmitData.java,v 1.7 2016-10-04 23:32:16-04 ericholp Exp $
-
 import lombok.Data;
 
 @Data
