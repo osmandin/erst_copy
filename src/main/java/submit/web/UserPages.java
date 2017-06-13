@@ -609,8 +609,13 @@ public class UserPages {
         }
 
         List<SsasForm> ssas = null;
+        // osm: In later versions of MySql the distinct fails
+        // for now modified mysql profile to fix this.
+        // SET sql_mode=(SELECT REPLACE(@@sql_mode, 'ONLY_FULL_GROUP_BY', ''));
+        // and restart MYSql
+
+
         if (isadmin) {
-            ssarepo.find
             ssas = ssarepo.findAllEnabledDepartments();
         } else {
             ssas = ssarepo.findAllActiveApprovedEnabledDepartmentsForUsername(username);
