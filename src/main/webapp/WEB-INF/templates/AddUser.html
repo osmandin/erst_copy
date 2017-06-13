@@ -1,128 +1,129 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-  
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <!-- $Id: AddUser.html,v 1.24 2016-11-15 11:28:07-04 ericholp Exp $ -->
     <title>Add a New User</title>
     <div th:replace="fragments/Head :: Head"></div>
-    <script type="text/javascript" th:src="@{/resources/js/AddUser.js}"></script> 
-  </head>
-  
-  <body>
+    <script type="text/javascript" th:src="@{/resources/js/AddUser.js}"></script>
+</head>
 
-    <div th:replace="fragments/BodyHeader :: BodyHeader">body_header</div>
-    
-    <div id="body_main">
-      <div class="window">
+<body>
 
-	<div th:replace="fragments/Nav :: Nav">Nav</div>
-	
-	<div id="content">
-	  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+<div th:replace="fragments/BodyHeader :: BodyHeader">body_header</div>
 
-	  <div class="alert_box" id="alert_box_top">
-	    <p>Please enter the missing values below.</p>
-	    <ul>
-	      <li class="hiddenerror" id="usernameerr">Please enter a "Username."</li> 
-	      <li class="hiddenerror" id="firstnameerr">Please enter a valid "First name."</li> 
-	      <li class="hiddenerror" id="lastnameerr">Please enter a valid "Last name."</li> 
-	      <li class="hiddenerror" id="emailerr">Please enter a valid "Email."</li> 
-	    </ul>
-	  </div>
-	  
-	  <h1>Add a New User</h1>
+<div id="body_main">
+    <div class="window">
 
-	  <div class="alert_box" th:if="${formsubmitted}">
-	    <p>
-	      User not added.  Please correct the fields highlighted
-	      below.
-	    </p>
-	  </div>
+        <div th:replace="fragments/Nav :: Nav">Nav</div>
 
-	  <div class="alert_box" th:if="${duplicate}">
-	    <p>
-	      User not added.  This username is already assigned to
-	      another user.
-	    </p>
-	  </div>
+        <div id="content">
+            <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 
-	  <div class="alert_box" th:if="${error}">
-	    <p th:text="${error}"></p>
-	  </div>
+            <div class="alert_box" id="alert_box_top">
+                <p>Please enter the missing values below.</p>
+                <ul>
+                    <li class="hiddenerror" id="usernameerr">Please enter a "Username."</li>
+                    <li class="hiddenerror" id="firstnameerr">Please enter a valid "First name."</li>
+                    <li class="hiddenerror" id="lastnameerr">Please enter a valid "Last name."</li>
+                    <li class="hiddenerror" id="emailerr">Please enter a valid "Email."</li>
+                </ul>
+            </div>
 
-	  
-	  <p><a th:href="@{/ListUsers}">Return to user list</a></p>
-	  
-	  <p>Use the form below to add a new user.</p>
+            <h1>Add a New User</h1>
 
-	  <form id="form" th:action="@{/AddUser}" th:object="${usersForm}" method="post">
-	    <p></p>
-	    <div>
-	      <label>Username</label>
-	      <input type="text" th:field="*{username}"/>
-	      <p style="color: red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
-	    </div>
-	    <div>
-	      <label for="ufn">First name</label>
-	      <input type="text" th:field="*{firstname}"/>
-	    </div>
-	    <div>
-	      <label for="uln">Last name</label>
-	      <input type="text" th:field="*{lastname}"/>
-	    </div>
-	    <div>
-	      <label for="uem">Email</label>
-	      <input type="text" th:field="*{email}"/>
-	    </div>
-	    <p></p>
-	    <div>
-	      <label>Admin Function?</label>
-	      <input type="checkbox" th:field="*{isadmin}" th:checked="*{isadmin}"/>
-	    </div>
-	    <p></p>
-	    <div>
-	      <label>Enable</label>
-	      <input type="checkbox" th:field="*{enabled}" th:checked="*{enabled}"/>
-	    </div>
-	    
-	    <p></p>
-	    <p><b>Note:</b> added departments will default to active</p>
-	    <fieldset class="repeatable">
-	      <legend>Departments</legend>
-	      <input name="department_counter" type="hidden" value="0" id="department_counter"/>
-	      <div id="department">
-		<div>
-		  <p></p>
+            <div class="alert_box" th:if="${formsubmitted}">
+                <p>
+                    User not added. Please correct the fields highlighted
+                    below.
+                </p>
+            </div>
 
-		  <select name="" id="add_department_select" onchange="add_department( this )">
-		    <option value="">Add a new department:</option>
-		    <option th:each="department: *{departmentsForms}" th:value="${department.id}" th:text="${department.name}"></option>
-		  </select>
-		  
-		</div>
-	      </div>
-	    </fieldset>
-	    
-	    <!-- <input type="submit" value="Add User"/> -->
-	    <input type="button" value="Add User" onclick="validate()"/>
-	  </form>
-	  
-	  <div class="alert_box" id="alert_box_bottom">
-	    <p>
-	      Please enter the missing values above.
-	    </p>
-	  </div>
-	  
-	  <p></p>
-	  
-	  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-	</div>
-	
-      </div>
+            <div class="alert_box" th:if="${duplicate}">
+                <p>
+                    User not added. This username is already assigned to
+                    another user.
+                </p>
+            </div>
+
+            <div class="alert_box" th:if="${error}">
+                <p th:text="${error}"></p>
+            </div>
+
+
+            <p><a th:href="@{/ListUsers}">Return to user list</a></p>
+
+            <p>Use the form below to add a new user.</p>
+
+            <form id="form" th:action="@{/AddUser}" th:object="${usersForm}" method="post">
+                <p></p>
+                <div>
+                    <label>Username</label>
+                    <input type="text" th:field="*{username}"/>
+                    <p style="color: red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
+                </div>
+                <div>
+                    <label for="ufn">First name</label>
+                    <input type="text" th:field="*{firstname}"/>
+                </div>
+                <div>
+                    <label for="uln">Last name</label>
+                    <input type="text" th:field="*{lastname}"/>
+                </div>
+                <div>
+                    <label for="uem">Email</label>
+                    <input type="text" th:field="*{email}"/>
+                </div>
+                <p></p>
+                <div>
+                    <label>Admin Function?</label>
+                    <input type="checkbox" th:field="*{isadmin}" th:checked="*{isadmin}"/>
+                </div>
+                <p></p>
+                <div>
+                    <label>Enable</label>
+                    <input type="checkbox" th:field="*{enabled}" th:checked="*{enabled}"/>
+                </div>
+
+                <p></p>
+                <p><b>Note:</b> added departments will default to active</p>
+                <fieldset class="repeatable">
+                    <legend>Departments</legend>
+                    <input name="department_counter" type="hidden" value="0" id="department_counter"/>
+                    <div id="department">
+                        <div>
+                            <p></p>
+
+                            <select name="" id="add_department_select" onchange="add_department( this )">
+                                <option value="">Add a new department:</option>
+                                <option th:each="department: *{departmentsForms}" th:value="${department.id}"
+                                        th:text="${department.name}"></option>
+                            </select>
+
+                        </div>
+                    </div>
+                </fieldset>
+
+                <!-- <input type="submit" value="Add User"/> -->
+                <input type="button" value="Add User" onclick="validate()"/>
+            </form>
+
+            <div class="alert_box" id="alert_box_bottom">
+                <p>
+                    Please enter the missing values above.
+                </p>
+            </div>
+
+            <p></p>
+
+            <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+        </div>
+
     </div>
+</div>
 
-    <div th:replace="fragments/Footer :: Footer"></div>
-    
-  </body>
+<div th:replace="fragments/Footer :: Footer"></div>
+
+</body>
 </html>

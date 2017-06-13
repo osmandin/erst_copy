@@ -1,8 +1,8 @@
 #navigation, #body_header, #body_footer {
-    display: none;  
+    display: none;
 }
 
-.window, .breadcrumbs, .callout, .callout-nobackground, #content, #content.wide, #body_main  {
+.window, .breadcrumbs, .callout, .callout-nobackground, #content, #content.wide, #body_main {
     border: none !important;
     float: none !important;
     margin: 0 !important;
@@ -11,10 +11,9 @@
     width: 100% !important;
 }
 
-    
 #body_header {
     height: auto;
-        min-height: 0;
+    min-height: 0;
 }
 
 #body_header img {
@@ -33,5 +32,5 @@
 }
 
 .CABS-print-only {
-    display: block	
+    display: block
 }

@@ -1,0 +1,6 @@
+# osm added
+
+target/
+.DS_Store
+.idea/
+*.iml

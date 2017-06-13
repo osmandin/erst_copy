@@ -8,8 +8,9 @@ import submit.entity.RsaFileDataForm;
 
 import java.util.List;
 
-public interface RsaFileDataFormRepository extends JpaRepository<RsaFileDataForm, Integer>{
-     public RsaFileDataForm findById(int id);
+public interface RsaFileDataFormRepository extends JpaRepository<RsaFileDataForm, Integer> {
+    public RsaFileDataForm findById(int id);
+
     @Query(value = "SELECT f FROM RsaFileDataForm f JOIN f.rsasForm r where r.id=:rsaid and f.name=:filename order by f.name")
     List<RsaFileDataForm> findBasedOnIdAndFilename(@Param("rsaid") int rsaid, @Param("filename") String filename);
 }

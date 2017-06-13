@@ -7,6 +7,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
+
 import org.springframework.core.env.Environment;
 
 import submit.entity.OrgInfo;
@@ -22,37 +23,37 @@ public class InfoPages {
 
     // ------------------------------------------------------------------------
     @RequestMapping("/Faq")
-    public String Faq(ModelMap model){
-	model.addAttribute("banner", (System.currentTimeMillis() / 1000l) % 6 + 1);
-	model.addAttribute("page", "Faq");
-	OrgInfo org = new OrgInfo();
-	org.setEmail(env.getRequiredProperty("org.email"));
-	org.setPhone(env.getRequiredProperty("org.phone"));
-	org.setName(env.getRequiredProperty("org.name"));
-	org.setNamefull(env.getRequiredProperty("org.namefull"));
-	model.addAttribute("org", org);
+    public String Faq(ModelMap model) {
+        model.addAttribute("banner", (System.currentTimeMillis() / 1000l) % 6 + 1);
+        model.addAttribute("page", "Faq");
+        OrgInfo org = new OrgInfo();
+        org.setEmail(env.getRequiredProperty("org.email"));
+        org.setPhone(env.getRequiredProperty("org.phone"));
+        org.setName(env.getRequiredProperty("org.name"));
+        org.setNamefull(env.getRequiredProperty("org.namefull"));
+        model.addAttribute("org", org);
         return "Faq";
     }
 
     // ------------------------------------------------------------------------
     @RequestMapping("/About")
-    public String About(ModelMap model){
-	model.addAttribute("banner", (System.currentTimeMillis() / 1000l) % 6 + 1);
-	model.addAttribute("page", "About");
+    public String About(ModelMap model) {
+        model.addAttribute("banner", (System.currentTimeMillis() / 1000l) % 6 + 1);
+        model.addAttribute("page", "About");
         return "About";
     }
 
     // ------------------------------------------------------------------------
     @RequestMapping("/Help")
-    public String Help(ModelMap model){
-	model.addAttribute("banner", (System.currentTimeMillis() / 1000l) % 6 + 1);
-	OrgInfo org = new OrgInfo();
-	org.setEmail(env.getRequiredProperty("org.email"));
-	org.setPhone(env.getRequiredProperty("org.phone"));
-	org.setName(env.getRequiredProperty("org.name"));
-	org.setNamefull(env.getRequiredProperty("org.namefull"));
-	model.addAttribute("org", org);
-	model.addAttribute("page", "Help");
+    public String Help(ModelMap model) {
+        model.addAttribute("banner", (System.currentTimeMillis() / 1000l) % 6 + 1);
+        OrgInfo org = new OrgInfo();
+        org.setEmail(env.getRequiredProperty("org.email"));
+        org.setPhone(env.getRequiredProperty("org.phone"));
+        org.setName(env.getRequiredProperty("org.name"));
+        org.setNamefull(env.getRequiredProperty("org.namefull"));
+        model.addAttribute("org", org);
+        model.addAttribute("page", "Help");
         return "Help";
     }
 }

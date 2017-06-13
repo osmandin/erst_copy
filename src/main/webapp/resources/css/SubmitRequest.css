@@ -1,34 +1,33 @@
-
 /* $Id: SubmitRequest.css,v 1.10 2016-10-05 08:20:43-04 ericholp Exp $ */
 
 #container {
-    display:none;
-    position:fixed;
-    z-index: 100;  
-    top:50%; 
-    left:50%;
-    margin:-100px 0 0 -100px;  
-    width:355px;
-    height:140px;
+    display: none;
+    position: fixed;
+    z-index: 100;
+    top: 50%;
+    left: 50%;
+    margin: -100px 0 0 -100px;
+    width: 355px;
+    height: 140px;
     background-color: #d3d3d3;
-    border:1px solid black;
-    text-align:center;
-}  
+    border: 1px solid black;
+    text-align: center;
+}
 
 #captcha2 {
     margin: 0 auto;
-    width:304px;
-    height:76px;
+    width: 304px;
+    height: 76px;
 }
 
 #cancel {
-     line-height: 12px;
-     width: 10px;
-     font-size: 8pt;
-     font-family: tahoma;
-     margin-top: 1px;
-     margin-right: 2px;
-     position:absolute;
-     top:0;
-     right:0;
+    line-height: 12px;
+    width: 10px;
+    font-size: 8pt;
+    font-family: tahoma;
+    margin-top: 1px;
+    margin-right: 2px;
+    position: absolute;
+    top: 0;
+    right: 0;
 }

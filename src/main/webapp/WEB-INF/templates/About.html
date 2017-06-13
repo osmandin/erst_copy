@@ -1,54 +1,55 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-  
-  <head>
+
+<head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <!-- $Id: About.html,v 1.16 2016-09-26 09:21:28-04 ericholp Exp $ -->
     <title>About</title>
     <div th:replace="fragments/Head :: Head" th:remove="tag"></div>
-  </head>
-  
-  <body>
-    
-    <div th:replace="fragments/BodyHeader :: BodyHeader" th:remove="tag">body_header</div>
-    
-    <div id="body_main">
-      <div class="window">
-	
-	<div th:replace="fragments/Nav :: Nav">Nav</div>
-	
-	<div id="content">
-	  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+</head>
 
-	  <h1>About Page</h1>
-	  
-	  <p>
-            .... historical records are now created digitally.  The
-	    archives is trying to capture as many of these born-digital,
-	    and in some cases, digitized, documents, audio and video
-	    files as possible to document their potential historical
-	    significance to future Spartans.
-	  </p>
-	  
-	  <p>
-	    <img alt="Image depicting a records life cycle" src="/resources/images/lifecycle.jpeg" th:src="@{/resources/images/lifecycle.jpeg}"></img>
-	  </p>
-	  
-	  <p>
-	    Born-digital materials transferred to the XYZ are added
-	    to the ABC Digital Repository. The method
-	    for transferring files digitally from campus departments
-	    to the archives is based on a process created by Tufts
-	    University that was also funded by the NHPRC.
-	  </p>
+<body>
 
-	  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-	</div>
-	
-      </div>
+<div th:replace="fragments/BodyHeader :: BodyHeader" th:remove="tag">body_header</div>
+
+<div id="body_main">
+    <div class="window">
+
+        <div th:replace="fragments/Nav :: Nav">Nav</div>
+
+        <div id="content">
+            <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+            <h1>About Page</h1>
+
+            <p>
+                .... historical records are now created digitally. The
+                archives is trying to capture as many of these born-digital,
+                and in some cases, digitized, documents, audio and video
+                files as possible to document their potential historical
+                significance to future Spartans.
+            </p>
+
+            <p>
+                <img alt="Image depicting a records life cycle" src="/resources/images/lifecycle.jpeg"
+                     th:src="@{/resources/images/lifecycle.jpeg}"></img>
+            </p>
+
+            <p>
+                Born-digital materials transferred to the XYZ are added
+                to the ABC Digital Repository. The method
+                for transferring files digitally from campus departments
+                to the archives is based on a process created by Tufts
+                University that was also funded by the NHPRC.
+            </p>
+
+            <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+        </div>
+
     </div>
-    
-    <div th:replace="fragments/Footer :: Footer"></div>
-    
-  </body>
+</div>
+
+<div th:replace="fragments/Footer :: Footer"></div>
+
+</body>
 </html>

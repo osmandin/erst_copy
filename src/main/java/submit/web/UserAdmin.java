@@ -54,19 +54,19 @@ public class UserAdmin {
 
     @Autowired
     ServletContext context;
-    
+
     private static VelocityEngine velocityEngine;
 
     @Autowired
-    public void setVelocityEngine(VelocityEngine ve){
-	velocityEngine = ve;
+    public void setVelocityEngine(VelocityEngine ve) {
+        velocityEngine = ve;
     }
 
     private JavaMailSenderImpl sender;
 
     @Autowired
-    public void setSender(JavaMailSenderImpl sender){	
-	this.sender = sender;
+    public void setSender(JavaMailSenderImpl sender) {
+        this.sender = sender;
     }
 
     @Autowired
@@ -80,544 +80,544 @@ public class UserAdmin {
 
     @Autowired
     private UsersFormService userservice;
-    
+
     @Autowired
     DepartmentsFormService departmentservice;
 
     // ------------------------------------------------------------------------
-    @RequestMapping(value="/ListUsers", method=RequestMethod.GET)
+    @RequestMapping(value = "/ListUsers", method = RequestMethod.GET)
     public String ListUsers(
-			    ModelMap model,
-			    HttpSession session
-			    ){
-	LOGGER.log(Level.INFO, "ListUsers Get");
+            ModelMap model,
+            HttpSession session
+    ) {
+        LOGGER.log(Level.INFO, "ListUsers Get");
 
-	Utils utils = new Utils();	    
-	if(!utils.setupAdminHandler(model, session, env)){
-	    return "Home";
-	}
+        Utils utils = new Utils();
+        if (!utils.setupAdminHandler(model, session, env)) {
+            return "Home";
+        }
 
-	Map<Integer, Map<Integer, Boolean>> adminactivemap = new HashMap<Integer, Map<Integer, Boolean>>();	
-	List<UsersForm> adminusersForms = userrepo.findByIsadminTrueOrderByLastnameAscFirstnameAsc();
-	for(UsersForm uf : adminusersForms){
-	    List<DepartmentsForm> dfs = uf.getDepartmentsForms();
-	    if(dfs != null){ 
-		Map<Integer, Boolean> dmap = new HashMap<Integer, Boolean>();
-		for(DepartmentsForm df : dfs){
-		    IdKey ik = new IdKey();
-		    ik.userid=uf.getId();
-		    ik.departmentid=df.getId();
+        Map<Integer, Map<Integer, Boolean>> adminactivemap = new HashMap<Integer, Map<Integer, Boolean>>();
+        List<UsersForm> adminusersForms = userrepo.findByIsadminTrueOrderByLastnameAscFirstnameAsc();
+        for (UsersForm uf : adminusersForms) {
+            List<DepartmentsForm> dfs = uf.getDepartmentsForms();
+            if (dfs != null) {
+                Map<Integer, Boolean> dmap = new HashMap<Integer, Boolean>();
+                for (DepartmentsForm df : dfs) {
+                    IdKey ik = new IdKey();
+                    ik.userid = uf.getId();
+                    ik.departmentid = df.getId();
 
-		    MapForm mf = maprepo.findByKey(ik);
-		    dmap.put(df.getId(), mf.isDepartmentactive());
-		}
-		adminactivemap.put(uf.getId(), dmap);
-	    }
-	}
+                    MapForm mf = maprepo.findByKey(ik);
+                    dmap.put(df.getId(), mf.isDepartmentactive());
+                }
+                adminactivemap.put(uf.getId(), dmap);
+            }
+        }
         model.addAttribute("adminactivemap", adminactivemap);
         model.addAttribute("adminusersForms", adminusersForms);
-	
-	Map<Integer, Map<Integer, Boolean>> nonadminactivemap = new HashMap<Integer, Map<Integer, Boolean>>();	
-	List<UsersForm> nonadminusersForms = userrepo.findByIsadminFalseOrderByLastnameAscFirstnameAsc();
-	for(UsersForm uf : nonadminusersForms){
-	    List<DepartmentsForm> dfs = uf.getDepartmentsForms();
-	    if(dfs != null){
-		Map<Integer, Boolean> dmap = new HashMap<Integer, Boolean>();
-		for(DepartmentsForm df : dfs){
-		    IdKey ik = new IdKey();
-		    ik.userid=uf.getId();
-		    ik.departmentid=df.getId();
 
-		    MapForm mf = maprepo.findByKey(ik);
-		    dmap.put(df.getId(), mf.isDepartmentactive());
-		}
-		nonadminactivemap.put(uf.getId(), dmap);
-	    }
-	}
+        Map<Integer, Map<Integer, Boolean>> nonadminactivemap = new HashMap<Integer, Map<Integer, Boolean>>();
+        List<UsersForm> nonadminusersForms = userrepo.findByIsadminFalseOrderByLastnameAscFirstnameAsc();
+        for (UsersForm uf : nonadminusersForms) {
+            List<DepartmentsForm> dfs = uf.getDepartmentsForms();
+            if (dfs != null) {
+                Map<Integer, Boolean> dmap = new HashMap<Integer, Boolean>();
+                for (DepartmentsForm df : dfs) {
+                    IdKey ik = new IdKey();
+                    ik.userid = uf.getId();
+                    ik.departmentid = df.getId();
+
+                    MapForm mf = maprepo.findByKey(ik);
+                    dmap.put(df.getId(), mf.isDepartmentactive());
+                }
+                nonadminactivemap.put(uf.getId(), dmap);
+            }
+        }
         model.addAttribute("nonadminactivemap", nonadminactivemap);
         model.addAttribute("nonadminusersForms", nonadminusersForms);
-	
+
         return "ListUsers";
     }
 
     // ------------------------------------------------------------------------    
-    @RequestMapping(value="/EditUser", method=RequestMethod.GET)
+    @RequestMapping(value = "/EditUser", method = RequestMethod.GET)
     public String EditUser(
-			   ModelMap model,
-			   @RequestParam(value="userid", required=false) int userid,
-			   HttpSession session
-			   ){
-	LOGGER.log(Level.INFO, "EditUser Get");
+            ModelMap model,
+            @RequestParam(value = "userid", required = false) int userid,
+            HttpSession session
+    ) {
+        LOGGER.log(Level.INFO, "EditUser Get");
 
-	Utils utils = new Utils();
-	if(!utils.setupAdminHandler(model, session, env)){
-	    return "Home";
-	}
+        Utils utils = new Utils();
+        if (!utils.setupAdminHandler(model, session, env)) {
+            return "Home";
+        }
 
-	model.addAttribute("userid", userid);
+        model.addAttribute("userid", userid);
 
-	List<DepartmentsForm> dfs = departmentservice.findSkipUserid(userid);
-	model.addAttribute("dropdowndepartments", dfs);
+        List<DepartmentsForm> dfs = departmentservice.findSkipUserid(userid);
+        model.addAttribute("dropdowndepartments", dfs);
 
-	UsersForm usersForm = userrepo.findById(userid);
+        UsersForm usersForm = userrepo.findById(userid);
 
-	List<DepartmentsForm> ds = usersForm.getDepartmentsForms();
-	if(ds != null){
-	    for(DepartmentsForm dept : ds){
-		IdKey ik = new IdKey();
-		ik.userid=usersForm.getId();
-		ik.departmentid=dept.getId();
-		
-		MapForm mf = maprepo.findByKey(ik);
-		if(mf.isDepartmentactive()){
-		    dept.setActive(true);
-		}
-	    }
-	}
-	
-	model.addAttribute("usersForm", usersForm);
+        List<DepartmentsForm> ds = usersForm.getDepartmentsForms();
+        if (ds != null) {
+            for (DepartmentsForm dept : ds) {
+                IdKey ik = new IdKey();
+                ik.userid = usersForm.getId();
+                ik.departmentid = dept.getId();
 
-	return "EditUser";
+                MapForm mf = maprepo.findByKey(ik);
+                if (mf.isDepartmentactive()) {
+                    dept.setActive(true);
+                }
+            }
+        }
+
+        model.addAttribute("usersForm", usersForm);
+
+        return "EditUser";
     }
 
     // ------------------------------------------------------------------------
-    @RequestMapping(value="/EditUser", method=RequestMethod.POST)
+    @RequestMapping(value = "/EditUser", method = RequestMethod.POST)
     public ModelAndView EditUser(
-				 UsersForm usersForm,
-				 BindingResult result,
-				 final RedirectAttributes redirectAttributes,
-				 @RequestParam(value="delete", required=false) String delete,
-				 @RequestParam(value="department_id", required=false) DepartmentsForm selectedDepartmentsForms,
-				 ModelMap model,
-				 HttpSession session
-				 ){
-	LOGGER.log(Level.INFO, "EditUser Post");
+            UsersForm usersForm,
+            BindingResult result,
+            final RedirectAttributes redirectAttributes,
+            @RequestParam(value = "delete", required = false) String delete,
+            @RequestParam(value = "department_id", required = false) DepartmentsForm selectedDepartmentsForms,
+            ModelMap model,
+            HttpSession session
+    ) {
+        LOGGER.log(Level.INFO, "EditUser Post");
 
-	Utils utils = new Utils();
-	if(!utils.setupAdminHandler(model, session, env)){
-	    return new ModelAndView("/Home");
-	}
-	
-	if(result.hasErrors()){
-	    LOGGER.log(Level.INFO, "EditUser Post: has errors");
-	    return new ModelAndView("/EditUser");
-	}
+        Utils utils = new Utils();
+        if (!utils.setupAdminHandler(model, session, env)) {
+            return new ModelAndView("/Home");
+        }
 
-	if(delete != null){
-	    String username = usersForm.getUsername();
-	    // otherwise departments will be removed from map table for other users
-	    usersForm.setDepartmentsForms(null);
-	    userrepo.delete(usersForm);
-	    userrepo.delete(usersForm); // first delete only deletes depts
-	    redirectAttributes.addFlashAttribute("userdeleted", true);
-	    redirectAttributes.addFlashAttribute("username", username);
-	}else{
+        if (result.hasErrors()) {
+            LOGGER.log(Level.INFO, "EditUser Post: has errors");
+            return new ModelAndView("/EditUser");
+        }
 
-	    List<MapForm> mfstop = maprepo.findAll(); // why needed? (see below)
-	    
-	    int userid = usersForm.getId();
+        if (delete != null) {
+            String username = usersForm.getUsername();
+            // otherwise departments will be removed from map table for other users
+            usersForm.setDepartmentsForms(null);
+            userrepo.delete(usersForm);
+            userrepo.delete(usersForm); // first delete only deletes depts
+            redirectAttributes.addFlashAttribute("userdeleted", true);
+            redirectAttributes.addFlashAttribute("username", username);
+        } else {
 
-	    if(selectedDepartmentsForms == null){
-		LOGGER.log(Level.INFO, "selected department null");
-	    }else{
-		List<DepartmentsForm> ds = usersForm.getDepartmentsForms();
-		if(ds == null){
-		    List<DepartmentsForm> newdfs  = new ArrayList<DepartmentsForm>();
-		    newdfs.add(selectedDepartmentsForms);
-		    usersForm.setDepartmentsForms(newdfs);
-		    userrepo.save(usersForm);
-		}else{
-		    ds.add(selectedDepartmentsForms);
-		    usersForm.setDepartmentsForms(ds);
-		    userrepo.save(usersForm);
-		}
-	    }
-	    
-	    String thisusername = usersForm.getUsername();
-	    
-	    boolean found = false;
-	    List<UsersForm> UsersForms = userrepo.findByUsername(thisusername);
-	    for(UsersForm uf : UsersForms){
-		if(uf.getId() != userid && thisusername.equals(uf.getUsername())){
-		    found = true;
-		    break;
-		}
-	    }
-	    if(found){
-		ModelAndView mav = new ModelAndView();
-		
-		LOGGER.log(Level.INFO, "EditUser Post: Duplicate usernames are not allowed!!");
-		
-		model.addAttribute("error", "Duplicate usernames are not allowed.");
-		mav.setViewName("/EditUser");
-		
-		return mav;
-	    }
+            List<MapForm> mfstop = maprepo.findAll(); // why needed? (see below)
 
-	    List<DepartmentsForm> dfs = usersForm.getDepartmentsForms();
+            int userid = usersForm.getId();
 
-	    userrepo.save(usersForm);
-	    
-	    maprepo.save(mfstop);  // needed because all departments not present in template as hidden variables... could do it but this is easier
+            if (selectedDepartmentsForms == null) {
+                LOGGER.log(Level.INFO, "selected department null");
+            } else {
+                List<DepartmentsForm> ds = usersForm.getDepartmentsForms();
+                if (ds == null) {
+                    List<DepartmentsForm> newdfs = new ArrayList<DepartmentsForm>();
+                    newdfs.add(selectedDepartmentsForms);
+                    usersForm.setDepartmentsForms(newdfs);
+                    userrepo.save(usersForm);
+                } else {
+                    ds.add(selectedDepartmentsForms);
+                    usersForm.setDepartmentsForms(ds);
+                    userrepo.save(usersForm);
+                }
+            }
 
-	    if(dfs == null){
-		LOGGER.log(Level.INFO, "DepartmentsForm null");
-	    }else{		    
-		for(DepartmentsForm df : dfs){
-		    
-		    IdKey ik = new IdKey();
-		    ik.userid=usersForm.getId();
-		    ik.departmentid=df.getId();
-		    
-		    MapForm mf = maprepo.findByKey(ik);
-		    
-		    if(mf == null){
-			LOGGER.log(Level.INFO, "mapform null");
-		    }else{			
-			mf.setDepartmentactive(df.isActive());
-			maprepo.save(mf);
-		    }
-		}
-	    }
-	    
-	    redirectAttributes.addFlashAttribute("usermodified", true);
-	    redirectAttributes.addFlashAttribute("username", usersForm.getUsername());
-	}
+            String thisusername = usersForm.getUsername();
 
-	
-	ModelAndView mav = new ModelAndView();
-	
-	if(delete != null){
-	    List<UsersForm> adminusersForms = userrepo.findByIsadminTrueOrderByLastnameAscFirstnameAsc();
-	    model.addAttribute("adminusersForms", adminusersForms);
-	    
-	    List<UsersForm> usersForms = userservice.findAllNonadmin();
-	    model.addAttribute("nonadminusersForms", usersForms);
-	    
-	    mav.setViewName("redirect:/ListUsers");
-	}else{
-	    List<DepartmentsForm> dfs = departmentservice.findSkipUserid(usersForm.getId());
-	    model.addAttribute("dropdowndepartments", dfs);
+            boolean found = false;
+            List<UsersForm> UsersForms = userrepo.findByUsername(thisusername);
+            for (UsersForm uf : UsersForms) {
+                if (uf.getId() != userid && thisusername.equals(uf.getUsername())) {
+                    found = true;
+                    break;
+                }
+            }
+            if (found) {
+                ModelAndView mav = new ModelAndView();
 
-	    usersForm = userrepo.findById(usersForm.getId());
+                LOGGER.log(Level.INFO, "EditUser Post: Duplicate usernames are not allowed!!");
 
-	    List<DepartmentsForm> ds = usersForm.getDepartmentsForms();
-	    if(ds != null){
-		for(DepartmentsForm dept : ds){
-		    IdKey ik = new IdKey();
-		    ik.userid=usersForm.getId();
-		    ik.departmentid=dept.getId();
-		    
-		    MapForm mf = maprepo.findByKey(ik);
-		    if(mf.isDepartmentactive()){
-			dept.setActive(true);
-		    }
-		}
-	    }
+                model.addAttribute("error", "Duplicate usernames are not allowed.");
+                mav.setViewName("/EditUser");
 
-	    model.addAttribute("usersForm", usersForm);
+                return mav;
+            }
 
-	    mav.setViewName("/EditUser");
-	}
+            List<DepartmentsForm> dfs = usersForm.getDepartmentsForms();
 
-	return mav;
+            userrepo.save(usersForm);
+
+            maprepo.save(mfstop);  // needed because all departments not present in template as hidden variables... could do it but this is easier
+
+            if (dfs == null) {
+                LOGGER.log(Level.INFO, "DepartmentsForm null");
+            } else {
+                for (DepartmentsForm df : dfs) {
+
+                    IdKey ik = new IdKey();
+                    ik.userid = usersForm.getId();
+                    ik.departmentid = df.getId();
+
+                    MapForm mf = maprepo.findByKey(ik);
+
+                    if (mf == null) {
+                        LOGGER.log(Level.INFO, "mapform null");
+                    } else {
+                        mf.setDepartmentactive(df.isActive());
+                        maprepo.save(mf);
+                    }
+                }
+            }
+
+            redirectAttributes.addFlashAttribute("usermodified", true);
+            redirectAttributes.addFlashAttribute("username", usersForm.getUsername());
+        }
+
+
+        ModelAndView mav = new ModelAndView();
+
+        if (delete != null) {
+            List<UsersForm> adminusersForms = userrepo.findByIsadminTrueOrderByLastnameAscFirstnameAsc();
+            model.addAttribute("adminusersForms", adminusersForms);
+
+            List<UsersForm> usersForms = userservice.findAllNonadmin();
+            model.addAttribute("nonadminusersForms", usersForms);
+
+            mav.setViewName("redirect:/ListUsers");
+        } else {
+            List<DepartmentsForm> dfs = departmentservice.findSkipUserid(usersForm.getId());
+            model.addAttribute("dropdowndepartments", dfs);
+
+            usersForm = userrepo.findById(usersForm.getId());
+
+            List<DepartmentsForm> ds = usersForm.getDepartmentsForms();
+            if (ds != null) {
+                for (DepartmentsForm dept : ds) {
+                    IdKey ik = new IdKey();
+                    ik.userid = usersForm.getId();
+                    ik.departmentid = dept.getId();
+
+                    MapForm mf = maprepo.findByKey(ik);
+                    if (mf.isDepartmentactive()) {
+                        dept.setActive(true);
+                    }
+                }
+            }
+
+            model.addAttribute("usersForm", usersForm);
+
+            mav.setViewName("/EditUser");
+        }
+
+        return mav;
     }
 
     // ------------------------------------------------------------------------
-    @RequestMapping(value="/AddUser", method=RequestMethod.GET)
+    @RequestMapping(value = "/AddUser", method = RequestMethod.GET)
     public String AddUser(
-			  UsersForm usersForm,
-			  ModelMap model,
-			  HttpSession session
-			  ){
-	LOGGER.log(Level.INFO, "AddUser Get");
+            UsersForm usersForm,
+            ModelMap model,
+            HttpSession session
+    ) {
+        LOGGER.log(Level.INFO, "AddUser Get");
 
-	Utils utils = new Utils();  
-	if(!utils.setupAdminHandler(model, session, env)){
-	    return "Home";
-	}
-	
-	List<DepartmentsForm> dfs = departmentrepo.findAll();
-	//model.addAttribute("departmentsForm", dfs);
+        Utils utils = new Utils();
+        if (!utils.setupAdminHandler(model, session, env)) {
+            return "Home";
+        }
 
-	usersForm.setDepartmentsForms(dfs);
+        List<DepartmentsForm> dfs = departmentrepo.findAll();
+        //model.addAttribute("departmentsForm", dfs);
+
+        usersForm.setDepartmentsForms(dfs);
 
         return "AddUser";
     }
-    
+
     // ------------------------------------------------------------------------
-    @RequestMapping(value="/AddUser", method=RequestMethod.POST)
+    @RequestMapping(value = "/AddUser", method = RequestMethod.POST)
     public ModelAndView AddUser(
-				UsersForm usersForm,
-				BindingResult result,
-				final RedirectAttributes redirectAttributes,
-				@RequestParam(value="department_id", required=false) DepartmentsForm[] selectedDepartmentsForms,
-				@RequestParam(value="department_active", required=false) int[] activedepts,				
-				ModelMap model,
-				HttpSession session
-				){
-	LOGGER.log(Level.INFO, "AddUser Post");
+            UsersForm usersForm,
+            BindingResult result,
+            final RedirectAttributes redirectAttributes,
+            @RequestParam(value = "department_id", required = false) DepartmentsForm[] selectedDepartmentsForms,
+            @RequestParam(value = "department_active", required = false) int[] activedepts,
+            ModelMap model,
+            HttpSession session
+    ) {
+        LOGGER.log(Level.INFO, "AddUser Post");
 
-	Utils utils = new Utils();
-	if(!utils.setupAdminHandler(model, session, env)){
-	    return new ModelAndView("/Home");
-	}
-	
-	if(result.hasErrors()){
-	    LOGGER.log(Level.INFO, "AddUser Post: has errors");
-	    return new ModelAndView("/AddUser");
-	}
+        Utils utils = new Utils();
+        if (!utils.setupAdminHandler(model, session, env)) {
+            return new ModelAndView("/Home");
+        }
 
-	List<UsersForm> uf = userrepo.findByUsername(usersForm.getUsername());
-	if(uf != null && uf.size() != 0){
-	    LOGGER.log(Level.INFO, "duplicate user with this username: size={0}", new Object[]{uf.size()});
+        if (result.hasErrors()) {
+            LOGGER.log(Level.INFO, "AddUser Post: has errors");
+            return new ModelAndView("/AddUser");
+        }
 
-	    List<DepartmentsForm> dfs = departmentrepo.findAll();
-	    usersForm.setDepartmentsForms(dfs);
-		
-	    model.addAttribute("duplicate", 1);
-	    
-	    return new ModelAndView("/AddUser");
-	}
-	
-	int userid = usersForm.getId();
-	
-	if(selectedDepartmentsForms == null){
-	    LOGGER.log(Level.INFO, "selectedDepartmentsForms is null");
-	}else{
+        List<UsersForm> uf = userrepo.findByUsername(usersForm.getUsername());
+        if (uf != null && uf.size() != 0) {
+            LOGGER.log(Level.INFO, "duplicate user with this username: size={0}", new Object[]{uf.size()});
 
-	    Map<Integer, Boolean> active = new HashMap<Integer, Boolean>();
-	    for(int activedept : activedepts){
-		active.put(activedept, true);
-	    }	    
-	    
-	    List<DepartmentsForm> newdfs  = new ArrayList<DepartmentsForm>();
-	    int cnt=0;
-	    for(DepartmentsForm df : selectedDepartmentsForms){
-		newdfs.add(df);
-		cnt++;
-	    }
-	    if(cnt > 0){
-		usersForm.setDepartmentsForms(newdfs);
-	    }
-	}
-	
-	usersForm = userrepo.save(usersForm);
+            List<DepartmentsForm> dfs = departmentrepo.findAll();
+            usersForm.setDepartmentsForms(dfs);
 
-	ModelAndView mav = new ModelAndView();
-	String message = "New User " + usersForm.getId() + " was successfully created.";
+            model.addAttribute("duplicate", 1);
 
-	session.setAttribute("userid", Integer.toString(usersForm.getId()));
+            return new ModelAndView("/AddUser");
+        }
 
-	LOGGER.log(Level.INFO, "add user: userid={0}", new Object[]{usersForm.getId()});
-	
-	mav.setViewName("redirect:/NotifyUser");
-	
-	redirectAttributes.addFlashAttribute("message", message);
+        int userid = usersForm.getId();
 
-	redirectAttributes.addFlashAttribute("userid", userid);
+        if (selectedDepartmentsForms == null) {
+            LOGGER.log(Level.INFO, "selectedDepartmentsForms is null");
+        } else {
 
-	return mav;
+            Map<Integer, Boolean> active = new HashMap<Integer, Boolean>();
+            for (int activedept : activedepts) {
+                active.put(activedept, true);
+            }
+
+            List<DepartmentsForm> newdfs = new ArrayList<DepartmentsForm>();
+            int cnt = 0;
+            for (DepartmentsForm df : selectedDepartmentsForms) {
+                newdfs.add(df);
+                cnt++;
+            }
+            if (cnt > 0) {
+                usersForm.setDepartmentsForms(newdfs);
+            }
+        }
+
+        usersForm = userrepo.save(usersForm);
+
+        ModelAndView mav = new ModelAndView();
+        String message = "New User " + usersForm.getId() + " was successfully created.";
+
+        session.setAttribute("userid", Integer.toString(usersForm.getId()));
+
+        LOGGER.log(Level.INFO, "add user: userid={0}", new Object[]{usersForm.getId()});
+
+        mav.setViewName("redirect:/NotifyUser");
+
+        redirectAttributes.addFlashAttribute("message", message);
+
+        redirectAttributes.addFlashAttribute("userid", userid);
+
+        return mav;
     }
 
     // ------------------------------------------------------------------------
-    @RequestMapping(value="/DeleteUser", method=RequestMethod.POST)
+    @RequestMapping(value = "/DeleteUser", method = RequestMethod.POST)
     public ModelAndView DeleteUser(
-				   @RequestParam(value="userid", required=false) int userid,
-				   final RedirectAttributes redirectAttributes,
-				   ModelMap model,
-				   HttpSession session
-				   ){
-	LOGGER.log(Level.INFO, "DeleteUser Post");
-	
-	Utils utils = new Utils();
-	if(!utils.setupAdminHandler(model, session, env)){
-	    return new ModelAndView("/Home");
-	}
-	
-	UsersForm usersForm = userrepo.findById(userid);
-	
-	String username = usersForm.getUsername();
-	
-	usersForm.setDepartmentsForms(null);
-	userrepo.delete(usersForm);
-	userrepo.delete(usersForm);
-	
-	ModelAndView mav = new ModelAndView();
-	
-	mav.setViewName("redirect:/ListUsers");
-	
-	redirectAttributes.addFlashAttribute("userdeleted", true);
-	redirectAttributes.addFlashAttribute("username", username);
+            @RequestParam(value = "userid", required = false) int userid,
+            final RedirectAttributes redirectAttributes,
+            ModelMap model,
+            HttpSession session
+    ) {
+        LOGGER.log(Level.INFO, "DeleteUser Post");
 
-	LOGGER.log(Level.INFO, "delete user: username={0}", new Object[]{username});
-	
-	return mav;
+        Utils utils = new Utils();
+        if (!utils.setupAdminHandler(model, session, env)) {
+            return new ModelAndView("/Home");
+        }
+
+        UsersForm usersForm = userrepo.findById(userid);
+
+        String username = usersForm.getUsername();
+
+        usersForm.setDepartmentsForms(null);
+        userrepo.delete(usersForm);
+        userrepo.delete(usersForm);
+
+        ModelAndView mav = new ModelAndView();
+
+        mav.setViewName("redirect:/ListUsers");
+
+        redirectAttributes.addFlashAttribute("userdeleted", true);
+        redirectAttributes.addFlashAttribute("username", username);
+
+        LOGGER.log(Level.INFO, "delete user: username={0}", new Object[]{username});
+
+        return mav;
     }
 
     // ------------------------------------------------------------------------
-    @RequestMapping(value="/DeleteUserDepartment", method=RequestMethod.GET)
+    @RequestMapping(value = "/DeleteUserDepartment", method = RequestMethod.GET)
     public String DeleteUserDepartment(
-				       @RequestParam(value="id", required=false) int id,
-				       @RequestParam(value="userid", required=false) int userid,
-				       ModelMap model,
-				       HttpSession session
-				       ){
-	LOGGER.log(Level.INFO, "DeleteUserDepartment Get");
+            @RequestParam(value = "id", required = false) int id,
+            @RequestParam(value = "userid", required = false) int userid,
+            ModelMap model,
+            HttpSession session
+    ) {
+        LOGGER.log(Level.INFO, "DeleteUserDepartment Get");
 
-	Utils utils = new Utils();
-	if(!utils.setupAdminHandler(model, session, env)){
-	    return "Home";
-	}
-	
-	model.addAttribute("userid", userid);
-	
-	UsersForm uf = userrepo.findById(userid);
-	List<DepartmentsForm> dfs = uf.getDepartmentsForms();
+        Utils utils = new Utils();
+        if (!utils.setupAdminHandler(model, session, env)) {
+            return "Home";
+        }
 
-	LOGGER.log(Level.INFO, "delete departmentsForms id={0}", new Object[]{id});
+        model.addAttribute("userid", userid);
 
-	List<DepartmentsForm> newdfs  = new ArrayList<DepartmentsForm>();
-	for(DepartmentsForm df : dfs){
-	    if(df.getId() != id){
-		newdfs.add(df);
-	    }
-	}
-	uf.setDepartmentsForms(newdfs);
-	userrepo.save(uf);
-	
-	dfs = departmentservice.findSkipUserid(userid);
-	model.addAttribute("dropdowndepartments", dfs);
-	
-	UsersForm usersForm = userrepo.findById(userid);
-	model.addAttribute("usersForm", usersForm);
+        UsersForm uf = userrepo.findById(userid);
+        List<DepartmentsForm> dfs = uf.getDepartmentsForms();
 
-	return "EditUser";
+        LOGGER.log(Level.INFO, "delete departmentsForms id={0}", new Object[]{id});
+
+        List<DepartmentsForm> newdfs = new ArrayList<DepartmentsForm>();
+        for (DepartmentsForm df : dfs) {
+            if (df.getId() != id) {
+                newdfs.add(df);
+            }
+        }
+        uf.setDepartmentsForms(newdfs);
+        userrepo.save(uf);
+
+        dfs = departmentservice.findSkipUserid(userid);
+        model.addAttribute("dropdowndepartments", dfs);
+
+        UsersForm usersForm = userrepo.findById(userid);
+        model.addAttribute("usersForm", usersForm);
+
+        return "EditUser";
     }
 
     // ------------------------------------------------------------------------
-    @RequestMapping(value="/NotifyUser", method=RequestMethod.GET)
+    @RequestMapping(value = "/NotifyUser", method = RequestMethod.GET)
     public String NotifyUser(
-			     ModelMap model,
-			     @RequestParam(value="userid", required=false) String useridin,
-			     HttpServletRequest request,
-			     HttpSession session
-			     ){
-	LOGGER.log(Level.INFO, "NotifyUser Get");
+            ModelMap model,
+            @RequestParam(value = "userid", required = false) String useridin,
+            HttpServletRequest request,
+            HttpSession session
+    ) {
+        LOGGER.log(Level.INFO, "NotifyUser Get");
 
-	Utils utils = new Utils();
-	if(!utils.setupAdminHandler(model, session, env)){
-	    return "Home";
-	}
+        Utils utils = new Utils();
+        if (!utils.setupAdminHandler(model, session, env)) {
+            return "Home";
+        }
 
-	int userid = -1;
-	if(useridin == null){
-	    if(session.getAttribute("userid") != null && session.getAttribute("userid").toString() != null){
-		userid = Integer.parseInt(session.getAttribute("userid").toString());
-		if(userid <= 0){
-		    LOGGER.log(Level.SEVERE, "NotifyUserGet: userid={0}", new Object[]{userid});
-		    return "NotifyUser";
-		}
-	    }
-	}else{
-	    userid = Integer.parseInt(useridin);
-	}
-	
-	if(userid <= 0){
-	    LOGGER.log(Level.SEVERE, "NotifyUser Get: userid={0}", new Object[]{userid});
-	    return "NotifyUser";
-	}
-	
-	LOGGER.log(Level.INFO, "NotifyUser Get: userid={0}", new Object[]{userid});
+        int userid = -1;
+        if (useridin == null) {
+            if (session.getAttribute("userid") != null && session.getAttribute("userid").toString() != null) {
+                userid = Integer.parseInt(session.getAttribute("userid").toString());
+                if (userid <= 0) {
+                    LOGGER.log(Level.SEVERE, "NotifyUserGet: userid={0}", new Object[]{userid});
+                    return "NotifyUser";
+                }
+            }
+        } else {
+            userid = Integer.parseInt(useridin);
+        }
 
-	UsersForm user = userrepo.findById(userid);
-	if(user == null){
-	    LOGGER.log(Level.SEVERE, "NotifyUser Get: usersForm is null");
-	    return "NotifyUser";
-	}
+        if (userid <= 0) {
+            LOGGER.log(Level.SEVERE, "NotifyUser Get: userid={0}", new Object[]{userid});
+            return "NotifyUser";
+        }
 
-	List<DepartmentsForm> departments = user.getDepartmentsForms();
+        LOGGER.log(Level.INFO, "NotifyUser Get: userid={0}", new Object[]{userid});
 
-	SubmitAppInfo submitappinfo = new SubmitAppInfo();
-	submitappinfo.setName(env.getRequiredProperty("submit.name"));
-	submitappinfo.setFrom(env.getRequiredProperty("submit.from"));
-	submitappinfo.setRoot(context.getContextPath());
-	
-	Map<String, Object> vemodel = new HashMap<String, Object>();
-	vemodel.put("user", user);
-	vemodel.put("departments", departments);
-	vemodel.put("session", session);
-	vemodel.put("thishost", utils.getHostname());
-	vemodel.put("submit", submitappinfo);
-	
+        UsersForm user = userrepo.findById(userid);
+        if (user == null) {
+            LOGGER.log(Level.SEVERE, "NotifyUser Get: usersForm is null");
+            return "NotifyUser";
+        }
 
-	String emailsubject = "Account Created for " + env.getRequiredProperty("submit.name");
-	String useremailaddress = "\"" + user.getFirstname().trim() + " " + user.getLastname().trim() + "\" <" + user.getEmail().trim() + ">";
-	
-	EmailSetup emailsetup = new EmailSetup();
-	emailsetup.setSubject(emailsubject);
-	emailsetup.setTo(useremailaddress);
-	emailsetup.setFrom(env.getRequiredProperty("submit.from"));
-	emailsetup.setFirstname(user.getFirstname());
-	emailsetup.setLastname(user.getLastname());
-	emailsetup.setIsadmin(user.isIsadmin());
-	emailsetup.setUsername(user.getUsername());
+        List<DepartmentsForm> departments = user.getDepartmentsForms();
 
-	OrgInfo orginfo = new OrgInfo();
-	orginfo.setEmail(env.getRequiredProperty("org.email"));
-	orginfo.setPhone(env.getRequiredProperty("org.phone"));
-	orginfo.setName(env.getRequiredProperty("org.name"));
-	orginfo.setNamefull(env.getRequiredProperty("org.namefull"));
+        SubmitAppInfo submitappinfo = new SubmitAppInfo();
+        submitappinfo.setName(env.getRequiredProperty("submit.name"));
+        submitappinfo.setFrom(env.getRequiredProperty("submit.from"));
+        submitappinfo.setRoot(context.getContextPath());
 
-	vemodel.put("emailsetup", emailsetup);
-	vemodel.put("org", orginfo);
-	
-	String emailtext = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "velocity/NotifyUserText.vm", "UTF8", vemodel);
+        Map<String, Object> vemodel = new HashMap<String, Object>();
+        vemodel.put("user", user);
+        vemodel.put("departments", departments);
+        vemodel.put("session", session);
+        vemodel.put("thishost", utils.getHostname());
+        vemodel.put("submit", submitappinfo);
 
-	emailsetup.setBody(emailtext);
 
-	model.addAttribute("emailsetup", emailsetup);
+        String emailsubject = "Account Created for " + env.getRequiredProperty("submit.name");
+        String useremailaddress = "\"" + user.getFirstname().trim() + " " + user.getLastname().trim() + "\" <" + user.getEmail().trim() + ">";
 
-	return "NotifyUser";
+        EmailSetup emailsetup = new EmailSetup();
+        emailsetup.setSubject(emailsubject);
+        emailsetup.setTo(useremailaddress);
+        emailsetup.setFrom(env.getRequiredProperty("submit.from"));
+        emailsetup.setFirstname(user.getFirstname());
+        emailsetup.setLastname(user.getLastname());
+        emailsetup.setIsadmin(user.isIsadmin());
+        emailsetup.setUsername(user.getUsername());
+
+        OrgInfo orginfo = new OrgInfo();
+        orginfo.setEmail(env.getRequiredProperty("org.email"));
+        orginfo.setPhone(env.getRequiredProperty("org.phone"));
+        orginfo.setName(env.getRequiredProperty("org.name"));
+        orginfo.setNamefull(env.getRequiredProperty("org.namefull"));
+
+        vemodel.put("emailsetup", emailsetup);
+        vemodel.put("org", orginfo);
+
+        String emailtext = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "velocity/NotifyUserText.vm", "UTF8", vemodel);
+
+        emailsetup.setBody(emailtext);
+
+        model.addAttribute("emailsetup", emailsetup);
+
+        return "NotifyUser";
     }
 
     // ------------------------------------------------------------------------
-    @RequestMapping(value="/NotifyUser", method=RequestMethod.POST)
+    @RequestMapping(value = "/NotifyUser", method = RequestMethod.POST)
     public String NotifyUser(
-			     ModelMap model,
-			     EmailSetup emailsetup,
-			     
-			     HttpServletRequest request,
-			     HttpSession session
-			     ){
-	LOGGER.log(Level.INFO, "NotifyUser Post");
-	
-	Utils utils = new Utils();
-	if(!utils.setupAdminHandler(model, session, env)){
-	    return "Home";
-	}
+            ModelMap model,
+            EmailSetup emailsetup,
+
+            HttpServletRequest request,
+            HttpSession session
+    ) {
+        LOGGER.log(Level.INFO, "NotifyUser Post");
+
+        Utils utils = new Utils();
+        if (!utils.setupAdminHandler(model, session, env)) {
+            return "Home";
+        }
 
 
-	if(emailsetup == null){
-	    LOGGER.log(Level.SEVERE, "NotifyUser: emailssetup is null");
-	    model.addAttribute("emailsent", "0");
-	    model.addAttribute("failed", "1");
-	    model.addAttribute("emailrecips", "unknown email address");
-	    return "NotifyUser";
-	}
-	    
-	LOGGER.log(Level.INFO, "NotifyUser: emailsetup: to={0}", new Object[]{emailsetup.getTo()});
+        if (emailsetup == null) {
+            LOGGER.log(Level.SEVERE, "NotifyUser: emailssetup is null");
+            model.addAttribute("emailsent", "0");
+            model.addAttribute("failed", "1");
+            model.addAttribute("emailrecips", "unknown email address");
+            return "NotifyUser";
+        }
 
-	model.addAttribute("emailsetup", emailsetup);
+        LOGGER.log(Level.INFO, "NotifyUser: emailsetup: to={0}", new Object[]{emailsetup.getTo()});
 
-	model.addAttribute("emailsent", "0");
-	model.addAttribute("failed", "1");
-	model.addAttribute("invalidaddresses", "0");
-	model.addAttribute("emailrecips", emailsetup.getTo());
-	
-	Email email = new Email(emailsetup, sender, velocityEngine, env, context, session, model);
-	email.NotifyUser();
+        model.addAttribute("emailsetup", emailsetup);
 
-	return "NotifyUser";
+        model.addAttribute("emailsent", "0");
+        model.addAttribute("failed", "1");
+        model.addAttribute("invalidaddresses", "0");
+        model.addAttribute("emailrecips", emailsetup.getTo());
+
+        Email email = new Email(emailsetup, sender, velocityEngine, env, context, session, model);
+        email.NotifyUser();
+
+        return "NotifyUser";
     }
 }

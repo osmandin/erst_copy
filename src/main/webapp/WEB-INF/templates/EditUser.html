@@ -1,157 +1,160 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">  
-  <head>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <!-- $Id: EditUser.html,v 1.39 2016-11-15 11:30:31-04 ericholp Exp $ -->
     <title>Edit User</title>
     <div th:replace="fragments/Head :: Head"></div>
-    <script type="text/javascript" th:src="@{/resources/js/EditUser.js}"></script> 
-  </head>
-  <body>
+    <script type="text/javascript" th:src="@{/resources/js/EditUser.js}"></script>
+</head>
+<body>
 
-    <div th:replace="fragments/BodyHeader :: BodyHeader">body_header</div>
-    
-    <div id="body_main">
-      <div class="window">
+<div th:replace="fragments/BodyHeader :: BodyHeader">body_header</div>
 
-	<div th:replace="fragments/Nav :: Nav"></div>
-	
-	<div id="content">
-	  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+<div id="body_main">
+    <div class="window">
 
-	  <h1>Edit User</h1>
+        <div th:replace="fragments/Nav :: Nav"></div>
 
-	  <div class="alert_box" id="alert_box_top">
-	    <p>Please enter the missing values below.</p>
-	    <ul>
-	      <li class="hiddenerror" id="usernameerr">Please enter a "Username."</li> 
-	      <li class="hiddenerror" id="firstnameerr">Please enter a valid "First name."</li> 
-	      <li class="hiddenerror" id="lastnameerr">Please enter a valid "Last name."</li> 
-	      <li class="hiddenerror" id="emailerr">Please enter a valid "Email."</li> 
-	    </ul>
-	  </div>
-	  
-	  <div class="alert_box" th:if="${error}">
-	    <p th:text="${error}"></p>
-	  </div>
-	  
-	  <div class="success_box" th:if="${userdeleted eq '1'}">
-	    <p>${userid} deleted.</p>
-	  </div>
-	  
-	  <div th:switch="${submitted_and_valid}">
-	    <div th:case="'1'" class="success_box">
-	      <p>
-		User updated.
-	      </p>
-	    </div>
-	    <div th:case="*">
-	      <div class="alert_box" th:if="${form_submitted eq '1'}">
-		<p>
-		  User not updated.  Please correct the fields highlighted
-		  below.
-		</p>
-	      </div>
-	    </div>
-	  </div>
+        <div id="content">
+            <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 
-	  <p th:text="${message}"></p>
-	  
-	  <p><a th:href="@{/ListUsers}">Return to user list</a></p>
-	  
-	  <p>
-	    Use the form below to modify this user.  Use the button at
-	    the bottom to delete this user.
-	  </p>
+            <h1>Edit User</h1>
 
-	  <form id="form" th:action="@{/EditUser}" th:object="${usersForm}" method="post">
-	    <p></p>
-	    <div>
-	      <label for="lid">ID</label>
-	      <input type="text" th:field="*{id}" readonly="readonly"/>
-	    </div>
-	    <div>
-	      <label>Username</label>
-	      <input  type="text" th:field="*{username}"/>
-	      <span style="color: red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
-	    </div>
-	    <div>
-	      <label for="ufn">First name</label>
-	      <input type="text" th:field="*{firstname}"/>
-	    </div>
-	    <div>
-	      <label for="uln">Last name</label>
-	      <input type="text" th:field="*{lastname}"/>
-	    </div>
+            <div class="alert_box" id="alert_box_top">
+                <p>Please enter the missing values below.</p>
+                <ul>
+                    <li class="hiddenerror" id="usernameerr">Please enter a "Username."</li>
+                    <li class="hiddenerror" id="firstnameerr">Please enter a valid "First name."</li>
+                    <li class="hiddenerror" id="lastnameerr">Please enter a valid "Last name."</li>
+                    <li class="hiddenerror" id="emailerr">Please enter a valid "Email."</li>
+                </ul>
+            </div>
 
-	    <div>
-	      <label for="uem">Email</label>
-	      <input type="text" th:field="*{email}"/>
-	    </div>
+            <div class="alert_box" th:if="${error}">
+                <p th:text="${error}"></p>
+            </div>
 
-	    <p></p>
+            <div class="success_box" th:if="${userdeleted eq '1'}">
+                <p>${userid} deleted.</p>
+            </div>
 
-	    <div>
-	      <label>Admin Function?</label>
-	      <input type="checkbox" th:field="*{isadmin}" th:checked="*{isadmin}"/>
-	    </div>
+            <div th:switch="${submitted_and_valid}">
+                <div th:case="'1'" class="success_box">
+                    <p>
+                        User updated.
+                    </p>
+                </div>
+                <div th:case="*">
+                    <div class="alert_box" th:if="${form_submitted eq '1'}">
+                        <p>
+                            User not updated. Please correct the fields highlighted
+                            below.
+                        </p>
+                    </div>
+                </div>
+            </div>
 
-	    <p></p>
+            <p th:text="${message}"></p>
 
-	    <div>
-	      <label>Enable</label>
-	      <input type="checkbox" th:field="*{enabled}" th:checked="*{enabled}"/>
-	    </div>
+            <p><a th:href="@{/ListUsers}">Return to user list</a></p>
 
-	    <p></p>
-	    <fieldset class="repeatable">
-	      <legend>Departments</legend>
-	      <input name="department_counter" type="hidden" value="0" id="department_counter"/>
+            <p>
+                Use the form below to modify this user. Use the button at
+                the bottom to delete this user.
+            </p>
 
-	      <div id="department">		
-		<div th:each="department, stat : *{departmentsForms}">
-		  <input type="hidden" th:field="*{departmentsForms[__${stat.index}__].id}"/>
-		  <input type="hidden" th:field="*{departmentsForms[__${stat.index}__].name}"/>
-		  <span>
+            <form id="form" th:action="@{/EditUser}" th:object="${usersForm}" method="post">
+                <p></p>
+                <div>
+                    <label for="lid">ID</label>
+                    <input type="text" th:field="*{id}" readonly="readonly"/>
+                </div>
+                <div>
+                    <label>Username</label>
+                    <input type="text" th:field="*{username}"/>
+                    <span style="color: red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
+                </div>
+                <div>
+                    <label for="ufn">First name</label>
+                    <input type="text" th:field="*{firstname}"/>
+                </div>
+                <div>
+                    <label for="uln">Last name</label>
+                    <input type="text" th:field="*{lastname}"/>
+                </div>
+
+                <div>
+                    <label for="uem">Email</label>
+                    <input type="text" th:field="*{email}"/>
+                </div>
+
+                <p></p>
+
+                <div>
+                    <label>Admin Function?</label>
+                    <input type="checkbox" th:field="*{isadmin}" th:checked="*{isadmin}"/>
+                </div>
+
+                <p></p>
+
+                <div>
+                    <label>Enable</label>
+                    <input type="checkbox" th:field="*{enabled}" th:checked="*{enabled}"/>
+                </div>
+
+                <p></p>
+                <fieldset class="repeatable">
+                    <legend>Departments</legend>
+                    <input name="department_counter" type="hidden" value="0" id="department_counter"/>
+
+                    <div id="department">
+                        <div th:each="department, stat : *{departmentsForms}">
+                            <input type="hidden" th:field="*{departmentsForms[__${stat.index}__].id}"/>
+                            <input type="hidden" th:field="*{departmentsForms[__${stat.index}__].name}"/>
+                            <span>
 		    <span th:text="*{departmentsForms[__${stat.index}__].name}"></span>
 		  </span>
-		  <span>
+                            <span>
 		    <label>Active?</label>
-		    <input type="checkbox" th:field="*{departmentsForms[__${stat.index}__].active}" th:checked="*{departmentsForms[__${stat.index}__].active}"/>
+		    <input type="checkbox" th:field="*{departmentsForms[__${stat.index}__].active}"
+                   th:checked="*{departmentsForms[__${stat.index}__].active}"/>
 		  </span>
-		  <span>
+                            <span>
 		    <a th:href="@{/DeleteUserDepartment(id=*{departmentsForms[__${stat.index}__].id},userid=*{id})}"
-		    th:onclick="'return askremovedepartment(\'' + *{departmentsForms[__${stat.index}__].id}  + '\')'">disassociate</a>
+               th:onclick="'return askremovedepartment(\'' + *{departmentsForms[__${stat.index}__].id}  + '\')'">disassociate</a>
 		  </span>
-		</div>
-		
-		<p></p>
-		
-		<div>
-		  <select id="add_department_select" name="department_id">
-		    <option value="">Add a new department:</option>
-		    <option th:each="department: ${dropdowndepartments}" th:value="${department.id}" th:text="${department.name}"></option>
-		  </select>
-		</div>
-		
-	      </div>
-	      
-	    </fieldset>
-	    
-	    <p></p>
-	    
-	    <p><input type="button" value="Update user" onclick="validate()"/></p>
-	    <hr/>
-	    <p><input type="submit" name="delete" value="Delete user" th:onclick="'return askdeleteuser(\'' + *{id}  + '\')'"/></p>
-	  </form>
+                        </div>
 
-	  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-	</div>
-	
-      </div>
+                        <p></p>
+
+                        <div>
+                            <select id="add_department_select" name="department_id">
+                                <option value="">Add a new department:</option>
+                                <option th:each="department: ${dropdowndepartments}" th:value="${department.id}"
+                                        th:text="${department.name}"></option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                </fieldset>
+
+                <p></p>
+
+                <p><input type="button" value="Update user" onclick="validate()"/></p>
+                <hr/>
+                <p><input type="submit" name="delete" value="Delete user"
+                          th:onclick="'return askdeleteuser(\'' + *{id}  + '\')'"/></p>
+            </form>
+
+            <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+        </div>
+
     </div>
+</div>
 
-    <div th:replace="fragments/Footer :: Footer"></div>
+<div th:replace="fragments/Footer :: Footer"></div>
 
-  </body>
+</body>
 </html>

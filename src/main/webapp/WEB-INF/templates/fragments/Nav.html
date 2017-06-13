@@ -1,64 +1,65 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-  <head>
-  </head>
-  <body>
-    
-    <div id="navigation" th:fragment="Nav">
-      <ul>
-	
-	<div th:switch="${session.loggedin}"> 
-	  <li th:case="'1'"><p>Welcome, <span th:text="${session.name}">name</span>.</p></li>
-	  <li th:case="*"><p>You are not logged in.</p></li> 
-	</div>
-	
-	<div th:switch="${page}">
-	  <li th:case="'Home'"><a class="currentpage" th:href="@{/}">Home</a></li>
-	  <li th:case="*"><a th:href="@{/}">Home</a></li> 
-	</div>
-	
+<head>
+</head>
+<body>
+
+<div id="navigation" th:fragment="Nav">
+    <ul>
+
+        <div th:switch="${session.loggedin}">
+            <li th:case="'1'"><p>Welcome, <span th:text="${session.name}">name</span>.</p></li>
+            <li th:case="*"><p>You are not logged in.</p></li>
+        </div>
+
+        <div th:switch="${page}">
+            <li th:case="'Home'"><a class="currentpage" th:href="@{/}">Home</a></li>
+            <li th:case="*"><a th:href="@{/}">Home</a></li>
+        </div>
+
         <div th:if="${session.loggedin eq '1'}">
-	  
-	  <div th:switch="${page}">
-	    <li th:case="'SubmitRecords'"><a class="currentpage" th:href="@{/SubmitRecords}">Submit Records to Archives</a></li>
-	    <li th:case="*"><a th:href="@{/SubmitRecords}">Submit Records to Archives</a></li> 
-	  </div>
-	  
-          <div th:if="${session.isadmin eq '1'}">
-	    <div th:switch="${page}"> 
-	      <li th:case="'Admin'"><a class="currentpage" th:href="@{/Admin}">Administrative Tools</a></li>
-	      <li th:case="*"><a th:href="@{/Admin}">Administrative Tools</a></li> 
-	    </div>
-	  </div>
-	  
-	</div>
-	
-	<div th:switch="${page}"> 
-	  <li th:case="'About'"><a class="currentpage" th:href="@{/About}">About</a></li>
-	  <li th:case="*"><a th:href="@{/About}">About</a></li>
-	</div>
-	
-	<div th:switch="${page}"> 
-	  <li th:case="'Faq'"><a class="currentpage" th:href="@{/Faq}">FAQ</a></li>
-	  <li th:case="*"><a th:href="@{/Faq}">FAQ</a></li>
-	</div>
-	
-	<div th:switch="${page}"> 
-	  <li th:case="'Help'"><a class="currentpage" th:href="@{/Help}">Help</a></li>
-	  <li th:case="*"><a th:href="@{/Help}">Help</a></li> 
-	</div>
-	 
-	<div th:switch="${session.loggedin}"> 
-	  <li th:case="'1'"><p><a th:href="@{/Logout}">Log Out</a></p></li>
-	  <li th:case="*">
-	    <p th:switch="${page}"> 
-	      <a th:case="'Auth'" class="currentpage" th:href="@{/Auth}">Log In</a>
-	      <a th:case="*" th:href="@{/Auth}">Log In</a> 
-	    </p>
-	  </li>
-	</div>
-	
-      </ul>
-    </div>
-  </body>
+
+            <div th:switch="${page}">
+                <li th:case="'SubmitRecords'"><a class="currentpage" th:href="@{/SubmitRecords}">Submit Records to
+                    Archives</a></li>
+                <li th:case="*"><a th:href="@{/SubmitRecords}">Submit Records to Archives</a></li>
+            </div>
+
+            <div th:if="${session.isadmin eq '1'}">
+                <div th:switch="${page}">
+                    <li th:case="'Admin'"><a class="currentpage" th:href="@{/Admin}">Administrative Tools</a></li>
+                    <li th:case="*"><a th:href="@{/Admin}">Administrative Tools</a></li>
+                </div>
+            </div>
+
+        </div>
+
+        <div th:switch="${page}">
+            <li th:case="'About'"><a class="currentpage" th:href="@{/About}">About</a></li>
+            <li th:case="*"><a th:href="@{/About}">About</a></li>
+        </div>
+
+        <div th:switch="${page}">
+            <li th:case="'Faq'"><a class="currentpage" th:href="@{/Faq}">FAQ</a></li>
+            <li th:case="*"><a th:href="@{/Faq}">FAQ</a></li>
+        </div>
+
+        <div th:switch="${page}">
+            <li th:case="'Help'"><a class="currentpage" th:href="@{/Help}">Help</a></li>
+            <li th:case="*"><a th:href="@{/Help}">Help</a></li>
+        </div>
+
+        <div th:switch="${session.loggedin}">
+            <li th:case="'1'"><p><a th:href="@{/Logout}">Log Out</a></p></li>
+            <li th:case="*">
+                <p th:switch="${page}">
+                    <a th:case="'Auth'" class="currentpage" th:href="@{/Auth}">Log In</a>
+                    <a th:case="*" th:href="@{/Auth}">Log In</a>
+                </p>
+            </li>
+        </div>
+
+    </ul>
+</div>
+</body>
 </html>

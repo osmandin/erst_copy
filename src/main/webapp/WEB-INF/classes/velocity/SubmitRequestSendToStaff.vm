@@ -1,69 +1,74 @@
 <html>
-  <head>
+<head>
     <!-- $Id: SubmitRequestSendToStaff.vm,v 1.23 2016-11-02 13:38:31-04 ericholp Exp $ -->
     <title>Submission Agreement Request</title>
     <style>
-      .maintable {
-        padding: 0px;
-        margin: 0px;
-	border-spacing:0px;
-	border-right: 0px;
-	border-left: 0px;
-	border-collapse:collapse; 
-	margin-bottom: 0px;
-      }
-      ul {
-        list-style: none;
-      }
-      ul li {
-      }
+        .maintable {
+            padding: 0px;
+            margin: 0px;
+            border-spacing: 0px;
+            border-right: 0px;
+            border-left: 0px;
+            border-collapse: collapse;
+            margin-bottom: 0px;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        ul li {
+        }
     </style>
-  </head>
-  <body>
-    <h2>Dear ${org.name} Staff,</h2>
+</head>
+<body>
+<h2>Dear ${org.name} Staff,</h2>
 
-    <p>The user ${submitdata.name} has just completed a Records Submission Form to the ${org.name}, with the Submission Agreement ID ${submitdata.ssaid}.</p>
+<p>The user ${submitdata.name} has just completed a Records Submission Form to the ${org.name}, with the Submission
+    Agreement ID ${submitdata.ssaid}.</p>
 
-    #if (${errors.useremailfailed}) 
+    #if (${errors.useremailfailed})
     <p><b>Note</b>: The send of email to this user (${submitdata.firstname} ${submitdata.lastname}) failed. </p>
-    #end 
-    #if (${errors.duplicateuser}) 
+    #end
+    #if (${errors.duplicateuser})
     <p><b>Note</b>: The user ${submitdata.firstname} ${submitdata.lastname} was already defined.</p>
-    #end 
-    #if (${errors.duplicateusername}) 
+    #end
+    #if (${errors.duplicateusername})
     <p><b>Note</b>: This username ${submitdata.username} was already defined.</p>
-    #end 
-    #if (${errors.duplicatedepartment}) 
+    #end
+    #if (${errors.duplicatedepartment})
     <p><b>Note</b>: The department ${submitdata.department} was already defined.</p>
-    #end 
-    #if (${errors.departmentalreadyassignedtothisuser}) 
-    <p><b>Note</b>: This department ${submitdata.department} was already assigned to this user (${submitdata.firstname} ${submitdata.lastname}).</p>
-    #end 
+    #end
+    #if (${errors.departmentalreadyassignedtothisuser})
+    <p><b>Note</b>: This department ${submitdata.department} was already assigned to this user
+        (${submitdata.firstname} ${submitdata.lastname}).</p>
+    #end
     #if (${errors.wrongnumberofusermatches})
-    <p><b>Note</b>: There were an unexpected number of matches of this user (${submitdata.firstname} ${submitdata.lastname}) already in the system, no additions were made.</p>
-    #end 
+    <p><b>Note</b>: There were an unexpected number of matches of this user
+        (${submitdata.firstname} ${submitdata.lastname}) already in the system, no additions were made.</p>
+    #end
 
-    
-    <p><b>Department/Unit:</b> ${submitdata.department}</p>
 
-    <p><b>Department Address:</b> ${submitdata.address}</p>
+<p><b>Department/Unit:</b> ${submitdata.department}</p>
 
-    <p><b>Contact Name:</b> ${submitdata.name}</p>
+<p><b>Department Address:</b> ${submitdata.address}</p>
 
-    <p><b>Contact Email:</b> ${submitdata.email}</p>
+<p><b>Contact Name:</b> ${submitdata.name}</p>
 
-    <p><b>Contact Phone:</b> ${submitdata.phone}</p>
+<p><b>Contact Email:</b> ${submitdata.email}</p>
 
-    <p><b>Head of Department/Unit:</b> ${submitdata.departmenthead}</p>
+<p><b>Contact Phone:</b> ${submitdata.phone}</p>
 
-    <p><b>Agree:</b> ${submitdata.signature}</p>
+<p><b>Head of Department/Unit:</b> ${submitdata.departmenthead}</p>
 
-    <p></p>
-    <p></p>
-    <p></p>
-    
-    <p>Sincerely,</p>
-    <p>The ${submitappinfo.name} (https://${thishost}${submitappinfo.root})</p>
-    
-  </body>
+<p><b>Agree:</b> ${submitdata.signature}</p>
+
+<p></p>
+<p></p>
+<p></p>
+
+<p>Sincerely,</p>
+<p>The ${submitappinfo.name} (https://${thishost}${submitappinfo.root})</p>
+
+</body>
 </html>

@@ -1,91 +1,93 @@
 <html>
-  <head>
+<head>
     <!-- $Id: EditSsaApprovedSendToCreators.vm,v 1.24 2016-11-02 22:06:11-04 ericholp Exp $ -->
     <title>Submission Agreement Approved:  ${ssa.id}</title>
     <style>
-      .maintable {
-        padding: 0px;
-        margin: 0px;
-	border-spacing:0px;
-	border-right: 0px;
-	border-left: 0px;
-	border-collapse:collapse; 
-	margin-bottom: 0px;
-      }
-      ul {
-        list-style: none;
-      }
-      ul li {
-      }
+        .maintable {
+            padding: 0px;
+            margin: 0px;
+            border-spacing: 0px;
+            border-right: 0px;
+            border-left: 0px;
+            border-collapse: collapse;
+            margin-bottom: 0px;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        ul li {
+        }
     </style>
-  </head>
-  <body>
-    
-    <h2>Dear ${submitappinfo.name} User,</h2>
-    
-    <p>The user ${session.getAttribute("username")} has approved the Submission Agreement with ID=${ssa.id}.</p>
+</head>
+<body>
+
+<h2>Dear ${submitappinfo.name} User,</h2>
+
+<p>The user ${session.getAttribute("username")} has approved the Submission Agreement with ID=${ssa.id}.</p>
 
 
-    <p><b>Department/Unit or Donor:</b> ${ssa.departmentForm.name}</p>
-    <p><b>Records Title:</b> ${ssa.recordstitle}</p>
+<p><b>Department/Unit or Donor:</b> ${ssa.departmentForm.name}</p>
+<p><b>Records Title:</b> ${ssa.recordstitle}</p>
 
-    <p><b>Head of Department/Unit:</b> ${ssa.departmenthead}</p>
-    <p><b>Record or Collection Identifier:</b> ${ssa.recordid}</p>
+<p><b>Head of Department/Unit:</b> ${ssa.departmenthead}</p>
+<p><b>Record or Collection Identifier:</b> ${ssa.recordid}</p>
 
-    <h4>Department/Unit or Donor Contact Information</h4>
-    #if (!$ssa.ssaContactsForms || $ssa.ssaContactsForms.size()==0) 
-       <p>No contacts</p>
+<h4>Department/Unit or Donor Contact Information</h4>
+    #if (!$ssa.ssaContactsForms || $ssa.ssaContactsForms.size()==0)
+    <p>No contacts</p>
     #else
-       <ul>
-	 #foreach($contact in ${ssa.ssaContactsForms})
-	 <li>${contact.name}, ${contact.phone}, ${contact.address}, ${contact.email}</li>
-	 #end
-       </ul>
-     #end
+    <ul>
+        #foreach($contact in ${ssa.ssaContactsForms})
+            <li>${contact.name}, ${contact.phone}, ${contact.address}, ${contact.email}</li>
+        #end
+    </ul>
+    #end
 
-    <p><b>Agreement Creation Date:</b> ${ssa.creationdate}</p>
+<p><b>Agreement Creation Date:</b> ${ssa.creationdate}</p>
 
-    <p><b>Copyright Statement:</b> 
-    #if (!$ssa.ssaCopyrightsForms || $ssa.ssaCopyrightsForms.size()==0) 
-       No copyright statement
+<p><b>Copyright Statement:</b>
+    #if (!$ssa.ssaCopyrightsForms || $ssa.ssaCopyrightsForms.size()==0)
+        No copyright statement
     #else
-      <ul>
-	#foreach($copyright in $ssa.ssaCopyrightsForms)
-	<li>${copyright.copyright}</li>
-	#end
-      </ul>
-      #end
-    </p>
+    <ul>
+        #foreach($copyright in $ssa.ssaCopyrightsForms)
+            <li>${copyright.copyright}</li>
+        #end
+    </ul>
+    #end
+</p>
 
-    <p><b>Access Restrictions:</b>
-    #if (!$ssa.ssaAccessRestrictionsForms || $ssa.ssaAccessRestrictionsForms.size()==0) 
-       ${defaults.accessrestriction}
-      #else
-      <ul>
-	#foreach($restriction in ${ssa.ssaAccessRestrictionsForms})
-	<li>${restriction.restriction}</li>
-	#end
-      </ul>
-      #end
-    </p>
+<p><b>Access Restrictions:</b>
+    #if (!$ssa.ssaAccessRestrictionsForms || $ssa.ssaAccessRestrictionsForms.size()==0)
+        ${defaults.accessrestriction}
+    #else
+    <ul>
+        #foreach($restriction in ${ssa.ssaAccessRestrictionsForms})
+            <li>${restriction.restriction}</li>
+        #end
+    </ul>
+    #end
+</p>
 
-    <p><b>Agreement Effective Date:</b> ${ssa.effectivedate}</p>
+<p><b>Agreement Effective Date:</b> ${ssa.effectivedate}</p>
 
-    <p><b>Retention Schedule:</b> ${ssa.retentionschedule}</p>
+<p><b>Retention Schedule:</b> ${ssa.retentionschedule}</p>
 
-    <p><b>Retention Period:</b> ${ssa.retentionperiod}</p>
+<p><b>Retention Period:</b> ${ssa.retentionperiod}</p>
 
-    <p><b>Archival Description Standards:</b> ${ssa.descriptionstandards}</p>
-    
-    <p></p>
-    <p></p>    
-    <p></p>
-    <p></p>
-    
-    <p>Sincerely,</p>
-    <p>${org.name} Staff</p>
-    <p>${org.phone}</p>
-    <p>https://${thishost}${submitappinfo.root}</p>
+<p><b>Archival Description Standards:</b> ${ssa.descriptionstandards}</p>
 
-  </body>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+
+<p>Sincerely,</p>
+<p>${org.name} Staff</p>
+<p>${org.phone}</p>
+<p>https://${thishost}${submitappinfo.root}</p>
+
+</body>
 </html>

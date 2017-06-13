@@ -1,6 +1,7 @@
 package submit.entity;
 
 import lombok.Data;
+
 import java.util.Arrays;
 
 @Data
@@ -16,11 +17,11 @@ public class EmailSetup {
     private String body;
     private String toarrayasstr;
 
-    public void setToarray(String[] a){
-	toarray = a;
-	if(a != null){
-	    toarrayasstr=Arrays.toString(a);
-	    toarrayasstr=toarrayasstr.substring(1).substring(0, toarrayasstr.length() - 2);
-	}
+    public void setToarray(String[] a) {
+        toarray = a;
+        if (a != null) {
+            toarrayasstr = Arrays.toString(a);
+            toarrayasstr = toarrayasstr.substring(1).substring(0, toarrayasstr.length() - 2);
+        }
     }
 }

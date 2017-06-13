@@ -6,13 +6,13 @@ Your ${org.name} Submission Tool account has been set up.  You can now submit re
 Your account has been assigned administrative privileges.
 #end
 
-#if (!$departments || $departments.size()==0) 
+#if (!$departments || $departments.size()==0)
 No departments have been assigned yet.
 #else
 The following department(s) has been assigned to your login account:
-#foreach($department in ${departments})
-    ${department.name}
-#end
+    #foreach($department in ${departments})
+        ${department.name}
+    #end
 #end
 
 If you have any questions, please contact the ${org.name} staff at ${org.phone} or ${org.email}.

@@ -37,24 +37,24 @@ public class RsasFormServiceImpl implements RsasFormService {
 
     @Resource
     private RsasFormRepository repo;
-    
+
     @Resource
     private SsasFormRepository ssarepo;
-    
+
     @Resource
     private SsasFormService ssaservice;
 
     @Resource
     private RsaFileDataFormRepository filedatarepo;
-    
-    @Transactional
-    public void saveForm(RsasForm rsa){
-	
-	ssaservice.saveSsaFormForRsa(rsa.getSsasForm());
-	
-	List<RsaFileDataForm> fds = rsa.getRsaFileDataForms();
-	filedatarepo.save(fds);
 
-	repo.save(rsa);
+    @Transactional
+    public void saveForm(RsasForm rsa) {
+
+        ssaservice.saveSsaFormForRsa(rsa.getSsasForm());
+
+        List<RsaFileDataForm> fds = rsa.getRsaFileDataForms();
+        filedatarepo.save(fds);
+
+        repo.save(rsa);
     }
 }

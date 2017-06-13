@@ -1,11 +1,12 @@
 package submit.entity;
 
 import javax.persistence.*;
+
 import lombok.Data;
 import lombok.ToString;
 
 @Data
-@ToString(exclude={"rsasForm"})
+@ToString(exclude = {"rsasForm"})
 @Entity
 @Table(name = "rsaFileData")
 public class RsaFileDataForm {
@@ -21,16 +22,16 @@ public class RsaFileDataForm {
     private String status;
     private int idx;
 
-    public String getLastmoddatetime(){
-	// 2014-10-08 10:28:32.0
-	if(lastmoddatetime != null && lastmoddatetime.length() > 19){
-	    return lastmoddatetime.substring(0, 19);
-	}
-	return lastmoddatetime;
+    public String getLastmoddatetime() {
+        // 2014-10-08 10:28:32.0
+        if (lastmoddatetime != null && lastmoddatetime.length() > 19) {
+            return lastmoddatetime.substring(0, 19);
+        }
+        return lastmoddatetime;
     }
 
 
-    @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="rsaid")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "rsaid")
     private RsasForm rsasForm;
 }

@@ -7,7 +7,7 @@ import submit.entity.SsaFormatTypesForm;
 
 import java.util.List;
 
-public interface SsaFormatTypesFormRepository extends JpaRepository<SsaFormatTypesForm, Integer>{
+public interface SsaFormatTypesFormRepository extends JpaRepository<SsaFormatTypesForm, Integer> {
     public SsaFormatTypesForm findById(int id);
 
     @Query(value = "SELECT f FROM SsaFormatTypesForm f order by formattype asc")

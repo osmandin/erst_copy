@@ -10,7 +10,7 @@ public class SubmitData {
     private String email;
     private String phone;
     private String departmenthead;
-    private String signature;    
+    private String signature;
     private String date;
     private int ssaid;
     private String firstname;

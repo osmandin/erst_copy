@@ -1,76 +1,84 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-  
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <!-- $Id: ListUsers.html,v 1.33 2016-11-15 11:32:08-04 ericholp Exp $ -->
     <title>Manage Users</title>
     <div th:replace="fragments/Head :: Head"></div>
-  </head>
-  
-  <body>
+</head>
 
-    <div th:replace="fragments/BodyHeader :: BodyHeader">body_header</div>
+<body>
 
-    <div id="body_main">
-      <div class="window">
+<div th:replace="fragments/BodyHeader :: BodyHeader">body_header</div>
 
-	<div th:replace="fragments/Nav :: Nav"></div>
-	
-	<div id="content">
-	  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+<div id="body_main">
+    <div class="window">
+
+        <div th:replace="fragments/Nav :: Nav"></div>
+
+        <div id="content">
+            <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 
 
-          <div class="success_box" th:if="${userdeleted}">
-	    <p>
-	      User <span th:text="${username}">username</span> was deleted. 
-	    </p>
-	  </div>
-	  
-          <div class="success_box" th:if="${user_added}">
-	    <p>
-	      User <span th:text="${username}">username</span> added. 
-	    </p>
-	  </div>
-	  
-          <div class="success_box" th:if="${usermodified}">
-	    <p>
-	      User with username=<span th:text="${username}"></span> was modified. 
-	    </p>
-	  </div>
+            <div class="success_box" th:if="${userdeleted}">
+                <p>
+                    User <span th:text="${username}">username</span> was deleted.
+                </p>
+            </div>
 
-	  <h1>Manage Users</h1>
+            <div class="success_box" th:if="${user_added}">
+                <p>
+                    User <span th:text="${username}">username</span> added.
+                </p>
+            </div>
 
-	  <p>From this screen, you can either add a new user or edit an existing user.</p>
-	  
-	  <h3>Add a new user</h3>
-	  
-	  <p><a th:href="@{/AddUser}">Click here to add a new user.</a></p>
-	  
-	  <h3>Edit a user</h3>
+            <div class="success_box" th:if="${usermodified}">
+                <p>
+                    User with username=<span th:text="${username}"></span> was modified.
+                </p>
+            </div>
 
-	  <div th:switch="${adminusersForms.size()}"> 
-	    <div th:case="'0'">
-	      <p></p>
-	      <h4>There are currently no Admins users.</h4>
-	      <p></p>
-	    </div>
-	    <div th:case="*">
-	      <p></p>
-	      <h4>Admins:</h4>
-	      <p>
-		<table border="1">
-		  <tr><th>last name</th><th>first name</th><th>username</th><th>email</th><th>Department/Unit/Donor</th><th>&nbsp;</th><th>&nbsp;</th></tr>
-		  <tr th:each="user : ${adminusersForms}">
-		    <td th:text="${user.lastname}">last name</td>
-		    <td th:text="${user.firstname}">first name</td>
-		    <td th:text="${user.username}">username</td>
-		    <td th:text="${user.email}">email</td>
+            <h1>Manage Users</h1>
 
-		    <td th:switch="${user.departmentsForms.size()}">
+            <p>From this screen, you can either add a new user or edit an existing user.</p>
+
+            <h3>Add a new user</h3>
+
+            <p><a th:href="@{/AddUser}">Click here to add a new user.</a></p>
+
+            <h3>Edit a user</h3>
+
+            <div th:switch="${adminusersForms.size()}">
+                <div th:case="'0'">
+                    <p></p>
+                    <h4>There are currently no Admins users.</h4>
+                    <p></p>
+                </div>
+                <div th:case="*">
+                    <p></p>
+                    <h4>Admins:</h4>
+                    <p>
+                    <table border="1">
+                        <tr>
+                            <th>last name</th>
+                            <th>first name</th>
+                            <th>username</th>
+                            <th>email</th>
+                            <th>Department/Unit/Donor</th>
+                            <th>&nbsp;</th>
+                            <th>&nbsp;</th>
+                        </tr>
+                        <tr th:each="user : ${adminusersForms}">
+                            <td th:text="${user.lastname}">last name</td>
+                            <td th:text="${user.firstname}">first name</td>
+                            <td th:text="${user.username}">username</td>
+                            <td th:text="${user.email}">email</td>
+
+                            <td th:switch="${user.departmentsForms.size()}">
 		      <span th:case="0">
 		      </span>
-		      <span th:case="*">
+                                <span th:case="*">
 			<div th:each="dep : ${user.departmentsForms}">
 			  <span th:text="${dep.name}">department name</span>
 			  <div th:switch="${adminactivemap[__${user.id}__][__${dep.id}__]}">
@@ -83,38 +91,46 @@
 			  </div>
 			</div>
 		      </span>
-		    </td>
+                            </td>
 
-		    <td><a th:href="@{/EditUser(userid=${user.id})}">edit</a></td>
-		    <td><a th:href="@{/NotifyUser(userid=${user.id})}">notify</a></td>
-		  </tr>
-		</table>
-	      </p>
-	    </div> 
-	  </div>
+                            <td><a th:href="@{/EditUser(userid=${user.id})}">edit</a></td>
+                            <td><a th:href="@{/NotifyUser(userid=${user.id})}">notify</a></td>
+                        </tr>
+                    </table>
+                    </p>
+                </div>
+            </div>
 
-	  <div th:switch="${nonadminusersForms.size()}"> 
-	    <div th:case="'0'">
-	      <p></p>
-	      <h4>There are currently no Non-Admins users.</h4>
-	      <p></p>
-	    </div>
-	    <div th:case="*">
-	      <p></p>
-	      <h4>Non-Admins:</h4>
-	      <p>
-		<table border="1">
-		  <tr><th>last name</th><th>first name</th><th>username</th><th>email</th><th>Department/Unit/Donor</th><th>&nbsp;</th><th>&nbsp;</th></tr>
-		  <tr th:each="user : ${nonadminusersForms}">
-		    <td th:text="${user.lastname}">last name</td>
-		    <td th:text="${user.firstname}">first name</td>
-		    <td th:text="${user.username}">username</td>
-		    <td th:text="${user.email}">email</td>
-		    
-		    <td th:switch="${user.departmentsForms.size()}">
+            <div th:switch="${nonadminusersForms.size()}">
+                <div th:case="'0'">
+                    <p></p>
+                    <h4>There are currently no Non-Admins users.</h4>
+                    <p></p>
+                </div>
+                <div th:case="*">
+                    <p></p>
+                    <h4>Non-Admins:</h4>
+                    <p>
+                    <table border="1">
+                        <tr>
+                            <th>last name</th>
+                            <th>first name</th>
+                            <th>username</th>
+                            <th>email</th>
+                            <th>Department/Unit/Donor</th>
+                            <th>&nbsp;</th>
+                            <th>&nbsp;</th>
+                        </tr>
+                        <tr th:each="user : ${nonadminusersForms}">
+                            <td th:text="${user.lastname}">last name</td>
+                            <td th:text="${user.firstname}">first name</td>
+                            <td th:text="${user.username}">username</td>
+                            <td th:text="${user.email}">email</td>
+
+                            <td th:switch="${user.departmentsForms.size()}">
 		      <span th:case="0">
 		      </span>
-		      <span th:case="*">
+                                <span th:case="*">
 			<div th:each="dep : ${user.departmentsForms}">
 			  <span th:text="${dep.name}">department name</span>
 			  <div th:switch="${nonadminactivemap[__${user.id}__][__${dep.id}__]}">
@@ -127,23 +143,23 @@
 			  </div>
 			</div>
 		      </span>
-		    </td>
-		    
-		    <td><a th:href="@{/EditUser(userid=${user.id})}">edit</a></td>
-		    <td><a th:href="@{/NotifyUser(userid=${user.id})}">notify</a></td>
-		  </tr>
-		</table>
-	      </p>
-	    </div> 
-	  </div>
+                            </td>
 
-	  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-	</div>
-	
-      </div>
+                            <td><a th:href="@{/EditUser(userid=${user.id})}">edit</a></td>
+                            <td><a th:href="@{/NotifyUser(userid=${user.id})}">notify</a></td>
+                        </tr>
+                    </table>
+                    </p>
+                </div>
+            </div>
+
+            <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+        </div>
+
     </div>
+</div>
 
-    <div th:replace="fragments/Footer :: Footer"></div>
-    
-  </body>
+<div th:replace="fragments/Footer :: Footer"></div>
+
+</body>
 </html>

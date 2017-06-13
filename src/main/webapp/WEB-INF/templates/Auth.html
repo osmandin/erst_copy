@@ -1,60 +1,71 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-  
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>Electronic Records Submission Tool - Auth</title>
     <div th:replace="fragments/Head :: Head"></div>
-  </head>
-  
-  <body>
-    
-    <div th:replace="fragments/BodyHeader :: BodyHeader">body_header</div>
-    
-    <div id="body_main">
-      <div class="window">
-	
-	<div th:replace="fragments/Nav :: Nav"></div>
-	
-	<div id="content">
-	  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+</head>
 
-	  <h1>Electronic Records Submission Tool</h1>
-	  
-	  <p>Please log in using your username.</p>
-	  <br/>
-	  <form th:action="@{/Auth}" th:object="${loginData}" method="POST">
-	    <table class="table simpletable">
-	      <tr><td><p><b>Username</b></p></td><td><div>
-		    <input name="username" class="username" type="text" th:field="*{username}"/>
-	      </div></td></tr>
-	      <tr><td><p><b>Password</b></p></td><td><div>
-		    <input name="password" type="password"  th:field="*{password}"/>
-	      </div></td></tr>
-	    </table>
-	    <p></p>
-	    <div>
-	      <input name="submit" type="submit" value="Log in"/>
-	    </div>
-	  </form>
+<body>
 
-          <div th:if="${badauth}">
-	    <p th:text="${loginmessage}"></p>
-	    <p>Sorry, that username / password combination is not valid. Please try logging in again with a valid username and password.</p>
-	    <p>Note: This username must first be registered as a valid user
-	      of the Records Submission Tool. If you have further questions,
-	      please contact University Archives
-	      <a th:href="@{mailto:{se}(se=${staff_email})}">here</a>.</p>
-	    <br/>
-	  </div>
-	  
-	  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-	</div>
-	
-      </div>
+<div th:replace="fragments/BodyHeader :: BodyHeader">body_header</div>
+
+<div id="body_main">
+    <div class="window">
+
+        <div th:replace="fragments/Nav :: Nav"></div>
+
+        <div id="content">
+            <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+            <h1>Electronic Records Submission Tool</h1>
+
+            <p>Please log in using your username.</p>
+            <br/>
+            <form th:action="@{/Auth}" th:object="${loginData}" method="POST">
+                <table class="table simpletable">
+                    <tr>
+                        <td><p><b>Username</b></p></td>
+                        <td>
+                            <div>
+                                <input name="username" class="username" type="text" th:field="*{username}"/>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><p><b>Password</b></p></td>
+                        <td>
+                            <div>
+                                <input name="password" type="password" th:field="*{password}"/>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <p></p>
+                <div>
+                    <input name="submit" type="submit" value="Log in"/>
+                </div>
+            </form>
+
+            <div th:if="${badauth}">
+                <p th:text="${loginmessage}"></p>
+                <p>Sorry, that username / password combination is not valid. Please try logging in again with a valid
+                    username and password.</p>
+                <p>Note: This username must first be registered as a valid user
+                    of the Records Submission Tool. If you have further questions,
+                    please contact University Archives
+                    <a th:href="@{mailto:{se}(se=${staff_email})}">here</a>.</p>
+                <br/>
+            </div>
+
+            <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+        </div>
+
     </div>
-    
-    <div th:replace="fragments/Footer :: Footer"></div>
-    
-  </body>
+</div>
+
+<div th:replace="fragments/Footer :: Footer"></div>
+
+</body>
 </html>

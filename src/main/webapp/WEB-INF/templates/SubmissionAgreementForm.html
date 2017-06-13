@@ -1,196 +1,228 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-  
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Submission Agreement Form</title>    
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Submission Agreement Form</title>
     <div th:replace="fragments/Head :: Head"></div>
     <script th:inline="javascript">
-      /*<![CDATA[*/
-      var root = [[@{/}]];
-      var publickey = [[${publickey}]];
-      /*]]>*/
+        /*<![CDATA[*/
+        var root = [[
+        @
+        {/
+        }
+        ]]
+        ;
+        var publickey = [[${publickey}]];
+        /*]]>*/
     </script>
-    <script type="text/javascript" th:src="@{/resources/js/SubmitRequest.js}"></script> 
+    <script type="text/javascript" th:src="@{/resources/js/SubmitRequest.js}"></script>
     <link rel="stylesheet" type="text/css" th:href="@{/resources/css/SubmitRequest.css}"/>
-  </head>
-  
-  <body>
-    
-    <div th:replace="fragments/BodyHeader :: BodyHeader">body_header</div>
-    
-    <div id="body_main">
-      <div class="window">
-	
-	<div th:replace="fragments/Nav :: Nav"></div>
-	
-	<div id="content">
-	  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+</head>
 
-	  <h1>Submission Agreement Form</h1>
-	  
-	  <div class="alert_box" id="alert_box_top">
-	    <p>
-	      Please enter the missing values below.
-	    </p>
-	  </div>
+<body>
+
+<div th:replace="fragments/BodyHeader :: BodyHeader">body_header</div>
+
+<div id="body_main">
+    <div class="window">
+
+        <div th:replace="fragments/Nav :: Nav"></div>
+
+        <div id="content">
+            <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+            <h1>Submission Agreement Form</h1>
+
+            <div class="alert_box" id="alert_box_top">
+                <p>
+                    Please enter the missing values below.
+                </p>
+            </div>
 
 
-	  <div th:if="${duplicatedept eq '1'}">
-	    <div class="alert_box">
-	      <p>
-		The entered &quot;Department/Unit&quot; is already present in the system.
-		Please enter a different value or contact the <span th:text="${org.name}"></span> at <span th:text="${org.phone}"></span> for further help.
-	      </p>
-	    </div>
-	    <p></p>
-	  </div>
-	  
-	  <div th:if="${valid eq 1}">
-	    <div class="success_box">
-	      <p>
-		An email has been sent to the University Archives staff.
-		You should receive an email response soon.
-	      </p>
-	    </div>
-	    <p></p>
-	  </div>
-	  
-	  
-	  <p>
-	    Department staff that will be transferring records to the
-	    University Archives &amp; Historical Collections should
-	    fill out a submission agreement form to request an
-	    account.  The account links the staff person to a
-	    department for easy transfer of digital files from the
-	    department to the archives for long-term digital
-	    preservation.  A short transmittal form is required for
-	    the transfer of records.
-	  </p>
-	  
-	  <p>
-	    After submitting the form, an archivist will contact you
-	    when your account is created and you are authorized to
-	    transfer records.
-	  </p>
-	  
-	  <form th:action="@{/SubmitRequest}" th:object="${submitData}" id="form" name="submission" method="post">
-	    <input type="hidden" value="1" name="submitted"/>
-	    
-	    <p>
-	      <table>
-		<tr><th>Department/Unit:</th><td><input type="text" id="department" th:field="*{department}"/></td><td>
-		    <span class="hiddenerror" id="departerr">Enter a "Department/Unit."</span>
-		</td></tr>
-		<tr><th>Department Address:</th><td><input type="text" id="address" th:field="*{address}"/></td><td>
-		    <span class="hiddenerror" id="addresserr">Enter a "Department Address."</span>
-		</td></tr>
-		<tr><th>Contact Name:</th><td><input type="text" id="name" th:field="*{name}"/></td><td>
-		    <span class="hiddenerror" id="nameerr">Enter a first name followed by a last name.</span>
-		</td></tr>
-		<tr><th>Contact Email:</th><td><input type="text" id="email" th:field="*{email}"/></td><td>
-		    <span class="hiddenerror" id="emailerr">Enter a valid "Contact Email."</span>
-		</td></tr>
-		<tr><th>Contact Phone:</th><td><input type="text" id="phone" th:field="*{phone}"/></td><td>
-		    <span class="hiddenerror" id="phoneerr">Enter a valid "Contact Phone."</span>
-		</td></tr>
-		<tr><th>Head of Department/Unit:</th><td><input type="text" id="departmenthead" th:field="*{departmenthead}"/></td><td>
-		    <span class="hiddenerror" id="departmentheaderr">Enter a "Head of Department/Unit."</span>
-		</td></tr>
-	      </table>
-	    </p>
-	  
-	    <p>
-	      <b>Mandate for transfer</b>: ...
-	    </p>
-	    
-	    <p>
-	      <b>Retention Period</b>: The records transferred will be
-	      maintained permanently.  If the records transferred are
-	      appraised by the archives to have a retention period less
-	      than permanent, the archives will contact the Contact
-	      Person regarding the disposition of the records.
-	    </p>
-	    
-	    <p>
-	      <b>Access Restrictions</b>: The records transferred should
-	      be free of any restrictions to access. Records submitted
-	      will be available for finding and the use of these
-	      documents and/or information.  If some records need to be
-	      restricted from this type of usage, please note these
-	      restrictions on the transmittal form when the records are
-	      transferred.
-	    </p>
-	    
-	    <p>
-	      <b>Copyright Statement</b>: ...
-	    </p>
-	    
-	    <p>
-	      <i>By typing your name below you agree that you have
-		read all of the statements and that information provided
-		is true and correct to the best of your knowledge.</i>
-	    </p>
+            <div th:if="${duplicatedept eq '1'}">
+                <div class="alert_box">
+                    <p>
+                        The entered &quot;Department/Unit&quot; is already present in the system.
+                        Please enter a different value or contact the <span th:text="${org.name}"></span> at <span
+                            th:text="${org.phone}"></span> for further help.
+                    </p>
+                </div>
+                <p></p>
+            </div>
 
-	    <p>
-	      <b>Type Name Here</b>: <input type="text" id="signature" th:field="*{signature}"/>
-	      <span class="hiddenerror" id="signatureerr">Please enter your name.</span>
-	      &nbsp;&nbsp;&nbsp;&nbsp; <span th:field="*{date}"></span>
-	    </p>
-	    
-	    <br/>
+            <div th:if="${valid eq 1}">
+                <div class="success_box">
+                    <p>
+                        An email has been sent to the University Archives staff.
+                        You should receive an email response soon.
+                    </p>
+                </div>
+                <p></p>
+            </div>
 
-	    <div id="captcha1" class="g-recaptcha" data-sitekey=""></div><br/>
-	    <div id="container">
-	      <div id="captcha2" class="g-recaptcha" data-sitekey=""></div><br/>
-	      <br/>
-	      <input id="button" type="button" value="Submit to verify for save" onclick="validateforsave()"/>
-	      <input id="cancel" type="button" value="X" onclick="cancelcaptcha()"/>
-	    </div>
 
-	    <br/>
+            <p>
+                Department staff that will be transferring records to the
+                University Archives &amp; Historical Collections should
+                fill out a submission agreement form to request an
+                account. The account links the staff person to a
+                department for easy transfer of digital files from the
+                department to the archives for long-term digital
+                preservation. A short transmittal form is required for
+                the transfer of records.
+            </p>
 
-	    <div th:if="${submitrecap eq '1'}">
-	      <div th:switch="${correct}">
-		<h2 th:case="'1'">The captcha entry was correct</h2>
-		<h2 th:case="*">The captcha entry was incorrect, please try again</h2>
-		<br/>
-	      </div>
-	    </div>
-	    
-	    <a href="#" onclick="window.print();return false;">Print</a>/<a href="#" onclick="createpdf(); return false">Save</a><br/>
-	    <!-- make the pdf a separate link, else: "java.lang.IllegalStateException: getOutputStream() has already been called for this response" -->
-	  </form>
-	    
-	  <br/>
-	  
-	  <div class="alert_box" id="alert_box_bottom">
-	    <p>
-	      Please enter the missing values above.
-	    </p>
-	  </div>
-	  
-	  <br/>
-	  <br/>
-	  <input type="button" value="Submit Submission Agreement Form" onclick="validate()"/>
+            <p>
+                After submitting the form, an archivist will contact you
+                when your account is created and you are authorized to
+                transfer records.
+            </p>
 
-	  
-	  <p>
-	    If you have further questions, please check
-	    the <a th:href="@{/Faq}">FAQ</a>
-	    and <a th:href="@{/Help}">Help</a> or contact University
-	    Archives <a th:href="@{mailto:{sem}(sem=${staff_email})}">here</a>.
-	  </p>
-	  
-	  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-	</div>
-	
-      </div>
+            <form th:action="@{/SubmitRequest}" th:object="${submitData}" id="form" name="submission" method="post">
+                <input type="hidden" value="1" name="submitted"/>
+
+                <p>
+                <table>
+                    <tr>
+                        <th>Department/Unit:</th>
+                        <td><input type="text" id="department" th:field="*{department}"/></td>
+                        <td>
+                            <span class="hiddenerror" id="departerr">Enter a "Department/Unit."</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Department Address:</th>
+                        <td><input type="text" id="address" th:field="*{address}"/></td>
+                        <td>
+                            <span class="hiddenerror" id="addresserr">Enter a "Department Address."</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Contact Name:</th>
+                        <td><input type="text" id="name" th:field="*{name}"/></td>
+                        <td>
+                            <span class="hiddenerror" id="nameerr">Enter a first name followed by a last name.</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Contact Email:</th>
+                        <td><input type="text" id="email" th:field="*{email}"/></td>
+                        <td>
+                            <span class="hiddenerror" id="emailerr">Enter a valid "Contact Email."</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Contact Phone:</th>
+                        <td><input type="text" id="phone" th:field="*{phone}"/></td>
+                        <td>
+                            <span class="hiddenerror" id="phoneerr">Enter a valid "Contact Phone."</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Head of Department/Unit:</th>
+                        <td><input type="text" id="departmenthead" th:field="*{departmenthead}"/></td>
+                        <td>
+                            <span class="hiddenerror" id="departmentheaderr">Enter a "Head of Department/Unit."</span>
+                        </td>
+                    </tr>
+                </table>
+                </p>
+
+                <p>
+                    <b>Mandate for transfer</b>: ...
+                </p>
+
+                <p>
+                    <b>Retention Period</b>: The records transferred will be
+                    maintained permanently. If the records transferred are
+                    appraised by the archives to have a retention period less
+                    than permanent, the archives will contact the Contact
+                    Person regarding the disposition of the records.
+                </p>
+
+                <p>
+                    <b>Access Restrictions</b>: The records transferred should
+                    be free of any restrictions to access. Records submitted
+                    will be available for finding and the use of these
+                    documents and/or information. If some records need to be
+                    restricted from this type of usage, please note these
+                    restrictions on the transmittal form when the records are
+                    transferred.
+                </p>
+
+                <p>
+                    <b>Copyright Statement</b>: ...
+                </p>
+
+                <p>
+                    <i>By typing your name below you agree that you have
+                        read all of the statements and that information provided
+                        is true and correct to the best of your knowledge.</i>
+                </p>
+
+                <p>
+                    <b>Type Name Here</b>: <input type="text" id="signature" th:field="*{signature}"/>
+                    <span class="hiddenerror" id="signatureerr">Please enter your name.</span>
+                    &nbsp;&nbsp;&nbsp;&nbsp; <span th:field="*{date}"></span>
+                </p>
+
+                <br/>
+
+                <div id="captcha1" class="g-recaptcha" data-sitekey=""></div>
+                <br/>
+                <div id="container">
+                    <div id="captcha2" class="g-recaptcha" data-sitekey=""></div>
+                    <br/>
+                    <br/>
+                    <input id="button" type="button" value="Submit to verify for save" onclick="validateforsave()"/>
+                    <input id="cancel" type="button" value="X" onclick="cancelcaptcha()"/>
+                </div>
+
+                <br/>
+
+                <div th:if="${submitrecap eq '1'}">
+                    <div th:switch="${correct}">
+                        <h2 th:case="'1'">The captcha entry was correct</h2>
+                        <h2 th:case="*">The captcha entry was incorrect, please try again</h2>
+                        <br/>
+                    </div>
+                </div>
+
+                <a href="#" onclick="window.print();return false;">Print</a>/<a href="#"
+                                                                                onclick="createpdf(); return false">Save</a><br/>
+                <!-- make the pdf a separate link, else: "java.lang.IllegalStateException: getOutputStream() has already been called for this response" -->
+            </form>
+
+            <br/>
+
+            <div class="alert_box" id="alert_box_bottom">
+                <p>
+                    Please enter the missing values above.
+                </p>
+            </div>
+
+            <br/>
+            <br/>
+            <input type="button" value="Submit Submission Agreement Form" onclick="validate()"/>
+
+
+            <p>
+                If you have further questions, please check
+                the <a th:href="@{/Faq}">FAQ</a>
+                and <a th:href="@{/Help}">Help</a> or contact University
+                Archives <a th:href="@{mailto:{sem}(sem=${staff_email})}">here</a>.
+            </p>
+
+            <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+        </div>
+
     </div>
+</div>
 
 
-    
-    <div th:replace="fragments/Footer :: Footer"></div>
-    
-  </body>
+<div th:replace="fragments/Footer :: Footer"></div>
+
+</body>
 </html>

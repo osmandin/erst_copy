@@ -42,51 +42,51 @@ public class Config extends WebMvcConfigurerAdapter {
 
     @Bean
     public BasicDataSource dataSource() {
-	BasicDataSource dataSource = new BasicDataSource();
-	dataSource.setDriverClassName(env.getRequiredProperty("db.driver"));
-	dataSource.setUrl(env.getRequiredProperty("db.url"));
-	dataSource.setUsername(env.getRequiredProperty("db.username"));
-	dataSource.setPassword(env.getRequiredProperty("db.password"));
-	dataSource.setTestWhileIdle(Boolean.parseBoolean(env.getRequiredProperty("db.testWhileIdle").trim()));
-	dataSource.setTestOnBorrow(Boolean.parseBoolean(env.getRequiredProperty("db.testOnBorrow").trim()));
-	dataSource.setTestOnReturn(Boolean.parseBoolean(env.getRequiredProperty("db.testOnReturn").trim()));
-	dataSource.setValidationQuery(env.getRequiredProperty("db.validationQuery"));
-	dataSource.setTimeBetweenEvictionRunsMillis(Long.parseLong(env.getRequiredProperty("db.timeBetweenEvictionRunsMillis").trim()));
-	dataSource.setMaxActive(Integer.parseInt(env.getRequiredProperty("db.maxActive").trim()));
-	dataSource.setMaxIdle(Integer.parseInt(env.getRequiredProperty("db.maxIdle").trim()));
-	dataSource.setMinIdle(Integer.parseInt(env.getRequiredProperty("db.minIdle").trim()));
-	dataSource.setMaxWait(Integer.parseInt(env.getRequiredProperty("db.maxWait").trim()));
-	dataSource.setInitialSize(Integer.parseInt(env.getRequiredProperty("db.initialSize").trim()));
-	dataSource.setMinEvictableIdleTimeMillis(Integer.parseInt(env.getRequiredProperty("db.minEvictableIdleTimeMillis").trim()));
-	return dataSource;
-    }
-    
-    @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-	LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
-	entityManagerFactoryBean.setDataSource(dataSource());
-	entityManagerFactoryBean.setPersistenceProviderClass(HibernatePersistenceProvider.class);
-	entityManagerFactoryBean.setPackagesToScan("submit.*");
-	entityManagerFactoryBean.setJpaProperties(hibProperties());
-	return entityManagerFactoryBean;
-    }
-    
-    private Properties hibProperties() {
-	Properties properties = new Properties();
-	properties.put("hibernate.dialect", env.getRequiredProperty("hibernate.dialect"));
-	properties.put("hibernate.show_sql", env.getRequiredProperty("hibernate.show_sql"));
-	return properties;
-    }
-    
-    @Bean
-    public JpaTransactionManager transactionManager() {
-	JpaTransactionManager transactionManager = new JpaTransactionManager();
-	transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
-	return transactionManager;
+        BasicDataSource dataSource = new BasicDataSource();
+        dataSource.setDriverClassName(env.getRequiredProperty("db.driver"));
+        dataSource.setUrl(env.getRequiredProperty("db.url"));
+        dataSource.setUsername(env.getRequiredProperty("db.username"));
+        dataSource.setPassword(env.getRequiredProperty("db.password"));
+        dataSource.setTestWhileIdle(Boolean.parseBoolean(env.getRequiredProperty("db.testWhileIdle").trim()));
+        dataSource.setTestOnBorrow(Boolean.parseBoolean(env.getRequiredProperty("db.testOnBorrow").trim()));
+        dataSource.setTestOnReturn(Boolean.parseBoolean(env.getRequiredProperty("db.testOnReturn").trim()));
+        dataSource.setValidationQuery(env.getRequiredProperty("db.validationQuery"));
+        dataSource.setTimeBetweenEvictionRunsMillis(Long.parseLong(env.getRequiredProperty("db.timeBetweenEvictionRunsMillis").trim()));
+        dataSource.setMaxActive(Integer.parseInt(env.getRequiredProperty("db.maxActive").trim()));
+        dataSource.setMaxIdle(Integer.parseInt(env.getRequiredProperty("db.maxIdle").trim()));
+        dataSource.setMinIdle(Integer.parseInt(env.getRequiredProperty("db.minIdle").trim()));
+        dataSource.setMaxWait(Integer.parseInt(env.getRequiredProperty("db.maxWait").trim()));
+        dataSource.setInitialSize(Integer.parseInt(env.getRequiredProperty("db.initialSize").trim()));
+        dataSource.setMinEvictableIdleTimeMillis(Integer.parseInt(env.getRequiredProperty("db.minEvictableIdleTimeMillis").trim()));
+        return dataSource;
     }
 
     @Bean
-    public org.thymeleaf.templateresolver.ServletContextTemplateResolver templateResolver(){
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+        LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
+        entityManagerFactoryBean.setDataSource(dataSource());
+        entityManagerFactoryBean.setPersistenceProviderClass(HibernatePersistenceProvider.class);
+        entityManagerFactoryBean.setPackagesToScan("submit.*");
+        entityManagerFactoryBean.setJpaProperties(hibProperties());
+        return entityManagerFactoryBean;
+    }
+
+    private Properties hibProperties() {
+        Properties properties = new Properties();
+        properties.put("hibernate.dialect", env.getRequiredProperty("hibernate.dialect"));
+        properties.put("hibernate.show_sql", env.getRequiredProperty("hibernate.show_sql"));
+        return properties;
+    }
+
+    @Bean
+    public JpaTransactionManager transactionManager() {
+        JpaTransactionManager transactionManager = new JpaTransactionManager();
+        transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
+        return transactionManager;
+    }
+
+    @Bean
+    public org.thymeleaf.templateresolver.ServletContextTemplateResolver templateResolver() {
         ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver();
         templateResolver.setPrefix("/WEB-INF/templates/");
         templateResolver.setSuffix(".html");
@@ -96,14 +96,14 @@ public class Config extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    public org.thymeleaf.spring4.SpringTemplateEngine templateEngine(){
+    public org.thymeleaf.spring4.SpringTemplateEngine templateEngine() {
         SpringTemplateEngine templateEngine = new SpringTemplateEngine();
         templateEngine.setTemplateResolver(templateResolver());
         return templateEngine;
     }
-    
+
     @Bean
-    public org.thymeleaf.spring4.view.ThymeleafViewResolver viewResolver(){
+    public org.thymeleaf.spring4.view.ThymeleafViewResolver viewResolver() {
         ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
         viewResolver.setTemplateEngine(templateEngine());
         return viewResolver;
@@ -116,37 +116,37 @@ public class Config extends WebMvcConfigurerAdapter {
 
     @Bean
     public DepartmentsFormFormatter departmentsFormFormatter() {
-	return new DepartmentsFormFormatter();
+        return new DepartmentsFormFormatter();
     }
-    
+
     @Override
     public void addFormatters(FormatterRegistry registry) {
         registry.addFormatter(departmentsFormFormatter());
     }
-    
+
     @Bean
-    public JavaMailSenderImpl getSender() {	
-	JavaMailSenderImpl sender = new JavaMailSenderImpl();
-	sender.setHost(env.getRequiredProperty("email.mxserver"));
-	return sender;
+    public JavaMailSenderImpl getSender() {
+        JavaMailSenderImpl sender = new JavaMailSenderImpl();
+        sender.setHost(env.getRequiredProperty("email.mxserver"));
+        return sender;
     }
 
     @Bean
     public VelocityEngineFactoryBean getVelocityEngine() {
-	Properties properties = new Properties();
-	properties.put("resource.loader", "class");
-	properties.put("class.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
-	properties.put("file.resource.loader.cache", false);
+        Properties properties = new Properties();
+        properties.put("resource.loader", "class");
+        properties.put("class.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+        properties.put("file.resource.loader.cache", false);
 
-	VelocityEngineFactoryBean velocityEngine = new VelocityEngineFactoryBean();
-	velocityEngine.setVelocityProperties(properties);
-	return velocityEngine;
+        VelocityEngineFactoryBean velocityEngine = new VelocityEngineFactoryBean();
+        velocityEngine.setVelocityProperties(properties);
+        return velocityEngine;
     }
 
     @Bean
-    public org.springframework.web.multipart.commons.CommonsMultipartResolver multipartResolver(){
-	CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
-	multipartResolver.setMaxUploadSize(Long.parseLong(env.getRequiredProperty("filemaxuploadsize")));
+    public org.springframework.web.multipart.commons.CommonsMultipartResolver multipartResolver() {
+        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+        multipartResolver.setMaxUploadSize(Long.parseLong(env.getRequiredProperty("filemaxuploadsize")));
         return multipartResolver;
     }
 }

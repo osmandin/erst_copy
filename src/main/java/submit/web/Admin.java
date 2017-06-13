@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.core.env.Environment;
+
 import javax.annotation.Resource;
 
 import submit.impl.Utils;
@@ -19,21 +20,21 @@ public class Admin {
 
     @Resource
     private Environment env;
-    
+
     // ------------------------------------------------------------------------
     @RequestMapping("/Admin")
     public String Admin(
-			ModelMap model,
-			HttpSession session
-			){
-	LOGGER.log(Level.INFO, "Admin");
+            ModelMap model,
+            HttpSession session
+    ) {
+        LOGGER.log(Level.INFO, "Admin");
 
-	Utils utils = new Utils();
-	if(!utils.setupAdminHandler(model, session, env)){
-	    return "Home";
-	}
+        Utils utils = new Utils();
+        if (!utils.setupAdminHandler(model, session, env)) {
+            return "Home";
+        }
 
-	model.addAttribute("page", "Admin");
+        model.addAttribute("page", "Admin");
         return "Admin";
     }
 

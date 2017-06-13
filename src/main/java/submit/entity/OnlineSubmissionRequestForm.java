@@ -1,6 +1,7 @@
 package submit.entity;
 
 import javax.persistence.*;
+
 import lombok.Data;
 
 @Data

@@ -7,7 +7,7 @@ import submit.entity.SsaCopyrightsForm;
 
 import java.util.List;
 
-public interface SsaCopyrightsFormRepository extends JpaRepository<SsaCopyrightsForm, Integer>{
+public interface SsaCopyrightsFormRepository extends JpaRepository<SsaCopyrightsForm, Integer> {
     public SsaCopyrightsForm findById(int id);
 
     @Query(value = "SELECT c FROM SsaCopyrightsForm c order by copyright asc")

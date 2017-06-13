@@ -1,6 +1,7 @@
 package submit.entity;
 
 import javax.persistence.*;
+
 import lombok.Data;
 
 @Data
@@ -15,8 +16,8 @@ public class SsaAccessRestrictionsForm {
     private String restriction;
 
     private int idx;
-    
-    @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="ssaid")
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "ssaid")
     private SsasForm ssasForm;
 }

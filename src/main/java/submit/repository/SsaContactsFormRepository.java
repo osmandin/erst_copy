@@ -7,7 +7,7 @@ import java.util.List;
 
 import submit.entity.SsaContactsForm;
 
-public interface SsaContactsFormRepository extends JpaRepository<SsaContactsForm, Integer>{
+public interface SsaContactsFormRepository extends JpaRepository<SsaContactsForm, Integer> {
     public SsaContactsForm findById(int id);
 
     @Query(value = "SELECT c FROM SsaContactsForm c where c.ssasForm.id=?1 order by name asc")

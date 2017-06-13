@@ -1,158 +1,164 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-  
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <!-- $Id: DepartmentDeleteWarning.html,v 1.41 2016-11-15 11:29:08-04 ericholp Exp $ -->
     <title>Warning: Department Delete Request</title>
     <div th:replace="fragments/Head :: Head"></div>
-    <script type="text/javascript" th:src="@{/resources/js/DepartmentDeleteWarning.js}"></script> 
-  </head>
-  
-  <body>
-    
-    <div th:replace="fragments/BodyHeader :: BodyHeader">body_header</div>
-    
-    <div id="body_main">
-      <div class="window">
+    <script type="text/javascript" th:src="@{/resources/js/DepartmentDeleteWarning.js}"></script>
+</head>
 
-	<div th:replace="fragments/Nav :: Nav"></div>
-	
-	<div id="content">
-	  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+<body>
 
-	  <div th:if="${nossadeletes eq '1'}" class="alert_box">
-	    <p>
-	      No Submission Agreements were deleted because none were 
-	      selected. 
-	    </p>
-	  </div>
-	  
-	  <div th:if="${somessasdeleted eq '1'}" class="success_box">
-	    <p>
-	      The following Submission Agreements were deleted:
-	      <span th:text="${deletedssas}"></span>.
-	    </p>
-	  </div>
-	  	  
-	  <div th:if="${somessasnotdeleted eq '1'}" class="alert_box">
-	    <p>
-	      The following Submission Agreements were not deleted
-	      because of Transfer Request dependencies:
-	      <span th:text="${rejectedssas}"></span>.
-	    </p>
-	  </div>
-	  
-	  <div th:if="${nouserdeletes eq '1'}" class="alert_box">
-	    <p>No Users were deleted because none were selected.</p>
-	  </div>
-	  
-	  <div th:if="${usersdeleted eq '1'}" class="success_box">
-	    <p>
-	      The following <span th:text="${deletedcnt}"></span> Users were deleted:
-	      <span th:text="${deletedusers}"></span>.
-	    </p>
-	  </div>
+<div th:replace="fragments/BodyHeader :: BodyHeader">body_header</div>
 
-	  <h1>Warning: Department Delete Request</h1>
-	  
-	  <p><a th:href="@{/EditDepartment(departmentid=${departmentid})}">Return to Edit Department/Unit or Donor</a></p>
+<div id="body_main">
+    <div class="window">
 
-	  <h2 th:text="${departmentsForm.name}"></h2>	  
+        <div th:replace="fragments/Nav :: Nav"></div>
 
-	  <p></p>
-	  
-	  <div th:switch="${users.size()}">
-	    <div th:case="'0'">
-	      <h4>There are no User dependencies.</h4>
-	    </div>
-	    <div th:case="*">
-	      <h4>User dependencies:</h4>
-	      <form method="POST" th:action="@{/DepartmentDeleteWarningDeleteUsers}">
-		<input type="hidden" name="departmentid" th:value="${departmentid}"/>
-		<p>
-		  <table border="1">
-		    <tr>
-		      <th>&nbsp;</th>
-		      <th>id</th>
-		      <th>last name</th>
-		      <th>first name</th>
-		    </tr>
-		    <tr th:each="user : ${users}">
-		      <td><input name="userids" type="checkbox" th:value="${user.id}"/></td>
-		      <td>
-			<a th:href="@{/EditUser(userid=${user.id})}" th:text="${user.id}"></a>
-		      </td>
-		      <td>
-			<a th:href="@{/EditUser(userid=${user.id})}" th:text="${user.lastname}"></a>
-		      </td>
-		      <td>
-			<a th:href="@{/EditUser(userid=${user.id})}" th:text="${user.firstname}"></a>
-		      </td>
-		    </tr>
-		  </table>
-		</p>
-		<input type="submit" name="submit" value="Delete selected Users" onclick="return confirm_delete_users( this.form )" />
-	      </form>
-	    </div>
-	  </div>
-	  
-	  <p></p>
-	  <p></p>
+        <div id="content">
+            <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 
-	  <div th:switch="${ssas.size()}">
-	    <div th:case="'0'"> 
-	      <h4>There are no  Submission Agreement dependencies.</h4>
-	    </div>
-	    <div th:case="*">
-	      <h4>Submission Agreement dependencies:</h4>
-	      <form method="POST" th:action="@{/DepartmentDeleteWarningDeleteSsas}">
-		<input type="hidden" name="departmentid" th:value="${departmentid}"/>
-		<p>
-		  <table border="1">
-		    <tr>
-		      <th>&nbsp;</th>
-		      <th>id</th>
-		      <th>records title</th>
-		      <th>dependent<br/>Transfer Requests</th>
-		    </tr>
-		    <tr th:each="ssa : ${ssas}">
-		      <td th:switch="*{ssa == null or ssa.rsasForms == null or ssa.rsasForms.size() == 0}">
-			<div th:case="true">
-			  &nbsp;&nbsp;&nbsp;
-			</div>
-			<div th:case="*">
-			  <input name="ssaids" type="checkbox" th:value="${ssa.id}"/>
-			</div>
-		      </td>
-		      <td th:text="${ssa.id}"></td>
-		      <td><a th:href="@{/EditSsa(id=${ssa.id})}" th:text="${ssa.recordstitle}"></a></td>
-		      <td align="center" th:switch="*{ssa == null or ssa.rsasForms == null or ssa.rsasForms.size() == 0}">
-			<div th:case="true">
-			  none
-			</div>
-			<div th:case="*" th:each="rsa : ${ssa.rsasForms}">
-			  <div th:switch="${rsa.approved}">
-			    <a th:case="'1'" th:href="@{/EditApprovedRsa(rsaid=${rsa.id})}" th:text="${rsa.id}"></a>
-			    <a th:case="*" th:href="@{/EditDraftRsa(rsaid=${rsa.id})}" th:text="${rsa.id}"></a>
-			  </div>
-			</div>
-		      </td>
-		    </tr>
-		  </table>
-		</p>
-		<input type="submit" name="submit" value="Delete selected Submission Agreements" onclick="return confirm_delete_ssas( this.form )"/>
-	      </form>
-	    </div>
-	  </div>
-	  
-	  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-	</div>
-	
-      </div>
+            <div th:if="${nossadeletes eq '1'}" class="alert_box">
+                <p>
+                    No Submission Agreements were deleted because none were
+                    selected.
+                </p>
+            </div>
+
+            <div th:if="${somessasdeleted eq '1'}" class="success_box">
+                <p>
+                    The following Submission Agreements were deleted:
+                    <span th:text="${deletedssas}"></span>.
+                </p>
+            </div>
+
+            <div th:if="${somessasnotdeleted eq '1'}" class="alert_box">
+                <p>
+                    The following Submission Agreements were not deleted
+                    because of Transfer Request dependencies:
+                    <span th:text="${rejectedssas}"></span>.
+                </p>
+            </div>
+
+            <div th:if="${nouserdeletes eq '1'}" class="alert_box">
+                <p>No Users were deleted because none were selected.</p>
+            </div>
+
+            <div th:if="${usersdeleted eq '1'}" class="success_box">
+                <p>
+                    The following <span th:text="${deletedcnt}"></span> Users were deleted:
+                    <span th:text="${deletedusers}"></span>.
+                </p>
+            </div>
+
+            <h1>Warning: Department Delete Request</h1>
+
+            <p><a th:href="@{/EditDepartment(departmentid=${departmentid})}">Return to Edit Department/Unit or Donor</a>
+            </p>
+
+            <h2 th:text="${departmentsForm.name}"></h2>
+
+            <p></p>
+
+            <div th:switch="${users.size()}">
+                <div th:case="'0'">
+                    <h4>There are no User dependencies.</h4>
+                </div>
+                <div th:case="*">
+                    <h4>User dependencies:</h4>
+                    <form method="POST" th:action="@{/DepartmentDeleteWarningDeleteUsers}">
+                        <input type="hidden" name="departmentid" th:value="${departmentid}"/>
+                        <p>
+                        <table border="1">
+                            <tr>
+                                <th>&nbsp;</th>
+                                <th>id</th>
+                                <th>last name</th>
+                                <th>first name</th>
+                            </tr>
+                            <tr th:each="user : ${users}">
+                                <td><input name="userids" type="checkbox" th:value="${user.id}"/></td>
+                                <td>
+                                    <a th:href="@{/EditUser(userid=${user.id})}" th:text="${user.id}"></a>
+                                </td>
+                                <td>
+                                    <a th:href="@{/EditUser(userid=${user.id})}" th:text="${user.lastname}"></a>
+                                </td>
+                                <td>
+                                    <a th:href="@{/EditUser(userid=${user.id})}" th:text="${user.firstname}"></a>
+                                </td>
+                            </tr>
+                        </table>
+                        </p>
+                        <input type="submit" name="submit" value="Delete selected Users"
+                               onclick="return confirm_delete_users( this.form )"/>
+                    </form>
+                </div>
+            </div>
+
+            <p></p>
+            <p></p>
+
+            <div th:switch="${ssas.size()}">
+                <div th:case="'0'">
+                    <h4>There are no Submission Agreement dependencies.</h4>
+                </div>
+                <div th:case="*">
+                    <h4>Submission Agreement dependencies:</h4>
+                    <form method="POST" th:action="@{/DepartmentDeleteWarningDeleteSsas}">
+                        <input type="hidden" name="departmentid" th:value="${departmentid}"/>
+                        <p>
+                        <table border="1">
+                            <tr>
+                                <th>&nbsp;</th>
+                                <th>id</th>
+                                <th>records title</th>
+                                <th>dependent<br/>Transfer Requests</th>
+                            </tr>
+                            <tr th:each="ssa : ${ssas}">
+                                <td th:switch="*{ssa == null or ssa.rsasForms == null or ssa.rsasForms.size() == 0}">
+                                    <div th:case="true">
+                                        &nbsp;&nbsp;&nbsp;
+                                    </div>
+                                    <div th:case="*">
+                                        <input name="ssaids" type="checkbox" th:value="${ssa.id}"/>
+                                    </div>
+                                </td>
+                                <td th:text="${ssa.id}"></td>
+                                <td><a th:href="@{/EditSsa(id=${ssa.id})}" th:text="${ssa.recordstitle}"></a></td>
+                                <td align="center"
+                                    th:switch="*{ssa == null or ssa.rsasForms == null or ssa.rsasForms.size() == 0}">
+                                    <div th:case="true">
+                                        none
+                                    </div>
+                                    <div th:case="*" th:each="rsa : ${ssa.rsasForms}">
+                                        <div th:switch="${rsa.approved}">
+                                            <a th:case="'1'" th:href="@{/EditApprovedRsa(rsaid=${rsa.id})}"
+                                               th:text="${rsa.id}"></a>
+                                            <a th:case="*" th:href="@{/EditDraftRsa(rsaid=${rsa.id})}"
+                                               th:text="${rsa.id}"></a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        </p>
+                        <input type="submit" name="submit" value="Delete selected Submission Agreements"
+                               onclick="return confirm_delete_ssas( this.form )"/>
+                    </form>
+                </div>
+            </div>
+
+            <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+        </div>
+
     </div>
+</div>
 
-    <div th:replace="fragments/Footer :: Footer"></div>
-    
-  </body>
+<div th:replace="fragments/Footer :: Footer"></div>
+
+</body>
 </html>

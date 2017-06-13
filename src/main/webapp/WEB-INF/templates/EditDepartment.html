@@ -1,146 +1,152 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">  
-  <head>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
     <!-- $Id: EditDepartment.html,v 1.28 2016-11-15 11:29:48-04 ericholp Exp $ -->
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Edit a Department/Unit or Donor</title>    
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Edit a Department/Unit or Donor</title>
     <div th:replace="fragments/Head :: Head"></div>
-    <script type="text/javascript" th:src="@{/resources/js/EditDepartment.js}"></script> 
-  </head>
-  
-  <body>
+    <script type="text/javascript" th:src="@{/resources/js/EditDepartment.js}"></script>
+</head>
 
-    <div th:replace="fragments/BodyHeader :: BodyHeader">body_header</div>
-    
-    <div id="body_main">
-      <div class="window">
+<body>
 
-	<div th:replace="fragments/Nav :: Nav"></div>
-	
-	<div id="content">
-	  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-	  
-	  <div th:if="${updated eq '1'}">
-	    <div class="success_box">
-	      <p>
-		Department/Unit or Donors <span th:text="${departmentname}"></span> updated.
-	      </p>
-	    </div>
-	    <p></p>
-	  </div>
-	  
-	  <div th:if="${dependenciesresolved eq '1'}">
-	    <div class="success_box">
-	      <p>
-		The dependencies for this Department/Unit or Donors have been 
-		resolved, it can now be deleted.
-	      </p>
-	      <p th:if="${somessasdeleted}">
-		The following Standard Submission Agreements were
-		deleted: <span th:text="${deletedssas}"></span>
-	      </p>
-	      <p th:if="${usersdeleted}">
-		The following <span th:text="${deletedcnt}"></span> user<span th:if="${deletedcnt > 1}">s</span> <span th:if="${deletedcnt > 1}">were</span><span th:if="${deletedcnt == 1}">was</span> deleted: <span th:text="${deletedusers}"></span>
-	      </p>
-	    </div>
-	    <p></p>
-	  </div>
-	  
-	  <div th:if="${notupdated eq '1'}">
-	    <div class="alert_box">
-	      <p>
-		Department/Unit or Donors not updated.  Please correct
-		the fields highlighted below.
-	      </p>
-	    </div>
-	    <p></p>
-	  </div>
-	  
-	  <div th:if="${deleted eq '1'}">
-	    <div class="success_box">
-	      <p>Department/Unit or Donors deleted.</p>
-	    </div>
-	    <p></p>
-	  </div>
-	  
-	  <div th:if="${notdeleted eq '1'}">
-	    <div class="alert_box">
-	      <p>
-		Department/Unit or Donors could not be deleted because there were 
-		dependencies. 
-	      </p>
-	      <p th:if="${weredependentssas eq '1'}">
-		The following Submission Agreeements depend on this
-		department: <span th:text="${dependentssas}"></span>.
-	      </p>
-	      <p th:if="${weredependentusers eq '1'}">
-		The following users depend on this department:
-		<span th:text="${dependentusers}"></span>.
-	      </p>
-	      <p>
-		Please remove these dependencies first.
-	      </p>
-	    </div>
-	    <p></p>
-	  </div>
-	  
-	  <h1>Edit a Department/Unit or Donor</h1>
-	  
-	  <p><a th:href="@{/ListDepartments}">Return to Department/Unit or Donors list</a></p>
-	  
-	  <p>
-	    Use the form below to modify this Department/Unit or Donors.  Use the button at the bottom to delete this Department/Unit or Donors.  The
-	    delete option is only available when dependencies have been removed.
-	  </p>
-	  
-	  <p></p>
-	  <form th:action="@{/EditDepartment(departmentid=*{id})}" th:object="${departmentsForm}" method="post">
+<div th:replace="fragments/BodyHeader :: BodyHeader">body_header</div>
 
-	    <div th:each="user, stat : *{usersForms}">
-	      <input type="hidden" th:field="*{usersForms[__${stat.index}__].id}"/>
-	      <input type="hidden" th:field="*{usersForms[__${stat.index}__].username}"/>
-	      <input type="hidden" th:field="*{usersForms[__${stat.index}__].firstname}"/>
-	      <input type="hidden" th:field="*{usersForms[__${stat.index}__].lastname}"/>
-	      <input type="hidden" th:field="*{usersForms[__${stat.index}__].email}"/>
-	      <input type="hidden" th:field="*{usersForms[__${stat.index}__].isadmin}"/>
-	      <input type="hidden" th:field="*{usersForms[__${stat.index}__].enabled}"/>
-	    </div>
-	    <input type="hidden" th:field="*{id}"/>
-	    <div>
-	      <label>Name</label>
-	      <input  name="name" type="text" th:field="*{name}" class="wide"/>
-	      <span style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
-	    </div>
-	    <p></p>
-	    <div>
-	      <input type="submit" name="submit" value="Update Department/Unit or Donor"/>
-	    </div>
-	  </form>
-	  
-	  <p></p>
-	  <hr/>
-	  
-	  <div th:switch="*{(departmentsForm.usersForms != null and departmentsForm.usersForms.size() > 0) or departmentsForm.ssasForm != null}">
-	    <div th:case="true">
-	      <h4>This department cannot be deleted due to dependencies.</h4>
-	      <form method="post" id="deleteForm" th:action="@{/DepartmentDeleteWarning(departmentid=*{departmentsForm.id})}">
-		<p><input type="submit" name="submit" value="View dependencies"/></p>
-	      </form>
-	    </div>
-	    <div th:case="*">
-	      <form method="post" id="deleteForm" th:action="@{/DeleteDepartment(departmentid=*{departmentsForm.id})}">
-		<p><input type="submit" onclick="return confirm_delete()" name="delete" value="Delete Department/Unit or Donors"/></p>
-	      </form>
-	    </div>
-	  </div>
-	  
-	  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-	</div>
-	
-      </div>
+<div id="body_main">
+    <div class="window">
+
+        <div th:replace="fragments/Nav :: Nav"></div>
+
+        <div id="content">
+            <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+            <div th:if="${updated eq '1'}">
+                <div class="success_box">
+                    <p>
+                        Department/Unit or Donors <span th:text="${departmentname}"></span> updated.
+                    </p>
+                </div>
+                <p></p>
+            </div>
+
+            <div th:if="${dependenciesresolved eq '1'}">
+                <div class="success_box">
+                    <p>
+                        The dependencies for this Department/Unit or Donors have been
+                        resolved, it can now be deleted.
+                    </p>
+                    <p th:if="${somessasdeleted}">
+                        The following Standard Submission Agreements were
+                        deleted: <span th:text="${deletedssas}"></span>
+                    </p>
+                    <p th:if="${usersdeleted}">
+                        The following <span th:text="${deletedcnt}"></span> user<span th:if="${deletedcnt > 1}">s</span>
+                        <span th:if="${deletedcnt > 1}">were</span><span th:if="${deletedcnt == 1}">was</span> deleted:
+                        <span th:text="${deletedusers}"></span>
+                    </p>
+                </div>
+                <p></p>
+            </div>
+
+            <div th:if="${notupdated eq '1'}">
+                <div class="alert_box">
+                    <p>
+                        Department/Unit or Donors not updated. Please correct
+                        the fields highlighted below.
+                    </p>
+                </div>
+                <p></p>
+            </div>
+
+            <div th:if="${deleted eq '1'}">
+                <div class="success_box">
+                    <p>Department/Unit or Donors deleted.</p>
+                </div>
+                <p></p>
+            </div>
+
+            <div th:if="${notdeleted eq '1'}">
+                <div class="alert_box">
+                    <p>
+                        Department/Unit or Donors could not be deleted because there were
+                        dependencies.
+                    </p>
+                    <p th:if="${weredependentssas eq '1'}">
+                        The following Submission Agreeements depend on this
+                        department: <span th:text="${dependentssas}"></span>.
+                    </p>
+                    <p th:if="${weredependentusers eq '1'}">
+                        The following users depend on this department:
+                        <span th:text="${dependentusers}"></span>.
+                    </p>
+                    <p>
+                        Please remove these dependencies first.
+                    </p>
+                </div>
+                <p></p>
+            </div>
+
+            <h1>Edit a Department/Unit or Donor</h1>
+
+            <p><a th:href="@{/ListDepartments}">Return to Department/Unit or Donors list</a></p>
+
+            <p>
+                Use the form below to modify this Department/Unit or Donors. Use the button at the bottom to delete this
+                Department/Unit or Donors. The
+                delete option is only available when dependencies have been removed.
+            </p>
+
+            <p></p>
+            <form th:action="@{/EditDepartment(departmentid=*{id})}" th:object="${departmentsForm}" method="post">
+
+                <div th:each="user, stat : *{usersForms}">
+                    <input type="hidden" th:field="*{usersForms[__${stat.index}__].id}"/>
+                    <input type="hidden" th:field="*{usersForms[__${stat.index}__].username}"/>
+                    <input type="hidden" th:field="*{usersForms[__${stat.index}__].firstname}"/>
+                    <input type="hidden" th:field="*{usersForms[__${stat.index}__].lastname}"/>
+                    <input type="hidden" th:field="*{usersForms[__${stat.index}__].email}"/>
+                    <input type="hidden" th:field="*{usersForms[__${stat.index}__].isadmin}"/>
+                    <input type="hidden" th:field="*{usersForms[__${stat.index}__].enabled}"/>
+                </div>
+                <input type="hidden" th:field="*{id}"/>
+                <div>
+                    <label>Name</label>
+                    <input name="name" type="text" th:field="*{name}" class="wide"/>
+                    <span style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+                </div>
+                <p></p>
+                <div>
+                    <input type="submit" name="submit" value="Update Department/Unit or Donor"/>
+                </div>
+            </form>
+
+            <p></p>
+            <hr/>
+
+            <div th:switch="*{(departmentsForm.usersForms != null and departmentsForm.usersForms.size() > 0) or departmentsForm.ssasForm != null}">
+                <div th:case="true">
+                    <h4>This department cannot be deleted due to dependencies.</h4>
+                    <form method="post" id="deleteForm"
+                          th:action="@{/DepartmentDeleteWarning(departmentid=*{departmentsForm.id})}">
+                        <p><input type="submit" name="submit" value="View dependencies"/></p>
+                    </form>
+                </div>
+                <div th:case="*">
+                    <form method="post" id="deleteForm"
+                          th:action="@{/DeleteDepartment(departmentid=*{departmentsForm.id})}">
+                        <p><input type="submit" onclick="return confirm_delete()" name="delete"
+                                  value="Delete Department/Unit or Donors"/></p>
+                    </form>
+                </div>
+            </div>
+
+            <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+        </div>
+
     </div>
+</div>
 
-    <div th:replace="fragments/Footer :: Footer"></div>
-    
-  </body>
+<div th:replace="fragments/Footer :: Footer"></div>
+
+</body>
 </html>

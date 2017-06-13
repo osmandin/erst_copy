@@ -1,106 +1,107 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-  
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <!-- $Id: ListDepartments.html,v 1.20 2016-11-15 11:31:23-04 ericholp Exp $ -->
     <title>Manage Department/Unit and Donors</title>
     <div th:replace="fragments/Head :: Head"></div>
-    <script type="text/javascript" th:src="@{/resources/js/ListDepartments.js}"></script> 
-  </head>
-  
-  <body>
+    <script type="text/javascript" th:src="@{/resources/js/ListDepartments.js}"></script>
+</head>
 
-    <div th:replace="fragments/BodyHeader :: BodyHeader">body_header</div>
-    
-    <div id="body_main">
-      <div class="window">
+<body>
 
-	<div th:replace="fragments/Nav :: Nav"></div>
-	
-	<div id="content">
-	  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+<div th:replace="fragments/BodyHeader :: BodyHeader">body_header</div>
 
-	  <div class="alert_box" id="alert_box_top">
-	    <p>Please enter the missing values below.</p>
-	    <ul>
-	      <li id="departmentnameerr">Please enter a valid 'Name'."</li>
-	    </ul>
-	    <p></p>
-	  </div>
+<div id="body_main">
+    <div class="window">
 
-	  <div th:if="${departmentadded eq '1'}" class="success_box">
-	    <p>${departmentname} added.</p>
-	    <p></p>
-	  </div>
+        <div th:replace="fragments/Nav :: Nav"></div>
 
-	  <div class="success_box" th:if="${deleted eq '1'}">
-	    <p>Department <span th:text="${departmentname}"></span> was deleted.</p>
-	    <p></p>
-	  </div>	  
-	  
-	  <div th:if="${notdeleted eq '1'}" class="alert_box">
-	    <p>
-	      <span th:text="${departmentname}"></span> could not be deleted because there were 
-	      dependencies. 
-	    </p>
-	    <p th:if="${weredependentssas eq '1'}">
-	      The following Submission Agreeements depend on this
-	      department: <span th:text="${dependentssas}"></span>.
-	    </p>
-	    <p th:if="${weredependentusers eq '1'}">
-	      The following users depend on this department:
-	      <span th:text="${dependentusers}"></span>.
-	    </p>
-	    <p>
-	      Please remove these dependencies first.
-	    </p>
-	    <p></p>
-	  </div>
-	  
-	  <h2>Manage Department/Unit and Donors</h2>
+        <div id="content">
+            <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 
-	  <p>From this screen, you can either add a Department/Unit or Donor or edit an existing one.</p>
-	  	  
-	  <h1>Add a Department/Unit or Donor</h1>
-	  <br/>
-	  
-	  <form id="form" th:action="@{/AddDepartment}" method="post">
-	    <div>
-	      <label>Name</label>
-	      <input id="departmentname" name="name" type="text" class="wide"/>
-	    </div>
-	  </form>
-	  <p></p>
-	  <p>
-	    <input type="button" value="Add Department/Unit or Donor" onclick="validate()"/>
-	  </p>
-	  <br/>
+            <div class="alert_box" id="alert_box_top">
+                <p>Please enter the missing values below.</p>
+                <ul>
+                    <li id="departmentnameerr">Please enter a valid 'Name'."</li>
+                </ul>
+                <p></p>
+            </div>
 
-	  <div th:switch="${departmentsForms == null or departmentsForms.size() == 0}">
-	    <div th:case="true">
-	      <h3>Currently there are no Departments/Units or Donors to select from</h3>
-	    </div>
-	    <div th:case="*">
-	      
-	      <h1>Edit a Department/Unit or Donor</h1>
-	      <br/>
-	      
-	      <p>Click the name of a Department/Unit or Donor below to edit or delete it.
-		<ul th:each="department : ${departmentsForms}">
-		  <li><a th:href="@{/EditDepartment(departmentid=${department.id})}" th:text="${department.name}"></a></li>
-		</ul>
-	      </p>
-	    </div>
-	  </div>
-	  
-	  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-	</div>
-	
-      </div>
+            <div th:if="${departmentadded eq '1'}" class="success_box">
+                <p>${departmentname} added.</p>
+                <p></p>
+            </div>
+
+            <div class="success_box" th:if="${deleted eq '1'}">
+                <p>Department <span th:text="${departmentname}"></span> was deleted.</p>
+                <p></p>
+            </div>
+
+            <div th:if="${notdeleted eq '1'}" class="alert_box">
+                <p>
+                    <span th:text="${departmentname}"></span> could not be deleted because there were
+                    dependencies.
+                </p>
+                <p th:if="${weredependentssas eq '1'}">
+                    The following Submission Agreeements depend on this
+                    department: <span th:text="${dependentssas}"></span>.
+                </p>
+                <p th:if="${weredependentusers eq '1'}">
+                    The following users depend on this department:
+                    <span th:text="${dependentusers}"></span>.
+                </p>
+                <p>
+                    Please remove these dependencies first.
+                </p>
+                <p></p>
+            </div>
+
+            <h2>Manage Department/Unit and Donors</h2>
+
+            <p>From this screen, you can either add a Department/Unit or Donor or edit an existing one.</p>
+
+            <h1>Add a Department/Unit or Donor</h1>
+            <br/>
+
+            <form id="form" th:action="@{/AddDepartment}" method="post">
+                <div>
+                    <label>Name</label>
+                    <input id="departmentname" name="name" type="text" class="wide"/>
+                </div>
+            </form>
+            <p></p>
+            <p>
+                <input type="button" value="Add Department/Unit or Donor" onclick="validate()"/>
+            </p>
+            <br/>
+
+            <div th:switch="${departmentsForms == null or departmentsForms.size() == 0}">
+                <div th:case="true">
+                    <h3>Currently there are no Departments/Units or Donors to select from</h3>
+                </div>
+                <div th:case="*">
+
+                    <h1>Edit a Department/Unit or Donor</h1>
+                    <br/>
+
+                    <p>Click the name of a Department/Unit or Donor below to edit or delete it.
+                    <ul th:each="department : ${departmentsForms}">
+                        <li><a th:href="@{/EditDepartment(departmentid=${department.id})}"
+                               th:text="${department.name}"></a></li>
+                    </ul>
+                    </p>
+                </div>
+            </div>
+
+            <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+        </div>
+
     </div>
+</div>
 
-    <div th:replace="fragments/Footer :: Footer"></div>
+<div th:replace="fragments/Footer :: Footer"></div>
 
-  </body>
+</body>
 </html>

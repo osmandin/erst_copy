@@ -1,43 +1,43 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-  
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>Edit Draft Transfer Requests</title>
     <div th:replace="fragments/Head :: Head"></div>
-    <script type="text/javascript" th:src="@{/resources/js/CreateATImportFile.js}"></script> 
-  </head>
-  
-  <body>
-    
-    <div th:replace="fragments/BodyHeader :: BodyHeader">body_header</div>
-    
-    <div id="body_main">
-      <div class="window">
-	
-	<div th:replace="fragments/Nav :: Nav"></div>
-	
-	<div id="content">
-	  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-	  
-	  <h1>Create AT Import File</h1>
-	  
-	  <p><a th:href="@{/ListApprovedRsas}">Return to Review Approved Transfer Requests</a></p>
-	  <br/>
-	  
-	  <form method="post" id="form" th:action="@{/DownloadATImportFile(rsaid=${rsaid})}">
-	    Accession Number: <input type="text" name="accession" id="accession" th:value="${rsa.accessionnumber}"/>
-	  </form>
-	  
-	  <p><input type="submit" name="submit" value="Submit" onclick="doit()"/></p>
-	  
-	  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-	</div>
-	
-      </div>
+    <script type="text/javascript" th:src="@{/resources/js/CreateATImportFile.js}"></script>
+</head>
+
+<body>
+
+<div th:replace="fragments/BodyHeader :: BodyHeader">body_header</div>
+
+<div id="body_main">
+    <div class="window">
+
+        <div th:replace="fragments/Nav :: Nav"></div>
+
+        <div id="content">
+            <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+            <h1>Create AT Import File</h1>
+
+            <p><a th:href="@{/ListApprovedRsas}">Return to Review Approved Transfer Requests</a></p>
+            <br/>
+
+            <form method="post" id="form" th:action="@{/DownloadATImportFile(rsaid=${rsaid})}">
+                Accession Number: <input type="text" name="accession" id="accession" th:value="${rsa.accessionnumber}"/>
+            </form>
+
+            <p><input type="submit" name="submit" value="Submit" onclick="doit()"/></p>
+
+            <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+        </div>
+
     </div>
-    
-    <div th:replace="fragments/Footer :: Footer"></div>
-    
-  </body>
+</div>
+
+<div th:replace="fragments/Footer :: Footer"></div>
+
+</body>
 </html>

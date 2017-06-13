@@ -1,77 +1,92 @@
 <html>
-  <head>
+<head>
     <!-- $Id: DeleteDraftRsaSendToStaff.vm,v 1.16 2016-11-02 22:15:59-04 ericholp Exp $ -->
     <title>Draft Transfer Delete: ${rsa.id}</title>
     <style>
-      .maintable {
-        padding: 0px;
-        margin: 0px;
-	border-spacing:0px;
-	border-right: 0px;
-	border-left: 0px;
-	border-collapse:collapse; 
-	margin-bottom: 0px;
-      }
-      ul {
-        list-style: none;
-      }
-      ul li {
-      }
+        .maintable {
+            padding: 0px;
+            margin: 0px;
+            border-spacing: 0px;
+            border-right: 0px;
+            border-left: 0px;
+            border-collapse: collapse;
+            margin-bottom: 0px;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        ul li {
+        }
     </style>
-  </head>
-  <body>
-    <h2>Dear Archives Staff,</h2>
+</head>
+<body>
+<h2>Dear Archives Staff,</h2>
 
-    <p>The user ${session.getAttribute("username")} has deleted Draft Transfer Request ID ${rsa.id} with Submission Agreement ID ${rsa.ssasForm.id}.</p>
+<p>The user ${session.getAttribute("username")} has deleted Draft Transfer Request ID ${rsa.id} with Submission
+    Agreement ID ${rsa.ssasForm.id}.</p>
 
-    <p><b>Department/Unit or Donor Contact Information:</b>
-    #if (!$rsa.ssasForm.ssaContactsForms || $rsa.ssasForm.ssaContactsForms.size()==0) 
-       No contacts
+<p><b>Department/Unit or Donor Contact Information:</b>
+    #if (!$rsa.ssasForm.ssaContactsForms || $rsa.ssasForm.ssaContactsForms.size()==0)
+        No contacts
     #else
-      <ul>
-	#foreach($contact in ${rsa.ssasForm.ssaContactsForms})
-	<li>${contact.name}, ${contact.phone}, ${contact.address}, ${contact.email}</li>
-	#end
-      </ul>
-      #end
-    </p>
-    
-    <h2>Record Submission Form information</h2>
-    
-    <p><b>Date spans of the records:</b>
-      <span>
-	<label>Beginning year</label>
-	${rsa.startyear}
-	<label>Ending year</label>
-	${rsa.endyear}
-      </span>
-    </p>
-    
- 
-    <p><b>Description/comments:</b> ${rsa.description}</p>
- 
-    <p><b>Files selected for transfer:</b><br/>
-    #set( $count = 1 )
-    <table class="maintable" border="1">
-      <tr><th>&nbsp;</th><th>name</th><th>size</th><th>date</th><th>status</th></tr>
-      #foreach($item in ${rsa.rsaFileDataForms} )
-        #if (${item.status} != "success")
-          #set( $color = "red" )
-        #else
-          #set( $color = "black" )
+    <ul>
+        #foreach($contact in ${rsa.ssasForm.ssaContactsForms})
+            <li>${contact.name}, ${contact.phone}, ${contact.address}, ${contact.email}</li>
         #end
-        <tr><td>$count</td><td>${item.name}</td><td>${item.nicesize}</td><td>${item.lastmoddatetime}</td><td><font color="$color">${item.status}</font></td></tr>
-        #set( $count = $count + 1 )
-      #end
-    </table>
-    </p>
+    </ul>
+    #end
+</p>
 
-    <p></p>
-    <p></p>
-    <p></p>
-    
-    <p>Sincerely,</p>
-    <p>The ${submitappinfo.name} (https://${thishost}${submitappinfo.root})</p>
-    
-  </body>
+<h2>Record Submission Form information</h2>
+
+<p><b>Date spans of the records:</b>
+    <span>
+	<label>Beginning year</label>
+        ${rsa.startyear}
+	<label>Ending year</label>
+        ${rsa.endyear}
+      </span>
+</p>
+
+
+<p><b>Description/comments:</b> ${rsa.description}</p>
+
+<p><b>Files selected for transfer:</b><br/>
+    #set( $count = 1 )
+<table class="maintable" border="1">
+    <tr>
+        <th>&nbsp;</th>
+        <th>name</th>
+        <th>size</th>
+        <th>date</th>
+        <th>status</th>
+    </tr>
+    #foreach($item in ${rsa.rsaFileDataForms} )
+        #if (${item.status} != "success")
+            #set( $color = "red" )
+        #else
+            #set( $color = "black" )
+        #end
+        <tr>
+            <td>$count</td>
+            <td>${item.name}</td>
+            <td>${item.nicesize}</td>
+            <td>${item.lastmoddatetime}</td>
+            <td><font color="$color">${item.status}</font></td>
+        </tr>
+        #set( $count = $count + 1 )
+    #end
+</table>
+</p>
+
+<p></p>
+<p></p>
+<p></p>
+
+<p>Sincerely,</p>
+<p>The ${submitappinfo.name} (https://${thishost}${submitappinfo.root})</p>
+
+</body>
 </html>

@@ -6,7 +6,7 @@ import submit.entity.ApprovedRsasForm;
 
 import java.util.List;
 
-public interface ApprovedRsasFormRepository extends JpaRepository<ApprovedRsasForm, Integer>{
+public interface ApprovedRsasFormRepository extends JpaRepository<ApprovedRsasForm, Integer> {
     public ApprovedRsasForm findById(int id);
 
     @Query(value = "SELECT a FROM ApprovedRsasForm a order by datetime asc")

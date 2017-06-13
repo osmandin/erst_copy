@@ -1,7 +1,9 @@
 package submit.entity;
 
 import javax.persistence.*;
+
 import lombok.Data;
+
 import java.io.Serializable;
 
 public class IdKey implements Serializable {

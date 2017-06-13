@@ -1,6 +1,7 @@
 package submit.entity;
 
 import javax.persistence.*;
+
 import lombok.Data;
 
 @Data
@@ -22,21 +23,21 @@ public class ApprovedRsasForm {
     private String approveremail;
     private String description;
 
-    public String getDatetime(){
-	//2015-11-25 23:28:26.0
-	if(datetime != null && datetime.length() > 19){
-	    return datetime.substring(0, 19);
-	}
-	return datetime;
+    public String getDatetime() {
+        //2015-11-25 23:28:26.0
+        if (datetime != null && datetime.length() > 19) {
+            return datetime.substring(0, 19);
+        }
+        return datetime;
     }
 
     // probably not needed
-    public void setDatetime(String datetime){
-	//2015-11-25 23:28:26.0
-	if(datetime != null && datetime.length() > 19){
-	    this.datetime=datetime.substring(0, 19);
-	}else{
-	    this.datetime=datetime;
-	}
+    public void setDatetime(String datetime) {
+        //2015-11-25 23:28:26.0
+        if (datetime != null && datetime.length() > 19) {
+            this.datetime = datetime.substring(0, 19);
+        } else {
+            this.datetime = datetime;
+        }
     }
 }

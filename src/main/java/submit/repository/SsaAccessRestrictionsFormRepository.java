@@ -7,7 +7,7 @@ import submit.entity.SsaAccessRestrictionsForm;
 
 import java.util.List;
 
-public interface SsaAccessRestrictionsFormRepository extends JpaRepository<SsaAccessRestrictionsForm, Integer>{
+public interface SsaAccessRestrictionsFormRepository extends JpaRepository<SsaAccessRestrictionsForm, Integer> {
     public SsaAccessRestrictionsForm findById(int id);
 
     @Query(value = "SELECT a FROM SsaAccessRestrictionsForm a order by restriction asc")

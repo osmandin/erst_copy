@@ -25,23 +25,24 @@ public class DepartmentsFormFormatter implements Formatter<DepartmentsForm> {
 
     @Autowired
     DepartmentsFormRepository departmentsFormRepository;
-    
+
     public String print(DepartmentsForm object, Locale locale) {
         return (object != null ? Integer.toString(object.getId()) : "");
     }
 
     public DepartmentsForm parse(String text, Locale locale) throws ParseException {
-	//LOGGER.log(Level.INFO, "parse: text={0}", new Object[]{text});
-	if(text.equals("")){
-	    return null;
-	}
-	int id = -1;
-	try {
-	    id = Integer.parseInt(text);
-	}catch(NumberFormatException ex){}
-	if(id == -1){
-	    return null;
-	}
-	return departmentsFormRepository.findById(id);
+        //LOGGER.log(Level.INFO, "parse: text={0}", new Object[]{text});
+        if (text.equals("")) {
+            return null;
+        }
+        int id = -1;
+        try {
+            id = Integer.parseInt(text);
+        } catch (NumberFormatException ex) {
+        }
+        if (id == -1) {
+            return null;
+        }
+        return departmentsFormRepository.findById(id);
     }
 }

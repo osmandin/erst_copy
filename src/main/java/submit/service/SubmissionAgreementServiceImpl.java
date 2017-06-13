@@ -5,6 +5,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.servlet.ServletContext;
+
 import org.springframework.ui.ModelMap;
 
 import org.springframework.stereotype.Service;
@@ -66,15 +67,15 @@ public class SubmissionAgreementServiceImpl implements SubmissionAgreementServic
 
     @Resource
     ServletContext context;
-    
+
     @Resource
-    public void setVelocityEngine(VelocityEngine ve){
-	velocityEngine = ve;
+    public void setVelocityEngine(VelocityEngine ve) {
+        velocityEngine = ve;
     }
 
     @Resource
-    public void setSender(JavaMailSenderImpl sender){	
-	this.sender = sender;
+    public void setSender(JavaMailSenderImpl sender) {
+        this.sender = sender;
     }
 
     @Resource
@@ -85,10 +86,10 @@ public class SubmissionAgreementServiceImpl implements SubmissionAgreementServic
 
     @Resource
     private SsaAccessRestrictionsFormRepository accessrestrictionrepo;
-    
+
     @Resource
     private SsaCopyrightsFormRepository copyrightrepo;
-    
+
     @Resource
     private SsaFormatTypesFormRepository formattyperepo;
 
@@ -97,7 +98,7 @@ public class SubmissionAgreementServiceImpl implements SubmissionAgreementServic
 
     @Resource
     DepartmentsFormService departmentservice;
-	
+
     @Resource
     OnlineSubmissionRequestFormRepository onlinesubmissionrequestrepo;
 
@@ -106,265 +107,265 @@ public class SubmissionAgreementServiceImpl implements SubmissionAgreementServic
 
     @Resource
     private UsersFormService userservice;
-    				     
+
     @Resource
     SsasFormService ssasservice;
 
     // ------------------------------------------------------------------------
     @Transactional
     public boolean handleSubmissionAgreementForm(
-						 SubmitData submitData,
-						 HttpServletRequest request,
-						 HttpSession session,
-						 ModelMap model
-						 ){
+            SubmitData submitData,
+            HttpServletRequest request,
+            HttpSession session,
+            ModelMap model
+    ) {
 
-	String[] nameparts=submitData.getName().split("\\s+");
-	
-	String firstname = "unknown";
-	String lastname = "unknown";
-	if(nameparts.length == 3){
-	    firstname=nameparts[0];
-	    lastname=nameparts[2];
-	}else if(nameparts.length == 2){
-	    firstname=nameparts[0];
-	    lastname=nameparts[1];
-	}else if(nameparts.length == 1){
-	    lastname=nameparts[0];
-	}
+        String[] nameparts = submitData.getName().split("\\s+");
 
-	submitData.setFirstname(firstname);
-	submitData.setLastname(lastname);
-	
-	String[] emailparts = submitData.getEmail().split("@");
-	String username = "unknown";
-	if(emailparts.length > 0){
-	    username = emailparts[0];
-	}
-	
-	submitData.setUsername(username);
+        String firstname = "unknown";
+        String lastname = "unknown";
+        if (nameparts.length == 3) {
+            firstname = nameparts[0];
+            lastname = nameparts[2];
+        } else if (nameparts.length == 2) {
+            firstname = nameparts[0];
+            lastname = nameparts[1];
+        } else if (nameparts.length == 1) {
+            lastname = nameparts[0];
+        }
 
-	String[] staffrecipts = env.getRequiredProperty("org.email").split(",");
-	String from = env.getRequiredProperty("submit.from");
+        submitData.setFirstname(firstname);
+        submitData.setLastname(lastname);
 
-	String address = "\"" + submitData.getName().trim() + "\" <" + submitData.getEmail().trim() + ">";
+        String[] emailparts = submitData.getEmail().split("@");
+        String username = "unknown";
+        if (emailparts.length > 0) {
+            username = emailparts[0];
+        }
 
-	EmailSetup useremailsetup = new EmailSetup();	
-	useremailsetup.setTo(address);
-	useremailsetup.setSubject("Submission Agreement Request");
-	useremailsetup.setFrom(from);
+        submitData.setUsername(username);
 
-	EmailSetup staffemailsetup = new EmailSetup();
-	staffemailsetup.setToarray(staffrecipts);
-	staffemailsetup.setSubject("Submission Agreement Request");
-	staffemailsetup.setFrom(from);
-	
-	SubmitRequestErrors errors = ssasservice.checkForDups(submitData);
+        String[] staffrecipts = env.getRequiredProperty("org.email").split(",");
+        String from = env.getRequiredProperty("submit.from");
 
-	if(errors.isFullDuplicates()){
-	    request.setAttribute("duplicateuser", true);
-	    request.setAttribute("duplicateusername", true);
-	    request.setAttribute("duplicatedepartment", true);
-	    request.setAttribute("departmentalreadyassignedtothisuser", true);
-	    
-	    request.setAttribute("fullduplicate", "1");
+        String address = "\"" + submitData.getName().trim() + "\" <" + submitData.getEmail().trim() + ">";
 
-	    submitData.setSsaid(errors.getSsaid());
+        EmailSetup useremailsetup = new EmailSetup();
+        useremailsetup.setTo(address);
+        useremailsetup.setSubject("Submission Agreement Request");
+        useremailsetup.setFrom(from);
 
-	    errors = new SubmitRequestErrors();
-	    errors.setDuplicateuser(true);
-	    errors.setDuplicateusername(true);
-	    errors.setDuplicatedepartment(true);
-	    errors.setDepartmentalreadyassignedtothisuser(true);
+        EmailSetup staffemailsetup = new EmailSetup();
+        staffemailsetup.setToarray(staffrecipts);
+        staffemailsetup.setSubject("Submission Agreement Request");
+        staffemailsetup.setFrom(from);
 
-	    Email email = new Email(useremailsetup, sender, velocityEngine, env, context, session, model);
+        SubmitRequestErrors errors = ssasservice.checkForDups(submitData);
 
-	    email.sendSubmitEmail(
-				  staffemailsetup,
-				  submitData,
-				  errors,
-				  request
-				  );
+        if (errors.isFullDuplicates()) {
+            request.setAttribute("duplicateuser", true);
+            request.setAttribute("duplicateusername", true);
+            request.setAttribute("duplicatedepartment", true);
+            request.setAttribute("departmentalreadyassignedtothisuser", true);
 
-	    return false;
-	}
+            request.setAttribute("fullduplicate", "1");
 
-	request.setAttribute("fullduplicate", "0");
-	
-	request.setAttribute("correct", "1");
-	
-	boolean duplicateuser = false;
-	UsersForm uf = null;
-	
-	boolean duplicateusername = false;
-	List<UsersForm> matchingusers = userrepo.findByUsername(username);
-	LOGGER.log(Level.INFO, "findByUsername: username={0} size={1}", new Object[]{username, matchingusers.size()});
-	if(matchingusers.size() > 0){
-	    duplicateusername = true;
-	}
+            submitData.setSsaid(errors.getSsaid());
 
-	if(userservice.duplicate(username, firstname, lastname, submitData.getEmail())){
-	    duplicateuser = true;
-	}
-	
-	if(!duplicateusername && !duplicateuser){
-	    uf = new UsersForm();
-	    uf.setUsername(username);
-	    uf.setFirstname(firstname);
-	    uf.setLastname(lastname);
-	    uf.setEmail(submitData.getEmail());
-	    uf.setIsadmin(false);
-	    uf.setEnabled(false);
-	    uf=userrepo.save(uf);
-	}else{
-	    if(duplicateuser){
-		
-		List<UsersForm> ufs = userrepo.findByUsernameAndFirstnameAndLastnameAndEmail(username, firstname, lastname, submitData.getEmail());
-		LOGGER.log(Level.SEVERE, "duplicateuser: username={0} size={1}", new Object[]{username, ufs.size()});
-		
-		if(ufs.size() != 1){
-		    LOGGER.log(Level.SEVERE, "invalid matching users 2: size={0}", new Object[]{ufs.size()});
+            errors = new SubmitRequestErrors();
+            errors.setDuplicateuser(true);
+            errors.setDuplicateusername(true);
+            errors.setDuplicatedepartment(true);
+            errors.setDepartmentalreadyassignedtothisuser(true);
 
-		    submitData.setSsaid(-1);
-		    
-		    errors = new SubmitRequestErrors();
-		    errors.setDuplicateuser(true);
-		    //errors.setDuplicateusername(false); // default is false
-		    //errors.setDuplicatedepartment(false);
-		    //errors.setDepartmentalreadyassignedtothisuser(false);
-		    errors.setWrongnumberofusermatches(true);
-		    
-		    Email email = new Email(useremailsetup, sender, velocityEngine, env, context, session, model);
-		    
-		    email.sendSubmitEmail(
-					  staffemailsetup,
-					  submitData,
-					  errors,
-					  request
-					  );
+            Email email = new Email(useremailsetup, sender, velocityEngine, env, context, session, model);
 
-		    request.setAttribute("wrongnumberofusermatches", true);
-		    
-		    return false;
-		}else{
-		    uf=ufs.get(0);
-		}
-	    }else if(duplicateusername){
-		LOGGER.log(Level.SEVERE, "duplicateusername: username={0} size={1}", new Object[]{username, matchingusers.size()});
-		
-		if(matchingusers.size() == 1){
-		    uf=matchingusers.get(0);
-		    LOGGER.log(Level.SEVERE, "duplicateusername size=1: username={0} id={1}", new Object[]{username, uf.getId()});
-		}else{
-		    LOGGER.log(Level.SEVERE, "invalid matching users: size={0}", new Object[]{matchingusers.size()});
+            email.sendSubmitEmail(
+                    staffemailsetup,
+                    submitData,
+                    errors,
+                    request
+            );
 
-		    submitData.setSsaid(-1);
-		    
-		    errors = new SubmitRequestErrors();
-		    //errors.setDuplicateuser(false);
-		    errors.setDuplicateusername(true);
-		    //errors.setDuplicatedepartment(false);
-		    //errors.setDepartmentalreadyassignedtothisuser(false);
-		    errors.setWrongnumberofusermatches(true);
-		    
-		    Email email = new Email(useremailsetup, sender, velocityEngine, env, context, session, model);
-		    
-		    email.sendSubmitEmail(
-					  staffemailsetup,
-					  submitData,
-					  errors,
-					  request
-					  );
-		    
-		    request.setAttribute("wrongnumberofusermatches", true);
+            return false;
+        }
 
-		    return false;
-		}
-	    }
-	}
-	
-	
-	DepartmentsForm depart = new DepartmentsForm();
-	depart.setName(submitData.getDepartment());
-	depart = departmentrepo.save(depart);
-	int departmentid=depart.getId();
-	LOGGER.log(Level.INFO, "new department: id={0}", new Object[]{depart.getId()});    
-	
-	
-	boolean departmentalreadyassignedtothisuser = false;
-	if(departmentservice.departmentAssignedToUser(departmentid, uf.getId())){
-	    departmentalreadyassignedtothisuser = true;
-	}else{
-	    if(depart != null){
-		List<UsersForm> newufs = new ArrayList<UsersForm>();
-		List<UsersForm> ufs = depart.getUsersForms();
-		if(ufs != null && ufs.size() > 0){
-		    for(UsersForm u : ufs){
-			newufs.add(u);
-		    }
-		}
-		newufs.add(uf);
-		
-		depart.setUsersForms(newufs);
-		depart = departmentrepo.save(depart);
-	    }
-	}
+        request.setAttribute("fullduplicate", "0");
 
-	request.setAttribute("duplicateuser", duplicateuser);
-	request.setAttribute("duplicateusername", duplicateusername);
-	request.setAttribute("departmentalreadyassignedtothisuser", departmentalreadyassignedtothisuser);
-	
-	String remoteip = request.getRemoteAddr();
-	
-	String sqldate = String.format("%1$tY-%1$tm-%1$td", Calendar.getInstance());
-	
-	SsasForm ssa = new SsasForm();
-	ssa.setDepartmenthead(submitData.getDepartmenthead());
-	ssa.setCreatedby(submitData.getSignature());
-	ssa.setIP(remoteip);
+        request.setAttribute("correct", "1");
 
-	String recordstitle = env.getRequiredProperty("defaults.recordstitle");
-	String retentionschedule = env.getRequiredProperty("defaults.retentionschedule");
-	String retentionperiod = env.getRequiredProperty("defaults.retentionperiod");
-	String archivedescriptionstandards = env.getRequiredProperty("defaults.archivedescriptionstandards");
-	
-	ssa.setRecordstitle(recordstitle);
-	ssa.setRetentionschedule(retentionschedule);
-	ssa.setRetentionperiod(retentionperiod);
-	ssa.setDescriptionstandards(archivedescriptionstandards);
-	ssa.setCreationdate(sqldate);
-	ssa.setEffectivedate(sqldate);
-	ssa.setEditdate(sqldate);
-	ssa.setOnlinesubmission(true);
+        boolean duplicateuser = false;
+        UsersForm uf = null;
 
-	
-	ssa.setDepartmentForm(depart);
+        boolean duplicateusername = false;
+        List<UsersForm> matchingusers = userrepo.findByUsername(username);
+        LOGGER.log(Level.INFO, "findByUsername: username={0} size={1}", new Object[]{username, matchingusers.size()});
+        if (matchingusers.size() > 0) {
+            duplicateusername = true;
+        }
 
-	ssa = ssarepo.save(ssa); // for id
-	
-	List<SsaContactsForm> newcs = new ArrayList<SsaContactsForm>();
-	SsaContactsForm contact = new SsaContactsForm();
-	contact.setName(submitData.getName());
-	contact.setPhone(submitData.getPhone());
-	contact.setEmail(submitData.getEmail());
-	contact.setAddress(submitData.getAddress());
-	contact = contactrepo.save(contact);
-	contact.setSsasForm(ssa);
-	newcs.add(contact);
-	ssa.setSsaContactsForms(newcs);
+        if (userservice.duplicate(username, firstname, lastname, submitData.getEmail())) {
+            duplicateuser = true;
+        }
 
-	String copyrightstatement = env.getRequiredProperty("defaults.copyrightstatement");
+        if (!duplicateusername && !duplicateuser) {
+            uf = new UsersForm();
+            uf.setUsername(username);
+            uf.setFirstname(firstname);
+            uf.setLastname(lastname);
+            uf.setEmail(submitData.getEmail());
+            uf.setIsadmin(false);
+            uf.setEnabled(false);
+            uf = userrepo.save(uf);
+        } else {
+            if (duplicateuser) {
 
-	List<SsaCopyrightsForm> newcr = new ArrayList<SsaCopyrightsForm>();
-	SsaCopyrightsForm cr = new SsaCopyrightsForm();
-	cr.setCopyright(copyrightstatement);
-	cr = copyrightrepo.save(cr);
-	cr.setSsasForm(ssa);
-	newcr.add(cr);
-	ssa.setSsaCopyrightsForms(newcr);
+                List<UsersForm> ufs = userrepo.findByUsernameAndFirstnameAndLastnameAndEmail(username, firstname, lastname, submitData.getEmail());
+                LOGGER.log(Level.SEVERE, "duplicateuser: username={0} size={1}", new Object[]{username, ufs.size()});
+
+                if (ufs.size() != 1) {
+                    LOGGER.log(Level.SEVERE, "invalid matching users 2: size={0}", new Object[]{ufs.size()});
+
+                    submitData.setSsaid(-1);
+
+                    errors = new SubmitRequestErrors();
+                    errors.setDuplicateuser(true);
+                    //errors.setDuplicateusername(false); // default is false
+                    //errors.setDuplicatedepartment(false);
+                    //errors.setDepartmentalreadyassignedtothisuser(false);
+                    errors.setWrongnumberofusermatches(true);
+
+                    Email email = new Email(useremailsetup, sender, velocityEngine, env, context, session, model);
+
+                    email.sendSubmitEmail(
+                            staffemailsetup,
+                            submitData,
+                            errors,
+                            request
+                    );
+
+                    request.setAttribute("wrongnumberofusermatches", true);
+
+                    return false;
+                } else {
+                    uf = ufs.get(0);
+                }
+            } else if (duplicateusername) {
+                LOGGER.log(Level.SEVERE, "duplicateusername: username={0} size={1}", new Object[]{username, matchingusers.size()});
+
+                if (matchingusers.size() == 1) {
+                    uf = matchingusers.get(0);
+                    LOGGER.log(Level.SEVERE, "duplicateusername size=1: username={0} id={1}", new Object[]{username, uf.getId()});
+                } else {
+                    LOGGER.log(Level.SEVERE, "invalid matching users: size={0}", new Object[]{matchingusers.size()});
+
+                    submitData.setSsaid(-1);
+
+                    errors = new SubmitRequestErrors();
+                    //errors.setDuplicateuser(false);
+                    errors.setDuplicateusername(true);
+                    //errors.setDuplicatedepartment(false);
+                    //errors.setDepartmentalreadyassignedtothisuser(false);
+                    errors.setWrongnumberofusermatches(true);
+
+                    Email email = new Email(useremailsetup, sender, velocityEngine, env, context, session, model);
+
+                    email.sendSubmitEmail(
+                            staffemailsetup,
+                            submitData,
+                            errors,
+                            request
+                    );
+
+                    request.setAttribute("wrongnumberofusermatches", true);
+
+                    return false;
+                }
+            }
+        }
+
+
+        DepartmentsForm depart = new DepartmentsForm();
+        depart.setName(submitData.getDepartment());
+        depart = departmentrepo.save(depart);
+        int departmentid = depart.getId();
+        LOGGER.log(Level.INFO, "new department: id={0}", new Object[]{depart.getId()});
+
+
+        boolean departmentalreadyassignedtothisuser = false;
+        if (departmentservice.departmentAssignedToUser(departmentid, uf.getId())) {
+            departmentalreadyassignedtothisuser = true;
+        } else {
+            if (depart != null) {
+                List<UsersForm> newufs = new ArrayList<UsersForm>();
+                List<UsersForm> ufs = depart.getUsersForms();
+                if (ufs != null && ufs.size() > 0) {
+                    for (UsersForm u : ufs) {
+                        newufs.add(u);
+                    }
+                }
+                newufs.add(uf);
+
+                depart.setUsersForms(newufs);
+                depart = departmentrepo.save(depart);
+            }
+        }
+
+        request.setAttribute("duplicateuser", duplicateuser);
+        request.setAttribute("duplicateusername", duplicateusername);
+        request.setAttribute("departmentalreadyassignedtothisuser", departmentalreadyassignedtothisuser);
+
+        String remoteip = request.getRemoteAddr();
+
+        String sqldate = String.format("%1$tY-%1$tm-%1$td", Calendar.getInstance());
+
+        SsasForm ssa = new SsasForm();
+        ssa.setDepartmenthead(submitData.getDepartmenthead());
+        ssa.setCreatedby(submitData.getSignature());
+        ssa.setIP(remoteip);
+
+        String recordstitle = env.getRequiredProperty("defaults.recordstitle");
+        String retentionschedule = env.getRequiredProperty("defaults.retentionschedule");
+        String retentionperiod = env.getRequiredProperty("defaults.retentionperiod");
+        String archivedescriptionstandards = env.getRequiredProperty("defaults.archivedescriptionstandards");
+
+        ssa.setRecordstitle(recordstitle);
+        ssa.setRetentionschedule(retentionschedule);
+        ssa.setRetentionperiod(retentionperiod);
+        ssa.setDescriptionstandards(archivedescriptionstandards);
+        ssa.setCreationdate(sqldate);
+        ssa.setEffectivedate(sqldate);
+        ssa.setEditdate(sqldate);
+        ssa.setOnlinesubmission(true);
+
+
+        ssa.setDepartmentForm(depart);
+
+        ssa = ssarepo.save(ssa); // for id
+
+        List<SsaContactsForm> newcs = new ArrayList<SsaContactsForm>();
+        SsaContactsForm contact = new SsaContactsForm();
+        contact.setName(submitData.getName());
+        contact.setPhone(submitData.getPhone());
+        contact.setEmail(submitData.getEmail());
+        contact.setAddress(submitData.getAddress());
+        contact = contactrepo.save(contact);
+        contact.setSsasForm(ssa);
+        newcs.add(contact);
+        ssa.setSsaContactsForms(newcs);
+
+        String copyrightstatement = env.getRequiredProperty("defaults.copyrightstatement");
+
+        List<SsaCopyrightsForm> newcr = new ArrayList<SsaCopyrightsForm>();
+        SsaCopyrightsForm cr = new SsaCopyrightsForm();
+        cr.setCopyright(copyrightstatement);
+        cr = copyrightrepo.save(cr);
+        cr.setSsasForm(ssa);
+        newcr.add(cr);
+        ssa.setSsaCopyrightsForms(newcr);
 
 	/*
-	List<SsaFormatTypesForm> newfs = new ArrayList<SsaFormatTypesForm>();
+    List<SsaFormatTypesForm> newfs = new ArrayList<SsaFormatTypesForm>();
 	SsaFormatTypesForm f = new SsaFormatTypesForm();
 	f.setFormattype("None");
 	f = formattyperepo.save(f);
@@ -372,38 +373,38 @@ public class SubmissionAgreementServiceImpl implements SubmissionAgreementServic
 	newfs.add(f);
 	ssa.setSsaFormatTypesForms(newfs);
 	*/
-	
-	ssa = ssarepo.save(ssa);
 
-	submitData.setSsaid(ssa.getId());
+        ssa = ssarepo.save(ssa);
 
-	OnlineSubmissionRequestForm osrf = new OnlineSubmissionRequestForm();
-	osrf.setSsaid(ssa.getId());
-	osrf.setDepartment(submitData.getDepartment());
-	osrf.setAddress(submitData.getAddress());	
-	osrf.setName(submitData.getName());
-	osrf.setEmail(submitData.getEmail());
-	osrf.setPhone(submitData.getPhone());
-	osrf.setDepartmenthead(submitData.getDepartmenthead());
-	osrf.setSignature(submitData.getSignature());
-	osrf.setDate(sqldate);
+        submitData.setSsaid(ssa.getId());
 
-	errors = new SubmitRequestErrors();
-	errors.setDuplicateuser(duplicateuser);
-	errors.setDuplicateusername(duplicateusername);
-	errors.setDepartmentalreadyassignedtothisuser(departmentalreadyassignedtothisuser);
+        OnlineSubmissionRequestForm osrf = new OnlineSubmissionRequestForm();
+        osrf.setSsaid(ssa.getId());
+        osrf.setDepartment(submitData.getDepartment());
+        osrf.setAddress(submitData.getAddress());
+        osrf.setName(submitData.getName());
+        osrf.setEmail(submitData.getEmail());
+        osrf.setPhone(submitData.getPhone());
+        osrf.setDepartmenthead(submitData.getDepartmenthead());
+        osrf.setSignature(submitData.getSignature());
+        osrf.setDate(sqldate);
 
-	Email email = new Email(useremailsetup, sender, velocityEngine, env, context, session, model);
+        errors = new SubmitRequestErrors();
+        errors.setDuplicateuser(duplicateuser);
+        errors.setDuplicateusername(duplicateusername);
+        errors.setDepartmentalreadyassignedtothisuser(departmentalreadyassignedtothisuser);
 
-	email.sendSubmitEmail(
-			      staffemailsetup,
-			      submitData,
-			      errors,
-			      request
-			      );
+        Email email = new Email(useremailsetup, sender, velocityEngine, env, context, session, model);
 
-	request.setAttribute("ssa", ssa);
-	
-	return true;    
+        email.sendSubmitEmail(
+                staffemailsetup,
+                submitData,
+                errors,
+                request
+        );
+
+        request.setAttribute("ssa", ssa);
+
+        return true;
     }
 }
